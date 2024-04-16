@@ -265,6 +265,9 @@
             </Property>
             <Property name="radius" type="int" value="30"/>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnThemMousePressed"/>
+          </Events>
         </Component>
         <Component class="org.LapTrinhTienTien.ui.customItem.button" name="btnXoa">
           <Properties>

@@ -1,4 +1,4 @@
-package org.LapTrinhTienTien.model;
+package org.LapTrinhTienTien.ui.model;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;

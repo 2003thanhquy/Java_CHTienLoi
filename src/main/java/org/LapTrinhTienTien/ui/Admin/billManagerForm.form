@@ -154,6 +154,9 @@
                   <Color blue="ba" green="c8" red="a" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="myPanelBoxShadow2MousePressed"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">

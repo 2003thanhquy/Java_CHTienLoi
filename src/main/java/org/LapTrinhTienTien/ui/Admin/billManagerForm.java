@@ -5,7 +5,7 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.ImageIcon;
-import org.LapTrinhTienTien.model.modelCard;
+import org.LapTrinhTienTien.ui.model.modelCard;
 
 /**
  *
@@ -67,6 +67,11 @@ public class billManagerForm extends javax.swing.JPanel {
         jLabel1.setText("Thao tác");
 
         myPanelBoxShadow2.setBackground(new java.awt.Color(10, 200, 186));
+        myPanelBoxShadow2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                myPanelBoxShadow2MousePressed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/find.png"))); // NOI18N
 
@@ -197,6 +202,11 @@ public class billManagerForm extends javax.swing.JPanel {
             .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void myPanelBoxShadow2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myPanelBoxShadow2MousePressed
+        // TODO add your handling code here:
+        System.out.print("Fuckkkkkk");
+    }//GEN-LAST:event_myPanelBoxShadow2MousePressed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

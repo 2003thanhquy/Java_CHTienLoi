@@ -5,8 +5,7 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import java.awt.Color;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import javax.swing.JFrame;
 
 /**
  *
@@ -98,6 +97,11 @@ public class staffInfo extends javax.swing.JPanel {
         btnThem.setText("Thêm");
         btnThem.setBorderColor(new java.awt.Color(0, 0, 204));
         btnThem.setRadius(30);
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnThemMousePressed(evt);
+            }
+        });
 
         btnXoa.setText("Xóa");
         btnXoa.setRadius(30);
@@ -270,6 +274,14 @@ public class staffInfo extends javax.swing.JPanel {
         txtTimKiem.setForeground(Color.BLACK); // Đổi màu chữ khi focus vào
         }
     }//GEN-LAST:event_txtTimKiemFocusGained
+
+    private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
+    System.out.print("dsadsadas");
+    formThemNV themNV = new formThemNV();
+    // TODO add your handling code here:
+    themNV.setVisible(true);
+    themNV.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnThemMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
