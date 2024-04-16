@@ -5,7 +5,7 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.JComponent;
-import org.LapTrinhTienTien.events.EventMenuSelected;
+import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 
 /**
  *

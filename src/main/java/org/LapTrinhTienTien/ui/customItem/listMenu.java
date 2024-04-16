@@ -1,6 +1,6 @@
 package org.LapTrinhTienTien.ui.customItem;
 
-import org.LapTrinhTienTien.model.Model_Menu;
+import org.LapTrinhTienTien.ui.model.Model_Menu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,7 +10,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
-import org.LapTrinhTienTien.events.EventMenuSelected;
+import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 
 public class listMenu<E extends Object> extends JList<E> {
 

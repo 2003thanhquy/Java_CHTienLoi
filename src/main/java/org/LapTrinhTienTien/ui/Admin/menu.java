@@ -9,8 +9,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import org.LapTrinhTienTien.events.EventMenuSelected;
-import org.LapTrinhTienTien.model.Model_Menu;
+import org.LapTrinhTienTien.ui.events.EventMenuSelected;
+import org.LapTrinhTienTien.ui.model.Model_Menu;
 
 /**
  *

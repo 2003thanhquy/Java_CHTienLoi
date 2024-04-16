@@ -52,7 +52,7 @@ public class loginForm extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 255));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/grocery-cart.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/ui/Img/grocery-cart.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,11 +123,11 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3.add(jSeparator8);
         jSeparator8.setBounds(120, 130, 150, 10);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/user.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/ui/Img/user.png"))); // NOI18N
         jPanel3.add(jLabel5);
         jLabel5.setBounds(80, 80, 20, 30);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/padlock.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/ui/Img/padlock.png"))); // NOI18N
         jPanel3.add(jLabel6);
         jLabel6.setBounds(80, 140, 20, 40);
 

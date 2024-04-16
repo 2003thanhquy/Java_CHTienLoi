@@ -5,7 +5,7 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.ImageIcon;
-import org.LapTrinhTienTien.model.modelCard;
+import org.LapTrinhTienTien.ui.model.modelCard;
 
 /**
  *
