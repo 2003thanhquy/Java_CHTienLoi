@@ -1,8 +1,8 @@
 package org.LapTrinhTienTien.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+import org.LapTrinhTienTien.model.IdClass.ChiTietKhuyenMaiId;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,18 +10,20 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ChiTietKhuyenMai")
 @Getter
-@Builder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChiTietKhuyenMai implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "MaCT",referencedColumnName = "MaCT")
+
+    @EmbeddedId
+    private ChiTietKhuyenMaiId chiTietKhuyenMaiId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @MapsId("maCT")
     private ChuongTrinhKhuyenMai  chuongTrinhKhuyenMai;
 
-
-    @Column(name = "MaSP", length = 10)
-    private String maSP;
-
+//    @Column(name = "MaSP", length = 10)
+//    private String maSP;
 
     @Column(name = "NgayApDung", nullable = false)
     private LocalDateTime ngayApDung;

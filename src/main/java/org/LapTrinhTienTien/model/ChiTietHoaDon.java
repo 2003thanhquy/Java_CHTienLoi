@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.LapTrinhTienTien.model.IdClass.ChiTietHoaDonId;
 import org.LapTrinhTienTien.repository.HoaDonRepository;
 
 import java.util.Set;
@@ -14,19 +15,22 @@ import java.util.Set;
 @Entity
 @Table(name = "ChiTietHoaDon")
 public class ChiTietHoaDon {
-    @Id
+
+    @EmbeddedId
+    private ChiTietHoaDonId chiTietHoaDonId;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CTHD_SP",referencedColumnName = "MaSP")
+    @MapsId("maSP")
     private SanPham sanPham;
 
-    @Id
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CTHD_CH",referencedColumnName = "MaCH")
+    @MapsId("maCH")
     private CuaHang cuaHang;
 
-    @Id
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CTHD_HO",referencedColumnName = "MaHD")
+    @MapsId("maHD")
     private HoaDon hoaDon;
 
     @Column(name = "GiaThanhToan", nullable = false)

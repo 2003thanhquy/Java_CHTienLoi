@@ -35,13 +35,13 @@ public class SpringBootRestApplication {
     @Bean
     public CommandLineRunner commandLineRunner( HoaDonRepository hoaDonRepository, NhanVienRepository nhanVienRepository, ChucVuRepository chucVuRepository) {
         return args -> {
-            adminForm adminForm = new adminForm();
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-
-                    new adminForm().setVisible(true);
-                }
-            });
+//            adminForm adminForm = new adminForm();
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                public void run() {
+//
+//                    new adminForm().setVisible(true);
+//                }
+//            });
         };
     }
 }

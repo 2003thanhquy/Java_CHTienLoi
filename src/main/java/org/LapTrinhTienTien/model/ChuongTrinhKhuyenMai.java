@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "ChuongTrinhKhuyenMai")
@@ -24,7 +25,7 @@ public class ChuongTrinhKhuyenMai implements Serializable {
 
     @Column(name = "PhanTramGiamGia", nullable = false)
     private Integer phanTramGiamGia;
-    @OneToOne(mappedBy = "chuongTrinhKhuyenMai",cascade = CascadeType.ALL)
-    private ChiTietKhuyenMai chiTietKhuyenMai;
+    @OneToMany(mappedBy = "chuongTrinhKhuyenMai",cascade = CascadeType.ALL)
+    private Set<ChiTietKhuyenMai> chiTietKhuyenMai;
     // Constructors, getters, and setters
 }

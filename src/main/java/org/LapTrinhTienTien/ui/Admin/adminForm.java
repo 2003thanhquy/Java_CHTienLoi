@@ -6,11 +6,13 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.JComponent;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author Hi
  */
+
 public class adminForm extends javax.swing.JFrame {
 
     /**
