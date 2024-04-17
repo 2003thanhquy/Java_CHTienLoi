@@ -1,6 +1,12 @@
 package org.LapTrinhTienTien.data;
 
+import org.LapTrinhTienTien._enum.ChucVuEnum;
+import org.LapTrinhTienTien.model.ChiTietKhuyenMai;
+import org.LapTrinhTienTien.model.ChucVu;
+import org.LapTrinhTienTien.model.ChuongTrinhKhuyenMai;
 import org.LapTrinhTienTien.model.NhanVien;
+import org.LapTrinhTienTien.repository.ChuongTrinhKhuyenMaiRepository;
+import org.LapTrinhTienTien.repository.HoaDonRepository;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,20 +14,41 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class FakeData   implements CommandLineRunner{
     private final NhanVienRepository nhanVienRepository;
+    private final HoaDonRepository hoaDonRepository;
+    private final ChuongTrinhKhuyenMaiRepository chuongTrinhKhuyenMaiRepository;
     @Autowired
-    public  FakeData(NhanVienRepository nhanVienRepository) {
+    public  FakeData(NhanVienRepository nhanVienRepository,HoaDonRepository hoaDonRepository,ChuongTrinhKhuyenMaiRepository chuongTrinhKhuyenMaiRepository) {
         this.nhanVienRepository = nhanVienRepository;
+        this.hoaDonRepository = hoaDonRepository;
+        this.chuongTrinhKhuyenMaiRepository = chuongTrinhKhuyenMaiRepository;
 
     }
 
     @Override
     public void run(String... args) throws Exception {
-        insertNhanVien();
+        //insertNhanVien();
+       // insertChuongTrinh();
 
+    }
+    private void insertChuongTrinh() {
+//        ChuongTrinhKhuyenMai chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMai();
+//        chuongTrinhKhuyenMai.setMaCT("CT001");
+//        chuongTrinhKhuyenMai.setTenChuongTrinh("Khuyen Mai Tet");
+//        chuongTrinhKhuyenMai.setPhanTramGiamGia(10); // Giả
+//
+//        ChiTietKhuyenMai chiTietKhuyenMai = new ChiTietKhuyenMai();
+//        chiTietKhuyenMai.setChuongTrinhKhuyenMai(chuongTrinhKhuyenMai);
+//       // chiTietKhuyenMai.setMaSP("SP001");
+//        chiTietKhuyenMai.setNgayApDung(LocalDateTime.now());
+//        chiTietKhuyenMai.setNgayKetThuc(LocalDateTime.now().plusDays(7));
+//
+//        chuongTrinhKhuyenMai.setChiTietKhuyenMai(chiTietKhuyenMai);
+//        chuongTrinhKhuyenMaiRepository.save(chuongTrinhKhuyenMai);
     }
     private  void insertNhanVien(){
             NhanVien nhanVien = new NhanVien();
@@ -34,6 +61,14 @@ public class FakeData   implements CommandLineRunner{
             nhanVien.setCccd("123456789012");
             nhanVien.setGioiTinh("Male");
             nhanVien.setUrlImage("https://example.com/image.jpg");
+          //  ChucVu chucVu = new ChucVu();
+
+//            chucVu.setMaCV("CV001");
+//            nhanVien.setChucVu(chucVu);
+            ChucVuEnum chucVu = ChucVuEnum.NHAN_VIEN;
+            ChucVu chucVu1 = new ChucVu(chucVu);
+             nhanVien.setChucVu(chucVu1);
+             nhanVienRepository.save(nhanVien);
 
 
 //            List<NhanVien>  lst =(List<NhanVien>) nhanVienRepository.findAll();

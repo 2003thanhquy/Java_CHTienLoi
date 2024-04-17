@@ -1,27 +1,33 @@
 package org.LapTrinhTienTien.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+import org.LapTrinhTienTien.model.IdClass.KhoId;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Kho")
-@Builder
+@Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Kho  implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+
+    @EmbeddedId
+    private KhoId khoId;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CH_Kho", nullable = false,referencedColumnName = "MaCH")
+    @MapsId("maCH")
     private CuaHang cuaHang;
 
-    @Id
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "CH_SP", nullable = false,referencedColumnName = "MaSP")
+    @MapsId("maSP")
     private SanPham sanPham;
 
     @NotNull
