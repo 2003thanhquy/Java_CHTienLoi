@@ -19,6 +19,9 @@ public class adminForm extends javax.swing.JFrame {
     private staffInfo info;
     private billManagerForm bill;
     private formQlKho formKho; 
+    private dashBoard dashBoard;
+    private couponForm coupon;
+    private formNhapHang nhapHang;
     public adminForm() {
         //setUndecorated(true);
         initComponents();
@@ -27,6 +30,9 @@ public class adminForm extends javax.swing.JFrame {
         info = new staffInfo();
         bill = new billManagerForm ();
         formKho= new formQlKho();
+        dashBoard = new dashBoard();
+        coupon = new couponForm();
+        nhapHang = new formNhapHang();
         menu.addEventMenuSelected(new EventMenuSelected()
          {
             @Override
@@ -37,6 +43,14 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(bill);
                 if(index==3)
                     setForm(formKho);
+                if(index==6)
+                    setForm(coupon);
+                if(index==7)
+                    setForm(dashBoard);
+                if(index==8)
+                    setForm(nhapHang);
+                
+                    
             }
             
         });
@@ -68,24 +82,20 @@ public class adminForm extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.BorderLayout());
 
-        menu.setForeground(new java.awt.Color(255, 255, 255));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(619, Short.MAX_VALUE))
+                .addGap(619, 619, 619))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(menu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
