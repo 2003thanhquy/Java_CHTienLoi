@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,14 @@ public class ChuongTrinhKhuyenMai implements Serializable {
 
     @Column(name = "PhanTramGiamGia", nullable = false)
     private Integer phanTramGiamGia;
-    @OneToMany(mappedBy = "chuongTrinhKhuyenMai",cascade = CascadeType.ALL)
-    private Set<ChiTietKhuyenMai> chiTietKhuyenMai;
+
+    @Column(name = "NgayApDung", nullable = false)
+    private LocalDateTime ngayApDung;
+
+    @Column(name = "NgayKetThuc", nullable = false)
+    private LocalDateTime ngayKetThuc;
+    @Column(name = "DieuKienApDung")
+    private float tonghonDon =0;
+
     // Constructors, getters, and setters
 }

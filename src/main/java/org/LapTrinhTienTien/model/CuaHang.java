@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -26,10 +27,13 @@ public class CuaHang implements Serializable {
 
     @Column(name = "SDT", length = 10)
     private String sdt;
-    @OneToMany(mappedBy="cuaHang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    Set<NhanVien> nhanVien;
+    @OneToMany(mappedBy="cuaHang", fetch = FetchType.EAGER)
+    Set<NhanVien> nhanVien = new HashSet<>();
     //them hoac khong
-    @OneToOne(mappedBy="cuaHang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "cuaHang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Kho kho;
+    @OneToMany(mappedBy="cuaHang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<HoaDon> hoaDon = new HashSet<>();
+
 
 }

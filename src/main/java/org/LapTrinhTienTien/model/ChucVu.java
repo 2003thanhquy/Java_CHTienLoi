@@ -29,7 +29,7 @@ public class ChucVu implements Serializable {
     @Column(name = "GiaTienMotTieng")
     private int giaTienMotTieng;
 
-    @OneToMany(mappedBy="chucVu",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="chucVu",fetch = FetchType.EAGER)
     Set<NhanVien> nhanVien;
 
     public ChucVu(ChucVuEnum chucVuEnum) {

@@ -4,10 +4,13 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author Hi
  */
+@Service
 public class dashBoard extends javax.swing.JPanel {
 
     /**

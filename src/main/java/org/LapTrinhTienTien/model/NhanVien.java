@@ -3,7 +3,9 @@ package org.LapTrinhTienTien.model;
 import com.mysql.cj.protocol.ColumnDefinition;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -60,6 +62,6 @@ public class NhanVien implements Serializable {
     @OneToOne(mappedBy = "nhanVien",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private TaiKhoan taikhoan;
 
-    @OneToMany(mappedBy = "nhanVien",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "nhanVien",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     Set<LichLam> lichLam;
 }

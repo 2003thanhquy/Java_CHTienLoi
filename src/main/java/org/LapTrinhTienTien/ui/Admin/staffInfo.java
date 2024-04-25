@@ -4,6 +4,8 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import org.springframework.stereotype.Service;
+
 import java.awt.Color;
 import javax.swing.JFrame;
 
@@ -11,6 +13,7 @@ import javax.swing.JFrame;
  *
  * @author Hi
  */
+@Service
 public class staffInfo extends javax.swing.JPanel {
 
     /**

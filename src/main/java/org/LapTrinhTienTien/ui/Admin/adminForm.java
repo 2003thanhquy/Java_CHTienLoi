@@ -5,29 +5,33 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.JComponent;
+
+import org.LapTrinhTienTien.service.NhanVienService;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Hi
  */
-
+@Controller
 public class adminForm extends javax.swing.JFrame {
-
+    @Autowired
+    NhanVienService nhanVienService;
     /**
      * Creates new form adminForm
      */
     private staffInfo info;
     private billManagerForm bill;
-    private formQlKho formKho; 
+    private formQlKho formKho;
     private dashBoard dashBoard;
     private couponForm coupon;
     private formNhapHang nhapHang;
     public adminForm() {
         //setUndecorated(true);
         initComponents();
-        
         //setBackground(new Color(0, 0, 0, 0));
         info = new staffInfo();
         bill = new billManagerForm ();
@@ -134,7 +138,7 @@ public class adminForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new adminForm().setVisible(true);
+                //new adminForm().setVisible(true);
             }
         });
     }

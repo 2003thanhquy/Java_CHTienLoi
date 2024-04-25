@@ -4,6 +4,9 @@
  */
 package org.LapTrinhTienTien.ui.customItem;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +19,7 @@ import javax.swing.JButton;
  *
  * @author Hi
  */
+@Component
 public class button extends JButton {
 
     public boolean isOver() {
@@ -68,6 +72,7 @@ public class button extends JButton {
     }
 
     public button() {
+
         //  Init Color
         setColor(Color.WHITE);
         colorOver = new Color(179, 250, 160);
@@ -114,7 +119,9 @@ public class button extends JButton {
 
     @Override
     protected void paintComponent(Graphics grphcs) {
+
         Graphics2D g2 = (Graphics2D) grphcs;
+        this.setBorder(null);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //  Paint Border
         g2.setColor(borderColor);
@@ -123,5 +130,6 @@ public class button extends JButton {
         //  Border set 2 Pix
         g2.fillRoundRect(2, 2, getWidth() - 4, getHeight() - 4, radius, radius);
         super.paintComponent(grphcs);
+       
     }
 }

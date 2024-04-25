@@ -9,6 +9,7 @@ import org.LapTrinhTienTien.model.IdClass.LichLamId;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "LichLam")
@@ -22,12 +23,14 @@ public class LichLam implements Serializable {
     private LichLamId id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maNV")
-    private NhanVien nhanVien;
+    private NhanVien nhanVien ;
 
-    @Column(name = "MaCa", length = 10)
-    private String maCa;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "LL_CLV")
+    private CaLamViec caLamViec;
 
     // Constructors, getters, and setters
 }
