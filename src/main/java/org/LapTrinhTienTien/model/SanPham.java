@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -37,13 +39,14 @@ public class SanPham {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "NgayNhapHang", nullable = false)
-    private Date ngayNhapHang;
+    private LocalDate ngayNhapHang;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name ="SP_NCC",referencedColumnName = "MaNCC")
     private NhaCungCap nhaCungCap;
     //them hoac khong
-    @OneToOne(mappedBy="sanPham", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Kho kho;
+    @OneToMany(mappedBy = "sanPham",fetch = FetchType.EAGER)
+    private Set<KhoSanPham> khoSanPham = new HashSet<>();
+
     // Constructors, getters, and setters
 }

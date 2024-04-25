@@ -24,12 +24,7 @@ public class ChiTietHoaDon {
     private SanPham sanPham;
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @MapsId("maCH")
-    private CuaHang cuaHang;
-
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @MapsId("maHD")
     private HoaDon hoaDon;
 

@@ -6,11 +6,13 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.ImageIcon;
 import org.LapTrinhTienTien.ui.model.modelCard;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Hi
  */
+@Service
 public class billManagerForm extends javax.swing.JPanel {
 
     /**

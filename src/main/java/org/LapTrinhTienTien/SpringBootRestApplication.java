@@ -9,6 +9,7 @@ import org.LapTrinhTienTien.repository.ChucVuRepository;
 import org.LapTrinhTienTien.repository.HoaDonRepository;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
 import org.LapTrinhTienTien.ui.Admin.adminForm;
+import org.LapTrinhTienTien.ui.Admin.loginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,15 +34,12 @@ public class SpringBootRestApplication {
                 .run(args);
     }
     @Bean
-    public CommandLineRunner commandLineRunner( HoaDonRepository hoaDonRepository, NhanVienRepository nhanVienRepository, ChucVuRepository chucVuRepository) {
+    public CommandLineRunner commandLineRunner(loginForm controller) {
+
         return args -> {
-//            adminForm adminForm = new adminForm();
-//            java.awt.EventQueue.invokeLater(new Runnable() {
-//                public void run() {
-//
-//                    new adminForm().setVisible(true);
-//                }
-//            });
+           // EventQueue.invokeLater(()->f.setVisible(true));
+            EventQueue.invokeLater(() -> controller.setVisible(true));
         };
+
     }
 }

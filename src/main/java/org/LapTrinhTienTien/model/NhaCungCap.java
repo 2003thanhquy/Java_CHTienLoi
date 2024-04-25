@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 @Getter
 @Setter
@@ -32,8 +33,8 @@ public class NhaCungCap implements Serializable {
     @Column(name = "SDT", length = 10)
     private String sdt;
 
-    @OneToMany(mappedBy="nhaCungCap", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<SanPham> sanPham;
+    @OneToMany(mappedBy="nhaCungCap", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<SanPham> sanPham = new HashSet<>();
 
     // Constructors, getters, and setters
 }

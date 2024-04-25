@@ -9,11 +9,13 @@ import org.LapTrinhTienTien.ui.customItem.ProductCard;
 import org.LapTrinhTienTien.ui.customItem.ScrollBar;
 import org.LapTrinhTienTien.ui.customItem.WrapLayout;
 import org.LapTrinhTienTien.ui.model.modelProduct;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Hi
  */
+@Service
 public class formQlKho extends javax.swing.JPanel {
 
     /**

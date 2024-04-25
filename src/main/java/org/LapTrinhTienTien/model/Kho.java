@@ -6,6 +6,7 @@ import org.LapTrinhTienTien.model.IdClass.KhoId;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,26 +18,21 @@ import java.util.Set;
 public class Kho  implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @EmbeddedId
-    private KhoId khoId;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @MapsId("maCH")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "MaCH")
     private CuaHang cuaHang;
 
+    // Other fields...
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @MapsId("maSP")
-    private SanPham sanPham;
+    @OneToMany(mappedBy = "kho",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<KhoSanPham> sanPhamKhoSet = new HashSet<>();
 
     @NotNull
     @Column(name = "TenKho", length = 100)
     private String tenKho;
-
-    @NotNull
-    @Column(name = "SoLuong")
-    private int soLuong;
 
     // Constructors, getters, and setters
 }
