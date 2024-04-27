@@ -5,8 +5,12 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import jakarta.annotation.Resource;
+import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.NhanVien;
+import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.service.NhanVienService;
+import org.LapTrinhTienTien.service.TaiKhoanService;
+import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,9 @@ public class loginForm extends javax.swing.JFrame {
     /**
      * Creates new form loginForm
      */
+    @Autowired
+    TaiKhoanService taikhoanService;
+    @Autowired adminForm adminform;
     public loginForm(){
         initComponents();
         setSize(500,500);
@@ -60,14 +67,14 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tf_pass = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_user = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        button1 = new org.LapTrinhTienTien.ui.customItem.button();
+        btnLogin = new org.LapTrinhTienTien.ui.customItem.button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -75,7 +82,7 @@ public class loginForm extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 255));
 
-       // jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/ui/Img/grocery-cart.png"))); // NOI18N
+       // jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/grocery-cart.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,9 +132,9 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3.add(jLabel3);
         jLabel3.setBounds(120, 150, 90, 20);
 
-        jTextField1.setBorder(null);
-        jPanel3.add(jTextField1);
-        jTextField1.setBounds(120, 170, 150, 30);
+        tf_pass.setBorder(null);
+        jPanel3.add(tf_pass);
+        tf_pass.setBounds(120, 170, 150, 30);
 
         jSeparator7.setForeground(new java.awt.Color(51, 0, 51));
         jPanel3.add(jSeparator7);
@@ -138,33 +145,58 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3.add(jLabel4);
         jLabel4.setBounds(120, 80, 50, 20);
 
-        jTextField2.setBorder(null);
-        jPanel3.add(jTextField2);
-        jTextField2.setBounds(120, 100, 150, 30);
+        tf_user.setBorder(null);
+        jPanel3.add(tf_user);
+        tf_user.setBounds(120, 100, 150, 30);
 
         jSeparator8.setForeground(new java.awt.Color(51, 0, 51));
         jPanel3.add(jSeparator8);
         jSeparator8.setBounds(120, 130, 150, 10);
 
-      // jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Img/user.png"))); // NOI18N
+       // jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/user.png"))); // NOI18N
         jPanel3.add(jLabel5);
-        jLabel5.setBounds(80, 80, 20, 30);
+        jLabel5.setBounds(80, 80, 0, 30);
 
-      //  jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/ui/Img/padlock.png"))); // NOI18N
+       // jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/padlock.png"))); // NOI18N
         jPanel3.add(jLabel6);
         jLabel6.setBounds(80, 140, 20, 40);
 
-        button1.setText("Login");
-        button1.setBorderColor(new java.awt.Color(51, 0, 51));
-        button1.setRadius(35);
-        jPanel3.add(button1);
-        button1.setBounds(120, 240, 90, 40);
+        btnLogin.setText("Login");
+        btnLogin.setBorderColor(new java.awt.Color(51, 0, 51));
+        btnLogin.setRadius(35);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnLogin);
+        btnLogin.setBounds(120, 240, 90, 40);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(350, 0, 350, 400);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        String username = tf_user.getText();
+        String password = tf_pass.getText();
+        if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
+            return;
+        }
+        Response response =taikhoanService.login(username, password);
+        if(response.getFlag()){
+            System.out.println(response.getMessage());
+            Global.account = (TaiKhoan) response.getData();
+            //Chuyen toi form Admin main
+            adminform.setVisible(true);
+            this.dispose();
+
+        }else System.out.println(response.getMessage());
+
+
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,7 +234,7 @@ public class loginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.LapTrinhTienTien.ui.customItem.button button1;
+    private org.LapTrinhTienTien.ui.customItem.button btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -219,7 +251,7 @@ public class loginForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField tf_pass;
+    private javax.swing.JTextField tf_user;
     // End of variables declaration//GEN-END:variables
 }

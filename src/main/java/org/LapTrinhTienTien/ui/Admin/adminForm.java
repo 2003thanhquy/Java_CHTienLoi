@@ -23,22 +23,28 @@ public class adminForm extends javax.swing.JFrame {
     /**
      * Creates new form adminForm
      */
+    @Autowired
     private staffInfo info;
+    @Autowired
     private billManagerForm bill;
+    @Autowired
     private formQlKho formKho;
+    @Autowired
     private dashBoard dashBoard;
+    @Autowired
     private couponForm coupon;
+    @Autowired
     private formNhapHang nhapHang;
     public adminForm() {
         //setUndecorated(true);
         initComponents();
         //setBackground(new Color(0, 0, 0, 0));
-        info = new staffInfo();
-        bill = new billManagerForm ();
-        formKho= new formQlKho();
-        dashBoard = new dashBoard();
-        coupon = new couponForm();
-        nhapHang = new formNhapHang();
+//        info = new staffInfo();
+//        bill = new billManagerForm ();
+//        formKho= new formQlKho();
+//        dashBoard = new dashBoard();
+//        coupon = new couponForm();
+//        nhapHang = new formNhapHang();
         menu.addEventMenuSelected(new EventMenuSelected()
          {
             @Override
