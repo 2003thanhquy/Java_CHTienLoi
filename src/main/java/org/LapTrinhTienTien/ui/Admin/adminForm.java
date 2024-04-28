@@ -29,12 +29,14 @@ public class adminForm extends javax.swing.JFrame {
     private billManagerForm bill;
     @Autowired
     private formQlKho formKho;
-    @Autowired
-    private dashBoard dashBoard;
+    /*@Autowired
+    private dashBoard dashBoard;*/
     @Autowired
     private couponForm coupon;
     @Autowired
     private formNhapHang nhapHang;
+    @Autowired
+    private customerMangager customer;
     public adminForm() {
         //setUndecorated(true);
         initComponents();
@@ -57,10 +59,10 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(formKho);
                 if(index==6)
                     setForm(coupon);
-                if(index==7)
-                    setForm(dashBoard);
+                /*if(index==7)
+                    setForm(dashBoard);*/
                 if(index==8)
-                    setForm(nhapHang);
+                    setForm(customer);
                 
                     
             }
