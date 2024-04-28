@@ -71,6 +71,7 @@ public class FakeData   implements CommandLineRunner{
 
 
     }
+
     private void insertHoaDon() {
         HoaDon hoaDon = new HoaDon();
         hoaDon.setMaHD("HD001");
@@ -79,6 +80,8 @@ public class FakeData   implements CommandLineRunner{
         hoaDon.setDiemTich(0);
         hoaDon.setDiemSuDung(0);
         hoaDon.setGiaTri(1000000);
+        hoaDon.setThanhTien(100000);
+        hoaDon.setMaKhuyenMai(null);
 
         // Tìm nhân viên và khách hàng từ cơ sở dữ liệu
         NhanVien nhanVien = nhanVienRepository.findByMaNV("NV001");
@@ -107,12 +110,28 @@ public class FakeData   implements CommandLineRunner{
         chiTietHoaDon.setSoLuong(2); // Số lượng sản phẩm
         chiTietHoaDon.setTongTien(chiTietHoaDon.getGiaThanhToan() * chiTietHoaDon.getSoLuong()); // Tính tổng tiền
 
+
+        // Tạo chi tiết hóa đơn
+        SanPham sanPham1 = sanPhamRepository.findByMaSP("SP002");
+        ChiTietHoaDon chiTietHoaDon1 = new ChiTietHoaDon();
+        ChiTietHoaDonId chiTietHoaDonId1 = new ChiTietHoaDonId();
+        chiTietHoaDonId1.setMaSP(sanPham1.getMaSP());
+        chiTietHoaDonId1.setMaHD(hoaDon.getMaHD());
+        chiTietHoaDon1.setChiTietHoaDonId(chiTietHoaDonId1);
+        chiTietHoaDon1.setHoaDon(hoaDon);
+        chiTietHoaDon1.setSanPham(sanPham1);
+        chiTietHoaDon1.setGiaThanhToan(50000); // Giá thanh toán cho mỗi sản phẩm trong chi tiết hóa đơn
+        chiTietHoaDon1.setSoLuong(2); // Số lượng sản phẩm
+        chiTietHoaDon1.setTongTien(chiTietHoaDon1.getGiaThanhToan() * chiTietHoaDon1.getSoLuong());
         // Lưu chi tiết hóa đơn vào cơ sở dữ liệu
-        //hoaDon.getChiTietHoaDon().add(chiTietHoaDon);
-        try{
+      //  hoaDon.getChiTietHoaDon().add(chiTietHoaDon);
+        try {
+
             hoaDonRepository.save(hoaDon);
-        }catch (Exception e){
-            System.out.println("HoaDon:"+e.getMessage());
+            chiTietHoaDonRepository.save(chiTietHoaDon);
+            chiTietHoaDonRepository.save(chiTietHoaDon1);
+        } catch (Exception e) {
+            System.out.println("HoaDon:" + e.getMessage());
         }
 
        // chiTietHoaDonRepository.save(chiTietHoaDon);

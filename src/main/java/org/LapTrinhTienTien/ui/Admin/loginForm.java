@@ -82,8 +82,6 @@ public class loginForm extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 255));
 
-       // jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/grocery-cart.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,8 +154,6 @@ public class loginForm extends javax.swing.JFrame {
        // jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/user.png"))); // NOI18N
         jPanel3.add(jLabel5);
         jLabel5.setBounds(80, 80, 0, 30);
-
-       // jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/padlock.png"))); // NOI18N
         jPanel3.add(jLabel6);
         jLabel6.setBounds(80, 140, 20, 40);
 
@@ -180,8 +176,10 @@ public class loginForm extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        String username = tf_user.getText();
-        String password = tf_pass.getText();
+        String username = tf_user.getText()+"";
+        String password = tf_pass.getText()+"";
+        username="NV001";
+        password ="NV001";
         if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
             return;
         }

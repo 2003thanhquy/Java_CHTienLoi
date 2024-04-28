@@ -23,12 +23,12 @@ public class adminForm extends javax.swing.JFrame {
     /**
      * Creates new form adminForm
      */
-    @Autowired
-    private staffInfo info;
+
     @Autowired
     private billManagerForm bill;
     @Autowired
     private formQlKho formKho;
+    private staffInfo info;
     /*@Autowired
     private dashBoard dashBoard;*/
     @Autowired
@@ -37,7 +37,8 @@ public class adminForm extends javax.swing.JFrame {
     private formNhapHang nhapHang;
     @Autowired
     private customerMangager customer;
-    public adminForm() {
+    public adminForm( @Autowired staffInfo info) {
+        this.info = info;
         //setUndecorated(true);
         initComponents();
         //setBackground(new Color(0, 0, 0, 0));
@@ -47,8 +48,14 @@ public class adminForm extends javax.swing.JFrame {
 //        dashBoard = new dashBoard();
 //        coupon = new couponForm();
 //        nhapHang = new formNhapHang();
+        events();
+
+        //  set when system open start with home form
+        setForm(new staffInfo());
+    }
+    private void events(){{
         menu.addEventMenuSelected(new EventMenuSelected()
-         {
+        {
             @Override
             public void selected(int index) {
                 if(index==1)
@@ -63,13 +70,12 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(dashBoard);*/
                 if(index==8)
                     setForm(customer);
-                
-                    
+
+
             }
-            
+
         });
-        //  set when system open start with home form
-        setForm(new staffInfo());
+    }
     }
     private void setForm(JComponent com) {
         mainPanel.removeAll();

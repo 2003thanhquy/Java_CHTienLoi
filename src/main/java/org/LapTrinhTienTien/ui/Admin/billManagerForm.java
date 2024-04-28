@@ -5,8 +5,20 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.ImageIcon;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import org.LapTrinhTienTien.TableModel.HoaDonTableModel;
+import org.LapTrinhTienTien.model.ChiTietHoaDon;
+import org.LapTrinhTienTien.model.HoaDon;
+import org.LapTrinhTienTien.service.ChiTietHoaDonService;
+import org.LapTrinhTienTien.service.HoaDonService;
 import org.LapTrinhTienTien.ui.model.modelCard;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -14,15 +26,48 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class billManagerForm extends javax.swing.JPanel {
-
+    private HoaDonService hoaDonService;
+    private ChiTietHoaDonService chiTietHoaDonService;
+    private HoaDonTableModel hoaDonTableModel;
+    private final String[] HOADONCLOUMNS = {};
+    modelCard card = new modelCard(new ImageIcon(getClass().getResource("/user.png")),"", "", "", "");
     /**
      * Creates new form billManagerForm
      */
-    public billManagerForm() {
+    public billManagerForm(@Autowired HoaDonService hoaDonService,@Autowired ChiTietHoaDonService chiTietHoaDonService) {
         initComponents();
-        cardThongtin.setData(new modelCard(new ImageIcon(getClass().getResource("/user.png")),"Bùi Trọng Trí", "HD001", "20/04", "200000$"));
-    }
+        cardThongtin.setData(card);
+        this.hoaDonService = hoaDonService;
+        this.chiTietHoaDonService = chiTietHoaDonService;
+        loadData();
+        events();
 
+    }
+    private void events(){
+        tblHoaDon.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Đảm bảo sự kiện chỉ được kích hoạt một lần khi chọn hàng
+                    int selectedRow = tblHoaDon.getSelectedRow();
+                    if (selectedRow != -1) {
+                       HoaDon hd =  hoaDonTableModel.getRow(selectedRow);
+                       System.out.println("Mã NV: "+hd.getNhanVien().getMaNV());
+                       card.setName("Mã NV: "+ hd.getNhanVien().getMaNV());
+                       card.setTitle("Mã HD: "+hd.getMaHD());
+                       card.setValues("Thời gian: "+String.valueOf(hd.getNgayXuat()));
+                       card.setDescription("Thành Tiền: "+String.valueOf(hd.getThanhTien()));
+                       cardThongtin.setData(card);
+                    }
+                }
+            }
+        });
+    }
+    private void loadData(){
+        List<HoaDon> hoaDons = hoaDonService.getAllHoaDon();
+        hoaDonTableModel = new HoaDonTableModel(hoaDons);
+        tblHoaDon.setModel(hoaDonTableModel);
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,7 +79,7 @@ public class billManagerForm extends javax.swing.JPanel {
 
         panelBorder1 = new org.LapTrinhTienTien.ui.customItem.panelBorder();
         jScrollPane2 = new javax.swing.JScrollPane();
-        table1 = new org.LapTrinhTienTien.ui.customItem.table();
+        tblHoaDon = new org.LapTrinhTienTien.ui.customItem.table();
         cardThongtin = new org.LapTrinhTienTien.ui.customItem.card();
         myPanelBoxShadow1 = new org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow();
         jLabel1 = new javax.swing.JLabel();
@@ -46,18 +91,7 @@ public class billManagerForm extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(table1);
+        jScrollPane2.setViewportView(tblHoaDon);
 
         cardThongtin.setColor1(new java.awt.Color(142, 142, 250));
         cardThongtin.setColor2(new java.awt.Color(123, 123, 245));
@@ -207,7 +241,17 @@ public class billManagerForm extends javax.swing.JPanel {
 
     private void myPanelBoxShadow2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myPanelBoxShadow2MousePressed
         // TODO add your handling code here:
-        System.out.print("Fuckkkkkk");
+        loadData();
+        System.out.println("LoaData");
+//        HoaDon hoaDon = hoaDonService.getHoaDon("HD001");
+//        System.out.println("hoaDon)");
+//        if(hoaDon != null){
+//            System.out.println("hoaDon)=!null");
+//            List<ChiTietHoaDon> chiTietHoaDons = chiTietHoaDonService.getListCTHD(hoaDon);
+//            if(chiTietHoaDons!=null){
+//                chiTietHoaDons.forEach(hd->System.out.println(hd.getGiaThanhToan()));
+//            }
+//        }
     }//GEN-LAST:event_myPanelBoxShadow2MousePressed
 
     
@@ -224,6 +268,6 @@ public class billManagerForm extends javax.swing.JPanel {
     private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow2;
     private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow3;
     private org.LapTrinhTienTien.ui.customItem.panelBorder panelBorder1;
-    private org.LapTrinhTienTien.ui.customItem.table table1;
+    private org.LapTrinhTienTien.ui.customItem.table tblHoaDon;
     // End of variables declaration//GEN-END:variables
 }
