@@ -6,9 +6,14 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import org.LapTrinhTienTien.model.KhachHang;
 import org.LapTrinhTienTien.repository.KhachHangRepository;
+import org.LapTrinhTienTien.service.KhachHangService;
+import org.LapTrinhTienTien.service.TaiKhoanService;
+import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -16,16 +21,20 @@ import java.util.List;
  *
  * @author Hi
  */
-@Service
+@Controller
 public class addCustomer extends javax.swing.JFrame {
+
+    KhachHangService khachHangService;
     KhachHangRepository khachHangRepository;
     customerMangager parentForm;
     /**
      * Creates new form addCustomer
      */
-    public addCustomer(customerMangager parentForm,@Autowired KhachHangRepository khachHangRepository) {
+    public addCustomer(@Autowired KhachHangRepository khachHangRepository, @Autowired KhachHangService khachHangService) {
         this.khachHangRepository = khachHangRepository;
-        this.parentForm = parentForm;
+
+        this.khachHangService = khachHangService;
+        System.out.print(this.khachHangService);
         initComponents();
     }
 
@@ -159,7 +168,17 @@ public class addCustomer extends javax.swing.JFrame {
         // TODO add your handling code here:
         String name = txtTen.getText();
         String sdt = txtSdt.getText();
-        addCustomer(name,sdt);
+        Response response = khachHangService.addCustomer(name,sdt);
+        if(response.getFlag()==false)
+        {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            themNv(name,sdt);
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Thanh cong", JOptionPane.PLAIN_MESSAGE);
+            this.dispose();
+        }
+
         parentForm.loadDataToTable();
     }//GEN-LAST:event_btnThemMousePressed
 
@@ -169,7 +188,7 @@ public class addCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHuyMousePressed
 
 
-    private void addCustomer(String name, String sdt)
+    private void themNv(String name, String sdt)
     {
         List<KhachHang> khachHangList = khachHangRepository.findAll();
         int i = khachHangList.size();
