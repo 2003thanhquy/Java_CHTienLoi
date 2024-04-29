@@ -4,10 +4,13 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.springframework.stereotype.Controller;
+
 /**
  *
- * @author Admin
+ * @author Admin //chinh sua 5 image
  */
+@Controller
 public class ProductForm extends javax.swing.JPanel {
 
     /**
@@ -43,7 +46,7 @@ public class ProductForm extends javax.swing.JPanel {
         jToolBar1.setRollover(true);
 
         btnAdd.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_add_40px.png"))); // NOI18N
+       // btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_add_40px.png"))); // NOI18N
         btnAdd.setText("Thêm");
         btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAdd.setFocusable(false);
@@ -57,7 +60,7 @@ public class ProductForm extends javax.swing.JPanel {
         jToolBar1.add(btnAdd);
 
         jButton4.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_delete_40px.png"))); // NOI18N
+       // jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_delete_40px.png"))); // NOI18N
         jButton4.setText("Xoá");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -70,7 +73,7 @@ public class ProductForm extends javax.swing.JPanel {
         jToolBar1.add(jButton4);
 
         jButton5.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_edit_40px.png"))); // NOI18N
+       // jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_edit_40px.png"))); // NOI18N
         jButton5.setText("Sửa");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -84,7 +87,7 @@ public class ProductForm extends javax.swing.JPanel {
         jToolBar1.add(jSeparator1);
 
         exportExcel.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-        exportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_spreadsheet_file_40px.png"))); // NOI18N
+     //   exportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_spreadsheet_file_40px.png"))); // NOI18N
         exportExcel.setText("Xuất Excel");
         exportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         exportExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -127,7 +130,7 @@ public class ProductForm extends javax.swing.JPanel {
         });
 
         btnReset.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
-        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_reset_25px_1.png"))); // NOI18N
+       // btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_reset_25px_1.png"))); // NOI18N
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
