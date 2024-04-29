@@ -4,14 +4,17 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.springframework.stereotype.Controller;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  *
- * @author Admin
+ * @author Admin // note chinh sua image
  */
+@Controller
 public class CalendarCustom extends javax.swing.JPanel {
 
     private int month;
@@ -141,7 +144,7 @@ public class CalendarCustom extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        cmdNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/next.png"))); // NOI18N
+       // cmdNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/next.png"))); // NOI18N
         cmdNext.setBorderPainted(false);
         cmdNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +152,7 @@ public class CalendarCustom extends javax.swing.JPanel {
             }
         });
 
-        cmdBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/back.png"))); // NOI18N
+      //  cmdBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/back.png"))); // NOI18N
         cmdBack.setBorderPainted(false);
         cmdBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

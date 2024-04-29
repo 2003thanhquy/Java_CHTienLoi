@@ -10,6 +10,7 @@ import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.service.NhanVienService;
 import org.LapTrinhTienTien.service.TaiKhoanService;
+import org.LapTrinhTienTien.ui.Staff.staffForm;
 import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -31,6 +32,8 @@ public class loginForm extends javax.swing.JFrame {
     @Autowired
     TaiKhoanService taikhoanService;
     @Autowired adminForm adminform;
+//    @Autowired
+//    staffForm staffform;
     public loginForm(){
         initComponents();
         setSize(700,500);

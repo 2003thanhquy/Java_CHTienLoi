@@ -4,10 +4,13 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.springframework.stereotype.Controller;
+
 /**
  *
  * @author Admin
  */
+@Controller
 public class Info extends javax.swing.JPanel {
 
     /**

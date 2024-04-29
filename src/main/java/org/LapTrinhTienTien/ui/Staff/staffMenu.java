@@ -17,6 +17,7 @@ import org.LapTrinhTienTien.ui.model.Model_Menu;
  *
  * @author Hi
  */
+
 public class staffMenu extends javax.swing.JPanel {
 
     /**
@@ -35,16 +36,6 @@ public class staffMenu extends javax.swing.JPanel {
         init();
     }
     private void init() {
-        listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
-        listMenu.addItem(new Model_Menu("user", "Thông tin", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("warehouse", "Kho", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("product", "Sản phẩm", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("supplier", "Nhà cung cấp", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("calendar", "Ca làm việc", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
-        listMenu.addItem(new Model_Menu("", "Chức năng", Model_Menu.MenuType.TITLE));
-        listMenu.addItem(new Model_Menu("bill", "Hóa đơn", Model_Menu.MenuType.MENU));
-        //listMenu.addItem(new Model_Menu("fast-delivery", "Nhập hàng", Model_Menu.MenuType.MENU));
     }
 
     /**

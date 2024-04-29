@@ -41,17 +41,10 @@ public class adminForm extends javax.swing.JFrame {
         this.info = info;
         //setUndecorated(true);
         initComponents();
-        //setBackground(new Color(0, 0, 0, 0));
-//        info = new staffInfo();
-//        bill = new billManagerForm ();
-//        formKho= new formQlKho();
-//        dashBoard = new dashBoard();
-//        coupon = new couponForm();
-//        nhapHang = new formNhapHang();
         events();
 
         //  set when system open start with home form
-        setForm(new staffInfo());
+
     }
     private void events(){{
         menu.addEventMenuSelected(new EventMenuSelected()
@@ -70,11 +63,10 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(dashBoard);*/
                 if(index==8)
                     setForm(customer);
-
-
             }
 
         });
+        setForm(info);
     }
     }
     private void setForm(JComponent com) {
