@@ -63,8 +63,6 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(dashBoard);*/
                 if(index==8)
                     setForm(customer);
-
-
             }
 
         });
