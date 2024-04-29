@@ -31,10 +31,15 @@ public class HoaDon {
     @Column(name = "TongHoaDon")
     private int giaTri;
 
+    @Column(name = "ThanhTien")
+    private int ThanhTien;
+    @Column(name = "MaKhuyenMai",nullable = true)
+    private String maKhuyenMai;
+
     @Column(name = "DiemTich", nullable = false)
     private int diemTich;
 
-    @Column(name = "DiemSuDung", nullable = false)
+    @Column(name = "DiemSuDung", nullable = true)
     private int diemSuDung;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -44,7 +49,7 @@ public class HoaDon {
     @JoinColumn(name ="HD_NV",nullable = false, referencedColumnName = "MaNV")
     private NhanVien nhanVien;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<ChiTietHoaDon> chiTietHoaDon= new HashSet<>();
 
     // Constructors, getters, and setters
