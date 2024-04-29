@@ -4,7 +4,6 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
-import org.LapTrinhTienTien.ui.Admin.*;
 import javax.swing.JComponent;
 
 import org.LapTrinhTienTien.service.NhanVienService;
@@ -19,12 +18,9 @@ import org.springframework.stereotype.Service;
  */
 @Controller
 public class staffForm extends javax.swing.JFrame {
-    @Autowired
-    NhanVienService nhanVienService;
     /**
      * Creates new form adminForm
      */
-    @Autowired
     private Info info;
     @Autowired
     private wareHouseForm wareHouse;
@@ -36,18 +32,19 @@ public class staffForm extends javax.swing.JFrame {
     private CalendarCustom timeTable;
     @Autowired
     private Invoice invoice;
-    public staffForm() {
+    public staffForm(@Autowired Info info) {
+        this.info = info;
         //setUndecorated(true);
         initComponents();
         //setBackground(new Color(0, 0, 0, 0));
-//        info = new staffInfo();
-//        bill = new billManagerForm ();
-//        formKho= new formQlKho();
-//        dashBoard = new dashBoard();
-//        coupon = new couponForm();
-//        nhapHang = new formNhapHang();
+        events();
+
+        //  set when system open start with home form
+
+    }
+    private void events(){
         staffMenu.addEventMenuSelected(new EventMenuSelected()
-         {
+        {
             @Override
             public void selected(int index) {
                 if(index==1)
@@ -61,12 +58,11 @@ public class staffForm extends javax.swing.JFrame {
                 if(index==5)
                     setForm(timeTable);
                 if(index==8)
-                    setForm(invoice);      
+                    setForm(invoice);
             }
-            
+
         });
-        //  set when system open start with home form
-        setForm(new staffInfo());
+        //setForm(info);
     }
     private void setForm(JComponent com) {
         mainPanel.removeAll();
@@ -144,8 +140,8 @@ public class staffForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                //new adminForm().setVisible(true);
+
+                //new staffMenu().setVisible(true);
             }
         });
     }

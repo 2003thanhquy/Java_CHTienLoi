@@ -4,10 +4,13 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.springframework.stereotype.Controller;
+
 /**
  *
- * @author Admin
+ * @author Admin //5 iamge
  */
+@Controller
 public class wareHouseForm extends javax.swing.JPanel {
 
     /**
@@ -42,7 +45,7 @@ public class wareHouseForm extends javax.swing.JPanel {
         jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
         jToolBar1.setRollover(true);
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_add_40px.png"))); // NOI18N
+       // btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_add_40px.png"))); // NOI18N
         btnAdd.setText("Thêm");
         btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.setEnabled(false);
@@ -56,7 +59,7 @@ public class wareHouseForm extends javax.swing.JPanel {
         });
         jToolBar1.add(btnAdd);
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_delete_40px.png"))); // NOI18N
+       // btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_delete_40px.png"))); // NOI18N
         btnDelete.setText("Xoá");
         btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete.setEnabled(false);
@@ -69,7 +72,7 @@ public class wareHouseForm extends javax.swing.JPanel {
         });
         jToolBar1.add(btnDelete);
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_edit_40px.png"))); // NOI18N
+       // btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_edit_40px.png"))); // NOI18N
         btnEdit.setText("Sửa");
         btnEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEdit.setEnabled(false);
@@ -84,7 +87,7 @@ public class wareHouseForm extends javax.swing.JPanel {
         jToolBar1.add(btnEdit);
         jToolBar1.add(jSeparator1);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_spreadsheet_file_40px.png"))); // NOI18N
+      //  jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_spreadsheet_file_40px.png"))); // NOI18N
         jButton6.setText("Xuất Excel");
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -115,7 +118,7 @@ public class wareHouseForm extends javax.swing.JPanel {
         });
 
         btnReset.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
-        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_reset_25px_1.png"))); // NOI18N
+       // btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_reset_25px_1.png"))); // NOI18N
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
