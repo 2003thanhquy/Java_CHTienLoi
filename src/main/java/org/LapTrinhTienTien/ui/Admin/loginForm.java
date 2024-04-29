@@ -33,7 +33,7 @@ public class loginForm extends javax.swing.JFrame {
     @Autowired adminForm adminform;
     public loginForm(){
         initComponents();
-        setSize(500,500);
+        setSize(700,500);
 
         ClassPathResource resource1 = new ClassPathResource("/grocery-cart.png");
         ClassPathResource resource2 = new ClassPathResource("/user.png");
@@ -226,7 +226,7 @@ public class loginForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new loginForm().setVisible(true);
+                new loginForm().setVisible(true);
             }
         });
     }
