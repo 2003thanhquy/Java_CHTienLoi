@@ -3,6 +3,7 @@ package org.LapTrinhTienTien.data;
 import org.LapTrinhTienTien._enum.ChucVuEnum;
 import org.LapTrinhTienTien.model.*;
 import org.LapTrinhTienTien.model.IdClass.ChiTietHoaDonId;
+import org.LapTrinhTienTien.model.IdClass.CuaHangSanPhamKey;
 import org.LapTrinhTienTien.model.IdClass.LichLamId;
 import org.LapTrinhTienTien.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,11 @@ public class FakeData   implements CommandLineRunner{
     private final  KhachHangRepository khachHangRepository;
     private final LichLamRepository lichLamRepository;
     private final TaiKhoanRepository taiKhoanRepository;
-    private final  KhoSanPhamRepository khoSanPhamRepository;
-    private final KhoRepository khoRepository;
     private final ChiTietHoaDonRepository chiTietHoaDonRepository;
+    private final  CuaHangSanPhamRepository cuaHangSanPhamRepository;
 
     @Autowired
-    public  FakeData(ChucVuRepository chucVuRepository, NhanVienRepository nhanVienRepository, HoaDonRepository hoaDonRepository, ChuongTrinhKhuyenMaiRepository chuongTrinhKhuyenMaiRepository, CuaHangRepository cuaHangRepository, NhaCungCapRepository nhaCungCapRepository, SanPhamRepository sanPhamRepository, CaLamViecRepository caLamViecRepository, KhachHangRepository khachHangRepository, LichLamRepository lichLamRepository, TaiKhoanRepository taiKhoanRepository, KhoRepository khoRepository, KhoSanPhamRepository khoSanPhamRepository, KhoRepository khoRepository1, ChiTietHoaDonRepository chiTietHoaDonRepository) {
+    public  FakeData(ChucVuRepository chucVuRepository, NhanVienRepository nhanVienRepository, HoaDonRepository hoaDonRepository, ChuongTrinhKhuyenMaiRepository chuongTrinhKhuyenMaiRepository, CuaHangRepository cuaHangRepository, NhaCungCapRepository nhaCungCapRepository, SanPhamRepository sanPhamRepository, CaLamViecRepository caLamViecRepository, KhachHangRepository khachHangRepository, LichLamRepository lichLamRepository, TaiKhoanRepository taiKhoanRepository, ChiTietHoaDonRepository chiTietHoaDonRepository, CuaHangSanPhamRepository cuaHangSanPhamRepository) {
         this.nhanVienRepository = nhanVienRepository;
         this.hoaDonRepository = hoaDonRepository;
         this.chuongTrinhKhuyenMaiRepository = chuongTrinhKhuyenMaiRepository;
@@ -47,9 +47,8 @@ public class FakeData   implements CommandLineRunner{
         this.khachHangRepository = khachHangRepository;
         this.lichLamRepository = lichLamRepository;
         this.taiKhoanRepository = taiKhoanRepository;
-        this.khoSanPhamRepository = khoSanPhamRepository;
-        this.khoRepository = khoRepository;
         this.chiTietHoaDonRepository = chiTietHoaDonRepository;
+        this.cuaHangSanPhamRepository = cuaHangSanPhamRepository;
     }
 
     @Override
@@ -62,7 +61,7 @@ public class FakeData   implements CommandLineRunner{
         insertCuaHang();//cua hang + kho //Trung khoa chinh
         insertNhanVien();//tai khoan voi nhan vien
        insertLichLam();// insert theo thu tu
-        insertkhoSanPham();
+        insertCuaHangSanPham();
        insertChuongTrinh();// chuong trinh
         insertHoaDon();//hoa don va chi tiet hoa don
 
@@ -136,13 +135,20 @@ public class FakeData   implements CommandLineRunner{
 
        // chiTietHoaDonRepository.save(chiTietHoaDon);
     }
-    private void insertkhoSanPham(){
-        KhoSanPham khoSanPham = new KhoSanPham();
+    private void insertCuaHangSanPham(){
+        CuaHangSanPham cuaHangSanPham = new CuaHangSanPham();
         SanPham sanPham = sanPhamRepository.findByMaSP("SP001");
-        Kho kho = khoRepository.findByCuaHang_MaCH("CH002");
-        khoSanPham.setSanPham(sanPham);
-        khoSanPham.setKho(kho);
-        khoSanPhamRepository.save(khoSanPham);
+        CuaHang cuaHang = cuaHangRepository.findByMaCH("CH002");
+        cuaHangSanPham.setId(new CuaHangSanPhamKey(cuaHang.getMaCH(),sanPham.getMaSP()));
+        cuaHangSanPham.setSanPham(sanPham);
+        cuaHangSanPham.setCuaHang(cuaHang);
+        cuaHangSanPham.setSoLuong(10);
+        try{
+            cuaHangSanPhamRepository.save(cuaHangSanPham);
+        }catch (Exception e){
+            System.out.println("CuaHangSanPham:" + e.getMessage());
+        }
+
     }
     private void insertKho(){
     }
@@ -294,10 +300,6 @@ public class FakeData   implements CommandLineRunner{
             cuaHang.setDiaChiCH("Địa chỉ A");
             cuaHang.setSdt("0123456789");
 
-            Kho kho  = new Kho();
-            kho.setCuaHang(cuaHang);
-            kho.setTenKho("Kho cua hang 1");
-            cuaHang.setKho(kho);
 
             // khoRepository.save(kho);
             cuaHangRepository.save(cuaHang);
