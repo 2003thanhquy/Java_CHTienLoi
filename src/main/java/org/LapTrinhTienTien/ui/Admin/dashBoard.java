@@ -4,19 +4,63 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.LapTrinhTienTien.model.KhachHang;
+import org.LapTrinhTienTien.model.KhoSanPham;
+import org.LapTrinhTienTien.repository.KhoSanPhamRepository;
+import org.LapTrinhTienTien.ui.model.modelChartLine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Hi
  */
+@Controller 
 public class dashBoard extends javax.swing.JPanel {
 
-    /**
-     * Creates new form dashBoard
-     */
-    public dashBoard() {
+    KhoSanPhamRepository khoSpRepository;
+    public dashBoard(@Autowired KhoSanPhamRepository khoSpRepository) {
+        this.khoSpRepository = khoSpRepository;
         initComponents();
+        loadDataToTable();
+        initData();
     }
+    public void initData()
+    {
+        List<modelChartLine> list = new ArrayList<>();
+        /*list.add(new modelChartLine("Monday", 10));
+        list.add(new modelChartLine("Tuesday", 150));
+        list.add(new modelChartLine("Wednesday", 80));
+        list.add(new modelChartLine("Thursday", 100));
+        list.add(new modelChartLine("Friday", 125));
+        list.add(new modelChartLine("Saturday", 80));
+        list.add(new modelChartLine("Sunday", 200));*/
 
+        for (KhoSanPham khoSp : khoSpRepository.findAll()) {
+            list.add(new modelChartLine(khoSp.getSanPham().toString(), khoSp.getSoLuong()));
+        }
+        chartLine1.setModel(list);
+    }
+    public void loadDataToTable() {
+        List<KhoSanPham> khoSanPhamList = khoSpRepository.findAll();
+
+        // Xóa dữ liệu cũ trong bảng
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        // Đưa dữ liệu mới từ danh sách khách hàng vào bảng
+        for (KhoSanPham khoSp : khoSanPhamList) {
+            model.addRow(new Object[]{
+                    khoSp.getSanPham(),
+                    khoSp.getSoLuong()
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,30 +70,50 @@ public class dashBoard extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        myPanelBoxShadow1 = new org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow();
-        myPanelBoxShadow2 = new org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow();
+        chartLine1 = new org.LapTrinhTienTien.ui.customItem.ChartLine();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        fromTxt = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        toTxt = new javax.swing.JLabel();
+        fromTxt1 = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        searchBtn = new org.LapTrinhTienTien.ui.customItem.button();
 
-        javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
-        myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
-        myPanelBoxShadow1Layout.setHorizontalGroup(
-            myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
-        );
-        myPanelBoxShadow1Layout.setVerticalGroup(
-            myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Tên sản phẩm", "Số lượng bán ra"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout myPanelBoxShadow2Layout = new javax.swing.GroupLayout(myPanelBoxShadow2);
-        myPanelBoxShadow2.setLayout(myPanelBoxShadow2Layout);
-        myPanelBoxShadow2Layout.setHorizontalGroup(
-            myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 302, Short.MAX_VALUE)
-        );
-        myPanelBoxShadow2Layout.setVerticalGroup(
-            myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 218, Short.MAX_VALUE)
-        );
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel1.setText("Từ ngày: ");
+
+        fromTxt.setBackground(new java.awt.Color(242, 242, 242));
+        fromTxt.setBorder(null);
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
+        toTxt.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        toTxt.setText("Tới ngày:");
+
+        fromTxt1.setBackground(new java.awt.Color(242, 242, 242));
+        fromTxt1.setBorder(null);
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+
+        searchBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        searchBtn.setText("Tìm");
+        searchBtn.setBorderColor(new java.awt.Color(0, 51, 255));
+        searchBtn.setRadius(35);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,25 +121,60 @@ public class dashBoard extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fromTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(jSeparator1)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(toTxt))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(searchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fromTxt1))
+                        .addContainerGap())
+                    .addComponent(chartLine1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addComponent(chartLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fromTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toTxt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fromTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 106, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow1;
-    private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow2;
+    private org.LapTrinhTienTien.ui.customItem.ChartLine chartLine1;
+    private javax.swing.JTextField fromTxt;
+    private javax.swing.JTextField fromTxt1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable jTable1;
+    private org.LapTrinhTienTien.ui.customItem.button searchBtn;
+    private javax.swing.JLabel toTxt;
     // End of variables declaration//GEN-END:variables
 }
