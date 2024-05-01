@@ -46,7 +46,7 @@ public class SanPham {
     private NhaCungCap nhaCungCap;
     //them hoac khong
     @OneToMany(mappedBy = "sanPham",fetch = FetchType.EAGER)
-    private Set<KhoSanPham> khoSanPham = new HashSet<>();
+    private Set<CuaHangSanPham>  cuaHangSanPham = new HashSet<>();
 
     // Constructors, getters, and setters
 }

@@ -30,8 +30,8 @@ public class CuaHang implements Serializable {
     @OneToMany(mappedBy="cuaHang", fetch = FetchType.EAGER)
     Set<NhanVien> nhanVien = new HashSet<>();
     //them hoac khong
-    @OneToOne(mappedBy = "cuaHang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Kho kho;
+    @OneToMany(mappedBy = "cuaHang",fetch = FetchType.EAGER)
+    private Set<CuaHangSanPham> cuaHangSanPham = new HashSet<>();
     @OneToMany(mappedBy="cuaHang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<HoaDon> hoaDon = new HashSet<>();
 
