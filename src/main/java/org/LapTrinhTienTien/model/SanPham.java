@@ -36,6 +36,8 @@ public class SanPham {
 
     @Column(name = "TienThanhToan", nullable = false)
     private int tienThanhToan;
+    @Column(name = "Image")
+    private String image;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "NgayNhapHang", nullable = false)

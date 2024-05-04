@@ -17,7 +17,7 @@ public class TaiKhoan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Tk_NV",referencedColumnName = "MaNV")
     private NhanVien nhanVien;
 
