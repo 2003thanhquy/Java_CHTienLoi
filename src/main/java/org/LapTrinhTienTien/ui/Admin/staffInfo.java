@@ -7,7 +7,13 @@ package org.LapTrinhTienTien.ui.Admin;
 import org.springframework.stereotype.Service;
 
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import org.LapTrinhTienTien.model.NhanVien;
+import org.LapTrinhTienTien.repository.NhanVienRepository;
+import org.LapTrinhTienTien.service.NhanVienService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -19,8 +25,29 @@ public class staffInfo extends javax.swing.JPanel {
     /**
      * Creates new form staffInfo
      */
-    public staffInfo() {
+    @Autowired private formThemNV themNV;
+    
+    NhanVienRepository nhanVienRepository;
+    public staffInfo(@Autowired NhanVienRepository nhanVienRepository) {
+        
+        this.nhanVienRepository = nhanVienRepository;
         initComponents();
+        
+        // Call a method to load data into the table when the form is loaded
+        loadDataIntoTable();
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                // Lấy chỉ số hàng của dòng được chọn
+                int row = table1.getSelectedRow();
+
+                // Lấy dữ liệu từ hàng được chọn và hiển thị trong các JTextField
+                jTextField2.setText(table1.getValueAt(row, 0).toString()); // Họ và tên
+                jTextField3.setText(table1.getValueAt(row, 1).toString()); // Chức vụ
+                jTextField1.setText(table1.getValueAt(row, 2).toString()); // Số điện thoại
+                jTextField4.setText(table1.getValueAt(row, 3).toString()); // Ca làm việc
+            }
+        });
     }
     
      
@@ -53,7 +80,7 @@ public class staffInfo extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
-        btnThem1 = new org.LapTrinhTienTien.ui.customItem.button();
+        btnTimKiem = new org.LapTrinhTienTien.ui.customItem.button();
 
         jPanel1.setBackground(new java.awt.Color(237, 237, 237));
 
@@ -149,9 +176,14 @@ public class staffInfo extends javax.swing.JPanel {
             }
         });
 
-        btnThem1.setText("Tìm");
-        btnThem1.setBorderColor(new java.awt.Color(0, 0, 204));
-        btnThem1.setRadius(30);
+        btnTimKiem.setText("Tìm");
+        btnTimKiem.setBorderColor(new java.awt.Color(0, 0, 204));
+        btnTimKiem.setRadius(30);
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -200,7 +232,7 @@ public class staffInfo extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnThem1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -212,7 +244,7 @@ public class staffInfo extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnThem1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                         .addGap(1, 1, 1)))
@@ -270,7 +302,7 @@ public class staffInfo extends javax.swing.JPanel {
                     txtTimKiem.setForeground(Color.GRAY); // Đổi màu chữ khi không focus
                 }
     }//GEN-LAST:event_txtTimKiemFocusLost
-
+    
     private void txtTimKiemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusGained
         if (txtTimKiem.getText().equals("Tìm kiếm")) {
         txtTimKiem.setText("");
@@ -279,17 +311,64 @@ public class staffInfo extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKiemFocusGained
 
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
-    System.out.print("dsadsadas");
-    formThemNV themNV = new formThemNV();
-    // TODO add your handling code here:
-    themNV.setVisible(true);
-    themNV.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        System.out.print("dsadsadas");
+        
+        // TODO add your handling code here:
+        themNV.setVisible(true);
+        themNV.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnThemMousePressed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // Get the search keyword from the text field
+        String keyword = txtTimKiem.getText().trim();
+
+        // Perform the search operation based on the keyword
+        List<NhanVien> searchResult = nhanVienRepository.findByHoTenNVContainingIgnoreCase(keyword);
+
+        // Update the table with the search result
+        updateTable(searchResult);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+    
+    private void updateTable(List<NhanVien> searchResult) {
+        // Get the table model
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+
+        // Clear the existing rows
+        model.setRowCount(0);
+
+        // Populate the table with the search result
+        for (NhanVien nhanVien : searchResult) {
+            model.addRow(new Object[]{
+                    nhanVien.getHoTenNV(),
+                    nhanVien.getChucVu().getTenChucVu(),
+                    nhanVien.getSdt(),
+                    nhanVien.getLichLam()
+            });
+        }
+    }
+    private void loadDataIntoTable() {
+        List<NhanVien> nhanVienList = nhanVienRepository.findAll();
+
+        // Xóa dữ liệu cũ trong bảng
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        model.setRowCount(0);
+
+        // Đưa dữ liệu mới từ danh sách khách hàng vào bảng
+        for (NhanVien nhanVien : nhanVienList) {
+            model.addRow(new Object[]{
+                    nhanVien.getHoTenNV(),
+                    nhanVien.getChucVu().getTenChucVu(),
+                    nhanVien.getSdt(),
+                    nhanVien.getLichLam()
+            });
+        }
+    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.LapTrinhTienTien.ui.customItem.button btnThem;
-    private org.LapTrinhTienTien.ui.customItem.button btnThem1;
+    private org.LapTrinhTienTien.ui.customItem.button btnTimKiem;
     private org.LapTrinhTienTien.ui.customItem.button btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
