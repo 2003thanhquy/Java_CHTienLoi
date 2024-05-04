@@ -36,6 +36,15 @@ public class staffMenu extends javax.swing.JPanel {
         init();
     }
     private void init() {
+        listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
+        listMenu.addItem(new Model_Menu("user", "info", Model_Menu.MenuType.MENU));
+        listMenu.addItem(new Model_Menu("bill", "ware house", Model_Menu.MenuType.MENU));
+        listMenu.addItem(new Model_Menu("warehouse", "product", Model_Menu.MenuType.MENU));
+        listMenu.addItem(new Model_Menu("dashboard", "supplier", Model_Menu.MenuType.MENU));
+        listMenu.addItem(new Model_Menu("customer", "timeTable", Model_Menu.MenuType.MENU));
+        listMenu.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+        listMenu.addItem(new Model_Menu("", "Chức năng", Model_Menu.MenuType.TITLE));
+        listMenu.addItem(new Model_Menu("coupon", "invoice", Model_Menu.MenuType.MENU));
     }
 
     /**
@@ -71,19 +80,19 @@ public class staffMenu extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
     protected void paintChildren(Graphics grphcs) {
