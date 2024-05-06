@@ -4,6 +4,16 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.LapTrinhTienTien.model.NhaCungCap;
+
+import org.LapTrinhTienTien.repository.NhaCungCapRepository;
+
+import org.LapTrinhTienTien.service.NhaCungCapService;
+import org.LapTrinhTienTien.ui.Staff.AddNCC;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -13,12 +23,30 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class NCCForm extends javax.swing.JPanel {
 
-    /**
-     * Creates new form NCCForm
-     */
+    NhaCungCapRepository nccRepository;
+    AddNCC addNCC;
+    NhaCungCapService nccService;
     public NCCForm() {
         initComponents();
     }
+    public void loadDataToTable() {
+        // Lấy danh sách nhà cung cấp từ cơ sở dữ liệu
+        List<NhaCungCap> nccList = nccRepository.findAll();
+
+        // Xóa dữ liệu cũ trong bảng
+        DefaultTableModel model = (DefaultTableModel) tblNCC.getModel();
+        model.setRowCount(0);
+
+        // Đưa dữ liệu mới từ danh sách nhà cung cấp vào bảng
+        for (NhaCungCap ncc : nccList) {
+            model.addRow(new Object[]{
+                ncc.getMaNCC(),
+                ncc.getTenNCC(),
+                ncc.getSdt(),
+                // Nếu có các trường dữ liệu khác, bạn có thể thêm vào đây
+        });
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,8 +59,8 @@ public class NCCForm extends javax.swing.JPanel {
 
         jToolBar1 = new javax.swing.JToolBar();
         btnAdd = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         exportExcel = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -46,7 +74,6 @@ public class NCCForm extends javax.swing.JPanel {
         jToolBar1.setRollover(true);
 
         btnAdd.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-       // btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_add_40px.png"))); // NOI18N
         btnAdd.setText("Thêm");
         btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAdd.setFocusable(false);
@@ -59,35 +86,32 @@ public class NCCForm extends javax.swing.JPanel {
         });
         jToolBar1.add(btnAdd);
 
-        jButton4.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-     //   jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_delete_40px.png"))); // NOI18N
-        jButton4.setText("Xoá");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnXoa.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
+        btnXoa.setText("Xoá");
+        btnXoa.setFocusable(false);
+        btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnXoaActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton4);
+        jToolBar1.add(btnXoa);
 
-        jButton5.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-     //   jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_edit_40px.png"))); // NOI18N
-        jButton5.setText("Sửa");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.setFocusable(false);
+        btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSua.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton5);
+        jToolBar1.add(btnSua);
         jToolBar1.add(jSeparator1);
 
         exportExcel.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-       // exportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_spreadsheet_file_40px.png"))); // NOI18N
         exportExcel.setText("Xuất Excel");
         exportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         exportExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -117,7 +141,6 @@ public class NCCForm extends javax.swing.JPanel {
         });
 
         btnReset.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
-       // btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8_reset_25px_1.png"))); // NOI18N
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,21 +210,18 @@ public class NCCForm extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        jPanel1.getAccessibleContext().setAccessibleName("Tìm kiếm");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-;
+        addNCC.parentForm = this ;
+        addNCC.setVisible(true);
+        addNCC.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        loadDataToTable();
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
     
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void exportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportExcelActionPerformed
         // TODO add your handling code here:
@@ -224,13 +244,32 @@ public class NCCForm extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnResetActionPerformed
 
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int selectedRow = tblNCC.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để sửa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String maNCC = tblNCC.getValueAt(selectedRow, 1).toString();
+        String tenNCC = tblNCC.getValueAt(selectedRow, 2).toString();
+        String sdt = tblNCC.getValueAt(selectedRow, 3).toString();
+        String diaChi = tblNCC.getValueAt(selectedRow, 4).toString();
+        
+        UpdateNCC updateNCC = new UpdateNCC(maNCC, tenNCC, sdt, diaChi);
+        
+        updateNCC.parentForm = this ;
+        updateNCC.setVisible(true);
+        updateNCC.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        loadDataToTable();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JButton exportExcel;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;

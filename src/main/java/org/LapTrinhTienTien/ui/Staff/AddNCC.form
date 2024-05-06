@@ -36,7 +36,7 @@
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtTenNhaCungCap" min="-2" pref="298" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" pref="100" max="-2" attributes="0"/>
-                  <Component id="txtphone1" min="-2" pref="298" max="-2" attributes="0"/>
+                  <Component id="txtPhone" min="-2" pref="298" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="txtDiaChi" min="-2" pref="298" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -64,7 +64,7 @@
               <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-              <Component id="txtphone1" min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="txtPhone" min="-2" pref="38" max="-2" attributes="0"/>
               <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
@@ -159,7 +159,7 @@
         <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtphone1">
+    <Component class="javax.swing.JTextField" name="txtPhone">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="SF Pro Display" size="16" style="0"/>

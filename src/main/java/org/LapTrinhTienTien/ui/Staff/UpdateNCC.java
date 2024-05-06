@@ -4,17 +4,51 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import javax.swing.JOptionPane;
+import org.LapTrinhTienTien.repository.NhaCungCapRepository;
+import org.LapTrinhTienTien.service.NhaCungCapService;
+
 /**
  *
  * @author Admin
  */
 public class UpdateNCC extends javax.swing.JFrame {
 
-    /**
-     * Creates new form UpdateNCC
-     */
-    public UpdateNCC() {
+    NhaCungCapService nccService;
+    NhaCungCapRepository nccRepository;
+    NCCForm parentForm;
+    String maNCC;
+    String tenNCC;
+    String diaChi;
+    String sdt;
+
+    public UpdateNCC(NhaCungCapService nccService, NhaCungCapRepository nccRepository, String maNCC, String tenNCC, String diaChi, String sdt) {
+        this.nccService = nccService;
+        this.nccRepository = nccRepository;
+        this.maNCC = maNCC;
+        this.tenNCC = tenNCC;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
+    }
+    public UpdateNCC(String maNCC, String tenNCC, String diaChi, String sdt) {
+        this.maNCC = maNCC;
+        this.tenNCC = tenNCC;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
         initComponents();
+        loadNCC(maNCC, tenNCC, diaChi, sdt);
+    }
+    public void loadNCC(String maNCC, String tenNCC, String diaChi, String sdt)
+    {
+        txtMaNhaCungCap.setText(maNCC);
+        txtMaNhaCungCap.setEditable(false);
+        txtTenNhaCungCap.setText(tenNCC);
+        txtPhone.setText(sdt);
+        txtDiaChi.setText(diaChi);
+    }
+
+    private UpdateNCC() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -28,10 +62,10 @@ public class UpdateNCC extends javax.swing.JFrame {
 
         txtTenNhaCungCap = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtphone1 = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtDiaChi = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnCapNhat = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -46,22 +80,22 @@ public class UpdateNCC extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
         jLabel4.setText("Số điện thoại");
 
-        txtphone1.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
+        txtPhone.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
         jLabel5.setText("Địa chỉ");
 
         txtDiaChi.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
 
-        jButton1.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
-        jButton1.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Cập nhật");
-        jButton1.setBorder(null);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCapNhat.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
+        btnCapNhat.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
+        btnCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapNhat.setText("Cập nhật");
+        btnCapNhat.setBorder(null);
+        btnCapNhat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCapNhatActionPerformed(evt);
             }
         });
 
@@ -124,11 +158,11 @@ public class UpdateNCC extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtTenNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtphone1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -148,14 +182,14 @@ public class UpdateNCC extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addGap(9, 9, 9)
-                .addComponent(txtphone1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel5)
                 .addGap(9, 9, 9)
                 .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -163,9 +197,11 @@ public class UpdateNCC extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        nccService.updateNCC(maNCC, tenNCC, diaChi, sdt);
+        JOptionPane.showMessageDialog(this, "Đã cập nhật thông tin thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -209,7 +245,7 @@ public class UpdateNCC extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCapNhat;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -219,7 +255,7 @@ public class UpdateNCC extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtMaNhaCungCap;
+    private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtTenNhaCungCap;
-    private javax.swing.JTextField txtphone1;
     // End of variables declaration//GEN-END:variables
 }

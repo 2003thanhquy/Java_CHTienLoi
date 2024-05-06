@@ -4,15 +4,23 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import javax.swing.JOptionPane;
+import org.LapTrinhTienTien.model.NhaCungCap;
+import org.LapTrinhTienTien.repository.NhaCungCapRepository;
+import org.LapTrinhTienTien.service.NhaCungCapService;
+import org.LapTrinhTienTien.ui.Admin.customerMangager;
+import org.LapTrinhTienTien.utils.Response;
+
 /**
  *
  * @author Admin
  */
 public class AddNCC extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AddNCC
-     */
+    NhaCungCapService nccService;
+    NhaCungCapRepository nccRepository;
+    NCCForm parentForm;
+    
     public AddNCC() {
         initComponents();
     }
@@ -33,7 +41,7 @@ public class AddNCC extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtTenNhaCungCap = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtphone1 = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtDiaChi = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -77,7 +85,7 @@ public class AddNCC extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
         jLabel4.setText("Số điện thoại");
 
-        txtphone1.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
+        txtPhone.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
         jLabel5.setText("Địa chỉ");
@@ -124,7 +132,7 @@ public class AddNCC extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtTenNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtphone1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -148,7 +156,7 @@ public class AddNCC extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addGap(9, 9, 9)
-                .addComponent(txtphone1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel5)
                 .addGap(9, 9, 9)
@@ -165,11 +173,19 @@ public class AddNCC extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String name = txtTenNhaCungCap.getText();
+        String sdt = txtPhone.getText();
+        String diaChi = txtDiaChi.getText();
+        NhaCungCap ncc = nccService.addNCC(name,diaChi, sdt);
 
+        parentForm.loadDataToTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        txtTenNhaCungCap.setText("");
+        txtPhone.setText("");
+        txtDiaChi.setText("");
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -220,7 +236,7 @@ public class AddNCC extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtMaNhaCungCap;
+    private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtTenNhaCungCap;
-    private javax.swing.JTextField txtphone1;
     // End of variables declaration//GEN-END:variables
 }

@@ -123,6 +123,11 @@ public class customerMangager extends javax.swing.JPanel {
                 btnThemMousePressed(evt);
             }
         });
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setText("Sửa");
         btnSua.setRadius(30);
@@ -148,11 +153,6 @@ public class customerMangager extends javax.swing.JPanel {
         btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSaveMouseClicked(evt);
-            }
-        });
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
             }
         });
 
@@ -242,10 +242,6 @@ public class customerMangager extends javax.swing.JPanel {
         btnSave.setVisible(false);
     }//GEN-LAST:event_formMouseClicked
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveActionPerformed
-
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
@@ -307,6 +303,10 @@ public class customerMangager extends javax.swing.JPanel {
         String sdt = jTable1.getValueAt(rowIndex, 2).toString();
         cardThongTin.setData(new modelCard(new ImageIcon(getClass().getResource("/user.png")),"Thông tin", hoTen, sdt, ""));
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnThemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
