@@ -29,10 +29,10 @@ public class HoaDon {
     private LocalDateTime ngayXuat;
 
     @Column(name = "TongHoaDon")
-    private int giaTri;
+    private float giaTri;
 
     @Column(name = "ThanhTien")
-    private int ThanhTien;
+    private float ThanhTien;
     @Column(name = "MaKhuyenMai",nullable = true)
     private String maKhuyenMai;
 
