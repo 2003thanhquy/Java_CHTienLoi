@@ -30,6 +30,7 @@ public class loginForm extends javax.swing.JFrame {
     /**
      * Creates new form loginForm
      */
+
     @Autowired
     TaiKhoanService taikhoanService;
     @Autowired adminForm adminform;

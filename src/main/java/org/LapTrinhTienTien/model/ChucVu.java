@@ -27,7 +27,7 @@ public class ChucVu implements Serializable {
     private String tenChucVu;
 
     @Column(name = "GiaTienMotTieng")
-    private int giaTienMotTieng;
+    private float giaTienMotTieng;
 
     @OneToMany(mappedBy="chucVu",fetch = FetchType.EAGER)
     Set<NhanVien> nhanVien;
