@@ -1,12 +1,11 @@
 package org.LapTrinhTienTien.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.LapTrinhTienTien._enum.Status;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,7 +40,9 @@ public class HoaDon {
 
     @Column(name = "DiemSuDung", nullable = true)
     private int diemSuDung;
-
+    @Column(name = "trangthai", columnDefinition = "VARCHAR(255) DEFAULT 'ACTIVE'")
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.ACTIVE;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="HD_KH",nullable = true, referencedColumnName = "id")
     private KhachHang khachHang;
