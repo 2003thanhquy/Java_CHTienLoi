@@ -29,8 +29,8 @@ public class adminForm extends javax.swing.JFrame {
     @Autowired
     private formQlKho formKho;
     private staffInfo info;
-    @Autowired
-    private dashBoard dashBoard;
+    /*@Autowired
+    private dashBoard dashBoard;*/
     @Autowired
     private couponForm coupon;
     @Autowired
@@ -59,8 +59,8 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(formKho);
                 if(index==6)
                     setForm(coupon);
-                if(index==7)
-                    setForm(dashBoard);
+                /*if(index==7)
+                    setForm(dashBoard);*/
                 if(index==8)
                     setForm(customer);
             }

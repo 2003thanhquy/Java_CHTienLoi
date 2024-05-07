@@ -4,7 +4,13 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import org.LapTrinhTienTien.ui.HoaDon.CreateBill;
 
 /**
  *
@@ -16,6 +22,8 @@ public class Invoice extends javax.swing.JPanel {
     /**
      * Creates new form Invoice
      */
+    @Autowired
+    private CreateBill createBill;
     public Invoice() {
         initComponents();
     }
@@ -157,8 +165,28 @@ public class Invoice extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        saleForm saleForm = new saleForm();
-        saleForm.setVisible(true);
+       // saleForm saleForm = new saleForm();
+
+        // Lấy cửa sổ gốc của form hiện tại
+        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
+
+        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
+        createBill.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        createBill.setLocationRelativeTo(rootFrame);
+
+        // Tắt form hiện tại
+        rootFrame.setEnabled(false);
+
+        // Khi form mới được đóng, bật lại form hiện tại
+        createBill.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                rootFrame.setEnabled(true);
+            }
+        });
+
+        // Hiển thị form saleForm
+        createBill.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
