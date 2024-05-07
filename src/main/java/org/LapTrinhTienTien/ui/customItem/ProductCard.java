@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
+
+import org.LapTrinhTienTien.ui.events.ProductCardClick;
 import org.LapTrinhTienTien.ui.model.modelProduct;
 
 public class ProductCard extends javax.swing.JPanel {
@@ -28,8 +30,9 @@ public class ProductCard extends javax.swing.JPanel {
     private int y = 140;
     private int speed = 2;
     private boolean showing = false;
-
-    public ProductCard(modelProduct data) {
+    private ProductCardClick productCardClick;;
+    public ProductCard(modelProduct data, ProductCardClick productCardClick) {
+        this.productCardClick = productCardClick;
         this.data = data;
         initComponents();
         setOpaque(false);
@@ -110,7 +113,7 @@ public class ProductCard extends javax.swing.JPanel {
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
-        System.out.print("abcd");
+       productCardClick.onCLickCard();
     }//GEN-LAST:event_formMousePressed
 
 @Override
