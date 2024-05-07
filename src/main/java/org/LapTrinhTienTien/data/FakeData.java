@@ -175,6 +175,8 @@ public class FakeData   implements CommandLineRunner{
         lichLam.setCaLamViec(caLamViec);
         lichLam.setNhanVien(nhanVien);
         lichLamRepository.save(lichLam);
+
+
     }
     private void insertKhachHang(){
         int n = 5;

@@ -65,8 +65,8 @@ public class formQlKho extends javax.swing.JPanel {
         }
 
     }
-    private void onClickToCardProduct(){
-        System.out.println("111111");
+    private void onClickToCardProduct(CuaHangSanPham chsp){
+        System.out.println("chsp---------"+ chsp.getSanPham().getMaSP());
     }
 
     private void init() {
@@ -81,8 +81,8 @@ public class formQlKho extends javax.swing.JPanel {
                 ClassPathResource resource1 = new ClassPathResource(imageResource);
                 try {
                     Image image = ImageIO.read(resource1.getInputStream());
-                    int width = 30; // Đặt chiều rộng mong muốn
-                    int height =20; // Đặt chiều cao mong muốn
+                    int width = 400; // Đặt chiều rộng mong muốn
+                    int height =400; // Đặt chiều cao mong muốn
                     Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
                     icon = new ImageIcon(scaledImage);
@@ -92,12 +92,12 @@ public class formQlKho extends javax.swing.JPanel {
             }
 
 
-            panel.add(new ProductCard(new modelProduct(icon, chsp.getSanPham().getTenSP(), "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch"), new ProductCardClick() {
+            panel.add(new ProductCard(new modelProduct(icon, chsp.getSanPham().getTenSP(), "Mã Sản Phẩm: "+chsp.getSanPham().getMaSP()+"\n"+"Giá Tiên: "+chsp.getSanPham().getTienThanhToan()+"\nSố lượng:" + chsp.getSoLuong()+"\nthank for watch"), new ProductCardClick() {
                 @Override
-                public void onCLickCard() {
-                    onClickToCardProduct();
+                public void onCLickCard(CuaHangSanPham cuaHangSanPham) {
+                    onClickToCardProduct(cuaHangSanPham);
                 }
-            }));
+            },chsp));
         }
 
         panel.revalidate();
