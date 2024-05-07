@@ -7,11 +7,11 @@ import org.LapTrinhTienTien.model.HoaDon;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-public class HoaDonTableModel extends AbstractTableModel {
+public class HoaDonAdminTableModel extends AbstractTableModel {
     @Setter@Getter
     private List<HoaDon> lstHoaDons;
-    private final String[] COLUMNS ={"Mã HD","Mã NV","Mã Khuyến Mãi","Đơn Giá","Ngày Xuất"};
-    public HoaDonTableModel(List<HoaDon> lstHoaDons){
+    private final String[] COLUMNS ={"Mã HD","Mã NV","Đơn Giá","Ngày Xuất","Trang Thái"};
+    public HoaDonAdminTableModel(List<HoaDon> lstHoaDons){
         this.lstHoaDons = lstHoaDons;
     }
     @Override
@@ -41,9 +41,9 @@ public class HoaDonTableModel extends AbstractTableModel {
         return switch (columnIndex){
             case 0->lstHoaDons.get(rowIndex).getMaHD();
             case 1->lstHoaDons.get(rowIndex).getNhanVien().getMaNV();
-            case 2->lstHoaDons.get(rowIndex).getMaKhuyenMai();
-            case 3->lstHoaDons.get(rowIndex).getThanhTien();
-            case 4->lstHoaDons.get(rowIndex).getNgayXuat();
+            case 2->lstHoaDons.get(rowIndex).getThanhTien();
+            case 3->lstHoaDons.get(rowIndex).getNgayXuat();
+            case 4->lstHoaDons.get(rowIndex).getStatus();
             default -> "-";
         };
     }

@@ -41,6 +41,5 @@ public class SpringBootRestApplication {
            // EventQueue.invokeLater(()->f.setVisible(true));
             EventQueue.invokeLater(() -> controller.setVisible(true));
         };
-
     }
 }
