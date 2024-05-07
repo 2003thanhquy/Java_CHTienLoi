@@ -5,6 +5,9 @@
 package org.LapTrinhTienTien.ui.Staff;
 
 import javax.swing.JComponent;
+import org.LapTrinhTienTien.StaticApp.Global;
+import org.LapTrinhTienTien.model.TaiKhoan;
+import org.LapTrinhTienTien.repository.NhanVienRepository;
 
 import org.LapTrinhTienTien.service.NhanVienService;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
@@ -21,6 +24,8 @@ public class staffForm extends javax.swing.JFrame {
     /**
      * Creates new form adminForm
      */
+    
+    NhanVienRepository nhanVienRepository;
     private Info info;
     @Autowired
     private wareHouseForm wareHouse;
@@ -32,8 +37,9 @@ public class staffForm extends javax.swing.JFrame {
     private CalendarCustom timeTable;
     @Autowired
     private Invoice invoice;
-    public staffForm(@Autowired Info info) {
-        this.info = info;
+    public staffForm(@Autowired NhanVienRepository nhanVienRepository) {
+        //this.info = new Info(nhanVienRepository);
+        this.nhanVienRepository=nhanVienRepository;
         //setUndecorated(true);
         initComponents();
         //setBackground(new Color(0, 0, 0, 0));
@@ -48,7 +54,7 @@ public class staffForm extends javax.swing.JFrame {
             @Override
             public void selected(int index) {
                 if(index==1)
-                    setForm(info) ;
+                    setForm(new Info(nhanVienRepository));
                 if(index==2)
                     setForm(wareHouse);
                 if(index==3)

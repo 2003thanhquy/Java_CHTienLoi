@@ -37,9 +37,10 @@ public class adminForm extends javax.swing.JFrame {
     private formNhapHang nhapHang;
     @Autowired
     private customerMangager customer;
-    public adminForm( @Autowired staffInfo info) {
+    public adminForm(@Autowired staffInfo info) {
         this.info = info;
         //setUndecorated(true);
+        
         initComponents();
         events();
 
