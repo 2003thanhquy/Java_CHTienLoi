@@ -1,13 +1,19 @@
 package org.LapTrinhTienTien.TableModel;
 
+import lombok.Setter;
 import org.LapTrinhTienTien.model.ChiTietHoaDon;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class ChiTietHoaDonTableModel extends AbstractTableModel {
+    @Setter
     private List<ChiTietHoaDon> lstCTHDs;
     private final String[] COLUMNS ={"Tên SP","Số lượng","Giá tiền","Thành Tiền"};
+    public ChiTietHoaDonTableModel(List<ChiTietHoaDon> lstCTHDs) {
+        this.lstCTHDs = lstCTHDs;
+    }
+
     @Override
     public int getRowCount() {
         return lstCTHDs.size();
