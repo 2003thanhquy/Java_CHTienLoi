@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package org.LapTrinhTienTien.ui.Staff;
-
 import java.time.format.DateTimeFormatter;
 import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.NhanVien;
@@ -17,11 +16,13 @@ import org.springframework.stereotype.Service;
  *
  * @author Admin
  */
+
 public class Info extends javax.swing.JPanel {
 
     /**
      * Creates new form Info
      */
+
     NhanVienRepository nhanVienRepository;
     
     // Biến để lưu trữ nhân viên hiện tại
