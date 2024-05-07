@@ -1,10 +1,8 @@
 package org.LapTrinhTienTien.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.LapTrinhTienTien._enum.Status;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,6 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChuongTrinhKhuyenMai implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,6 +34,10 @@ public class ChuongTrinhKhuyenMai implements Serializable {
     private LocalDateTime ngayKetThuc;
     @Column(name = "DieuKienApDung")
     private float tonghonDon =0;
+
+    @Column(name = "trangthai", columnDefinition = "VARCHAR(255) DEFAULT 'ACTIVE'")
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.ACTIVE;
 
     // Constructors, getters, and setters
 }
