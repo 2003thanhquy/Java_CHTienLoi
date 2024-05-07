@@ -2,13 +2,17 @@ package org.LapTrinhTienTien.model.IdClass;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.LapTrinhTienTien.model.NhanVien;
 
 import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
+@Setter
+@Getter
 public class LichLamId {
 
     @Column(name= "MaNV")

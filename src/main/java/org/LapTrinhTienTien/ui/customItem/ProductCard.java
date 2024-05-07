@@ -18,6 +18,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import org.LapTrinhTienTien.model.CuaHangSanPham;
 import org.LapTrinhTienTien.ui.events.ProductCardClick;
 import org.LapTrinhTienTien.ui.model.modelProduct;
 
@@ -30,9 +31,11 @@ public class ProductCard extends javax.swing.JPanel {
     private int y = 140;
     private int speed = 2;
     private boolean showing = false;
+    private CuaHangSanPham cuaHangSanPham;
     private ProductCardClick productCardClick;;
-    public ProductCard(modelProduct data, ProductCardClick productCardClick) {
+    public ProductCard(modelProduct data, ProductCardClick productCardClick,CuaHangSanPham cuaHangSanPham) {
         this.productCardClick = productCardClick;
+        this.cuaHangSanPham = cuaHangSanPham;
         this.data = data;
         initComponents();
         setOpaque(false);
@@ -113,7 +116,7 @@ public class ProductCard extends javax.swing.JPanel {
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
-       productCardClick.onCLickCard();
+       productCardClick.onCLickCard(cuaHangSanPham);
     }//GEN-LAST:event_formMousePressed
 
 @Override
