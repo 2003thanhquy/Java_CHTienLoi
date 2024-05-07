@@ -1,7 +1,5 @@
 package org.LapTrinhTienTien.service;
 
-import org.LapTrinhTienTien._enum.ChucVuEnum;
-import org.LapTrinhTienTien.model.ChucVu;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.io.File;
@@ -12,11 +10,9 @@ import java.util.List;
 import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
-import org.LapTrinhTienTien.utils.Response;
 import org.LapTrinhTienTien.repository.TaiKhoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service

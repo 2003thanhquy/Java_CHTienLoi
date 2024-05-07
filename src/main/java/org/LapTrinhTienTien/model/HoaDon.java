@@ -29,10 +29,10 @@ public class HoaDon {
     private LocalDateTime ngayXuat;
 
     @Column(name = "TongHoaDon")
-    private float giaTri;
+    private int giaTri;
 
     @Column(name = "ThanhTien")
-    private float ThanhTien;
+    private int ThanhTien;
     @Column(name = "MaKhuyenMai",nullable = true)
     private String maKhuyenMai;
 
@@ -43,7 +43,7 @@ public class HoaDon {
     private int diemSuDung;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="HD_KH",nullable = true, referencedColumnName = "id")
+    @JoinColumn(name ="HD_KH",nullable = false, referencedColumnName = "id")
     private KhachHang khachHang;
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name ="HD_NV",nullable = false, referencedColumnName = "MaNV")

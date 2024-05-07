@@ -62,7 +62,7 @@ public class staffForm extends javax.swing.JFrame {
             }
 
         });
-        //setForm(info);
+        setForm(info);
     }
     private void setForm(JComponent com) {
         mainPanel.removeAll();
@@ -140,7 +140,7 @@ public class staffForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                 //new staffForm().setVisible(true);
                 //new staffMenu().setVisible(true);
             }
         });

@@ -13,12 +13,12 @@ import org.LapTrinhTienTien.model.IdClass.CuaHangSanPhamKey;
 public class CuaHangSanPham {
     @EmbeddedId
     CuaHangSanPhamKey id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @MapsId("cuaHangId")
     @JoinColumn(name= "cuahang_id")
     CuaHang cuaHang;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @MapsId("sanPhamId")
     @JoinColumn(name= "sanpham_id")
     SanPham sanPham;
