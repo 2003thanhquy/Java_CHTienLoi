@@ -4,12 +4,24 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.LapTrinhTienTien.TableModel.HoaDonTableModel;
+import org.LapTrinhTienTien.model.ChiTietHoaDon;
+import org.LapTrinhTienTien.model.HoaDon;
+import org.LapTrinhTienTien.service.ChiTietHoaDonService;
+import org.LapTrinhTienTien.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.LapTrinhTienTien.ui.HoaDon.CreateBill;
 
 /**
@@ -24,10 +36,76 @@ public class Invoice extends javax.swing.JPanel {
      */
     @Autowired
     private CreateBill createBill;
-    public Invoice() {
+    HoaDonService hoaDonService;
+    ChiTietHoaDonService chiTietHoaDonService;
+    HoaDonTableModel hoaDonTableModel;
+    List<HoaDon> hoaDonList = new ArrayList<>();
+    List<ChiTietHoaDon> chiTietHoaDonList = new ArrayList<>();
+    public Invoice(@Autowired  HoaDonService hoaDonService,  @Autowired ChiTietHoaDonService chiTietHoaDonService ) {
         initComponents();
+        this.hoaDonService = hoaDonService;
+        this.chiTietHoaDonService = chiTietHoaDonService;
+        init();
+        loadData();
+        events();
     }
+    private void init(){
+        hoaDonList.clear();
+        hoaDonList = hoaDonService.getAllHoaDon();
+        hoaDonTableModel = new HoaDonTableModel(hoaDonList);
+        tblHoaDon.setModel(hoaDonTableModel);
+    }
+    private void loadData() {
+    }
+    private void events() {
+        btnTaohoaDon.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnCreateHoaDonPerformed(e);
+            }
+        });
+        btnTimKiem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnTimKiemActionPerformed(e);
+            }
+        });
+        tblHoaDon.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // Đảm bảo sự kiện chỉ được kích hoạt một lần khi chọn hàng
+                    chiTietHoaDonList.clear();
+                    //chiTietHoaDonList = chiTietHoaDonService.getListCTHD(Hoa)
+
+                }
+            }
+        });
+    }
+    private void btnCreateHoaDonPerformed(ActionEvent e) {
+        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
+
+        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
+        createBill.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        createBill.setLocationRelativeTo(rootFrame);
+
+        // Tắt form hiện tại
+        rootFrame.setEnabled(false);
+
+        // Khi form mới được đóng, bật lại form hiện tại
+        createBill.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                rootFrame.setEnabled(true);
+            }
+        });
+
+        // Hiển thị form saleForm
+        createBill.setVisible(true);
+    }
+    private void btnTimKiemActionPerformed(ActionEvent e) {
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,15 +116,15 @@ public class Invoice extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblHoaDon = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnTaohoaDon = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -54,15 +132,7 @@ public class Invoice extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(590, 390));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Mã HĐ", "Tên NV", "Tên KH", "Ngày xuất", "Điểm tích", "Điểm sử dụng", "Giá trị"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblHoaDon);
 
         jLabel1.setText("Mã HD:");
 
@@ -70,14 +140,9 @@ public class Invoice extends javax.swing.JPanel {
 
         jLabel3.setText("Ngày xuất:");
 
-        jButton1.setText("Tìm kiếm");
+        btnTimKiem.setText("Tìm kiếm");
 
-        jButton2.setText("Tạo hóa đơn");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        btnTaohoaDon.setText("Tạo hóa đơn");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -101,9 +166,9 @@ public class Invoice extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jButton1)
+                .addComponent(btnTimKiem)
                 .addGap(29, 29, 29)
-                .addComponent(jButton2)
+                .addComponent(btnTaohoaDon)
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,8 +188,8 @@ public class Invoice extends javax.swing.JPanel {
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnTimKiem)
+                    .addComponent(btnTaohoaDon))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -163,36 +228,10 @@ public class Invoice extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-       // saleForm saleForm = new saleForm();
-
-        // Lấy cửa sổ gốc của form hiện tại
-        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
-
-        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
-        createBill.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        createBill.setLocationRelativeTo(rootFrame);
-
-        // Tắt form hiện tại
-        rootFrame.setEnabled(false);
-
-        // Khi form mới được đóng, bật lại form hiện tại
-        createBill.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                rootFrame.setEnabled(true);
-            }
-        });
-
-        // Hiển thị form saleForm
-        createBill.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnTaohoaDon;
+    private javax.swing.JButton btnTimKiem;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -200,9 +239,9 @@ public class Invoice extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblHoaDon;
     // End of variables declaration//GEN-END:variables
 }

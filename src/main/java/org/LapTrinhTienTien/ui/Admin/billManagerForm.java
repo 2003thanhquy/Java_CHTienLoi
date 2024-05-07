@@ -29,7 +29,6 @@ public class billManagerForm extends javax.swing.JPanel {
     private HoaDonService hoaDonService;
     private ChiTietHoaDonService chiTietHoaDonService;
     private HoaDonTableModel hoaDonTableModel;
-    private final String[] HOADONCLOUMNS = {};
     modelCard card = new modelCard(new ImageIcon(getClass().getResource("/user.png")),"", "", "", "");
     /**
      * Creates new form billManagerForm

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class HoaDonTableModel extends AbstractTableModel {
     private List<HoaDon> lstHoaDons;
-    private final String[] COLUMNS ={"SDT Khách hàng","Điểm sử dụng","Đơn Giá","Mã Khuyến Mãi"};
+    private final String[] COLUMNS ={"Mã HD","Mã NV","Mã Khuyến Mãi","Đơn Giá","Ngày Xuất"};
     public HoaDonTableModel(List<HoaDon> lstHoaDons){
         this.lstHoaDons = lstHoaDons;
     }
@@ -36,10 +36,11 @@ public class HoaDonTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         return switch (columnIndex){
-            case 0->lstHoaDons.get(rowIndex).getKhachHang().getSdt();
-            case 1->lstHoaDons.get(rowIndex).getDiemSuDung();
-            case 2->lstHoaDons.get(rowIndex).getGiaTri();
-            case 3->lstHoaDons.get(rowIndex).getMaKhuyenMai();
+            case 0->lstHoaDons.get(rowIndex).getMaHD();
+            case 1->lstHoaDons.get(rowIndex).getNhanVien().getMaNV();
+            case 2->lstHoaDons.get(rowIndex).getMaKhuyenMai();
+            case 3->lstHoaDons.get(rowIndex).getThanhTien();
+            case 4->lstHoaDons.get(rowIndex).getNgayXuat();
             default -> "-";
         };
     }
