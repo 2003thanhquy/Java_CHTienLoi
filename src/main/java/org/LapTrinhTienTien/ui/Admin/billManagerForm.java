@@ -111,7 +111,6 @@ public class billManagerForm extends javax.swing.JPanel {
         List<HoaDon> hoaDons = hoaDonService.getAllAdminHoaDon();
         hoaDonAdminTableModel = new HoaDonAdminTableModel(hoaDons);
         tblHoaDon.setModel(hoaDonAdminTableModel);
-
     }
     /**
      * This method is called from within the constructor to initialize the form.
