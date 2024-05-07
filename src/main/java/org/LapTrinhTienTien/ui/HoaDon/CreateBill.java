@@ -27,16 +27,21 @@ import javax.swing.table.DefaultTableModel;
 
 @Controller
 public class CreateBill extends javax.swing.JFrame {
-    @Autowired
     CuaHangSanPhamService khoService;
-
+    @Autowired
+    ChuongTrinhKhuyenMaiService chuongTrinhKhuyenMaiService;
+    @Autowired
+    ThanhToanService thanhToanService;
+    @Autowired
+    KhachHangService khachHangService;
     private JPopupMenu menu;
     private PanelSearch search;
     private GioHangTableModel hoaDonTableModel;
     List<GioHang> gioHangs = new ArrayList<>();
     List<GioHang> storegioHang = new ArrayList<>();
-    public CreateBill() {
+    public CreateBill(@Autowired CuaHangSanPhamService cuaHangSanPhamService) {
         initComponents();
+        this.khoService = cuaHangSanPhamService;
         menu = new JPopupMenu();
         search = new PanelSearch();
         hoaDonTableModel = new GioHangTableModel(gioHangs);
@@ -54,7 +59,8 @@ public class CreateBill extends javax.swing.JFrame {
 
             @Override
             public void onDelete(int row) {
-                System.err.println("onDelete");
+                gioHangs.remove(row);
+                hoaDonTableModel.fireTableDataChanged();
             }
 
             @Override
@@ -63,14 +69,14 @@ public class CreateBill extends javax.swing.JFrame {
             }
         };
         
-        tblHoaDon.getColumnModel().getColumn(1).setCellEditor(new TableTextViewEditer(new EventCellInputChange() {
+        tblHoaDon.getColumnModel().getColumn(2).setCellEditor(new TableTextViewEditer(new EventCellInputChange() {
             @Override
             public void inputChanged() {
                gioHangs.forEach(gioHang-> System.out.println(gioHang.getTongTien()));
             }
-        }));
-        tblHoaDon.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
-        tblHoaDon.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+        },khoService));
+        tblHoaDon.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+        tblHoaDon.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
         tblHoaDon.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
@@ -140,6 +146,33 @@ public class CreateBill extends javax.swing.JFrame {
                 btnBillPerformed(e);
             }
         });
+        btnKiemTraSdt.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnCheckSdt(e);
+            }
+        });
+    }
+    private void btnCheckSdt(ActionEvent e){
+        String sdt = tf_sdt.getText()+"";
+        if(sdt.equals("")){
+            return;
+        }
+        if (khachHangService.isCheckSDTExist(sdt)) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Số điện thoại chưa có trong hệ thống!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+
+    }
+    private float getGiamGia(){
+        float tongTien = getTongTien();
+        return chuongTrinhKhuyenMaiService.getGiamGia(tongTien);
+    }
+    private float getTongTien(){
+       return (float) gioHangs.stream().mapToDouble(GioHang::getTongTien).sum();
     }
     private void btnBillPerformed(ActionEvent e) {
         bill.setText("                         The Little mall \n");
@@ -147,21 +180,23 @@ public class CreateBill extends javax.swing.JFrame {
         bill.setText(bill.getText() + "\tThủ đức, Thành phố Hồ Chí Minh, \n");
         bill.setText(bill.getText() + "\t+084 123456789, \n");
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
-        bill.setText(bill.getText() + " Iteam \tQty \tPrice \n");
+        bill.setText(bill.getText() + " Ten \tSo Luong \tGia \tThanh Tien \n");
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
 
-//        DefaultTableModel df = (DefaultTableModel) jTable1.getModel();
-//        for (int i = 0; i < jTable1.getRowCount(); i++) {
-//
-//            String name = df.getValueAt(i, 0).toString();
-//            String qt = df.getValueAt(i, 1).toString();
-//            String prc = df.getValueAt(i, 2).toString();
-//
-//            bill.setText(bill.getText() + name+"\t"+qt+"\t"+prc+" \n");
-//
-//        }
+
+        for(GioHang gh : gioHangs){
+
+            String name =gh.getTenSP();
+            String qt =String.valueOf(gh.getSoLuong()) ;
+            String prc =String.valueOf( gh.getGiaTien());
+            String tongtien = String.valueOf(gh.getTongTien());
+            bill.setText(bill.getText() + name+"\t  "+qt+"\t"+prc+"S\t"+tongtien+" \n");
+
+        }
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
-        //bill.setText(bill.getText() + "SubTotal :\t"+Too.getText()+"\n");
+        bill.setText(bill.getText() + "Tổng Tiền :\t"+getTongTien()+"\n");
+        bill.setText(bill.getText() + "Giam gia:\t"+getGiamGia()+"\n");
+        bill.setText(bill.getText() + "Thành Tiền :\t"+(getTongTien()-getGiamGia())+"\n");
         bill.setText(bill.getText() + "====================================\n");
         bill.setText(bill.getText() +"                     Thanks For Your Business...!"+"\n");
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
@@ -171,23 +206,12 @@ public class CreateBill extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Vừa lòng chọn sản phẩm thanh toán");
             return;
         }
-        for(GioHang gh : gioHangs){
-            Response response = khoService.isCheckSoLuong(gh.getMaSP(),gh.getSoLuong());
-            if(!response.getFlag()){
-                JOptionPane.showMessageDialog(CreateBill.this,response.getMessage());
-                return;
-            }
+      Response response =   thanhToanService.thanhToan(gioHangs,tf_sdt.getText()+"");
+        if (response.getFlag()) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + response.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-
-    }
-    private void loadData(){
-
-        storegioHang.add(new GioHang("SP001", 2, 100));
-        storegioHang.add(new GioHang("SP002", 3, 150));
-        storegioHang.add(new GioHang("SP003", 3, 150));
-        storegioHang.add(new GioHang("SP004", 3, 150));
-        storegioHang.add(new GioHang("SP005", 3, 150));
-        //hoaDonTableModel.fireTableDataChanged();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -205,6 +229,8 @@ public class CreateBill extends javax.swing.JFrame {
         btnBill = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         bill = new javax.swing.JTextArea();
+        tf_sdt = new javax.swing.JTextField();
+        btnKiemTraSdt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -230,6 +256,8 @@ public class CreateBill extends javax.swing.JFrame {
         bill.setRows(5);
         jScrollPane2.setViewportView(bill);
 
+        btnKiemTraSdt.setText("Kiểm tra");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,13 +267,20 @@ public class CreateBill extends javax.swing.JFrame {
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(261, 261, 261)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(tf_sdt, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(btnKiemTraSdt)))
+                        .addGap(86, 86, 86)
                         .addComponent(btnThanhToan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBill)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,10 +291,15 @@ public class CreateBill extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBill))
-                        .addGap(0, 33, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBill))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tf_sdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnKiemTraSdt)))
+                        .addGap(0, 11, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2)))
@@ -290,7 +330,6 @@ public class CreateBill extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private List<GioHang> search(String search) {
-        int limitData = 7;
         return khoService.searchTenSP(search);
     }
     String dataStory[] = {"300 - Rise of an Empire",
@@ -350,7 +389,7 @@ public class CreateBill extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateBill().setVisible(true);
+                //new CreateBill().setVisible(true);
             }
         });
     }
@@ -358,10 +397,12 @@ public class CreateBill extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea bill;
     private javax.swing.JButton btnBill;
+    private javax.swing.JButton btnKiemTraSdt;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblHoaDon;
+    private javax.swing.JTextField tf_sdt;
     private org.LapTrinhTienTien.ui.HoaDon.search.MyTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

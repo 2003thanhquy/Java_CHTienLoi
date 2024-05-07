@@ -52,6 +52,11 @@
             <artifactId>miglayout-swing</artifactId>
             <version>4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version> <!-- Thay đổi phiên bản tùy thuộc vào phiên bản bạn đang sử dụng -->
+        </dependency>
 
     </dependencies>
 

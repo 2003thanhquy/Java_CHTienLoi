@@ -7,12 +7,15 @@ package org.LapTrinhTienTien.ui.HoaDon.search;
 //
 
 import org.LapTrinhTienTien.model.GioHang;
+import org.springframework.core.io.ClassPathResource;
 
-import java.awt.Color;
-import java.awt.Component;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 /**
  *
@@ -29,14 +32,26 @@ public class Search_Item extends javax.swing.JPanel {
         addEventMouse(this);
         addEventMouse(lbText);
         addEventMouse(lbRemove);
-        lbText.setText(data.getMaSP());
-//        if (data.isStory()) {
-//            lbText.setForeground(new Color(29, 106, 205));
-//            lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/time.png")));
-//            lbRemove.setCursor(new Cursor(Cursor.HAND_CURSOR));
-//        } else {
-//            lbRemove.setText("");
-//        }
+        lbText.setText(data.getTenSP());
+        lbRemove.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        String imageResource = data.getImage();
+        System.out.println("Image"+imageResource);
+        if (imageResource != null) {
+            ClassPathResource resource1 = new ClassPathResource(imageResource);
+            try {
+                Image image = ImageIO.read(resource1.getInputStream());
+                int width = 30; // Đặt chiều rộng mong muốn
+                int height =20; // Đặt chiều cao mong muốn
+               Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+                ImageIcon icon = new ImageIcon(scaledImage);
+
+                // Đặt icon cho JLabel
+                lbIcon.setIcon(icon);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void addEventMouse(Component com) {

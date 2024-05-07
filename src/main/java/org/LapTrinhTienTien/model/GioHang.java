@@ -16,11 +16,20 @@ public class GioHang {
     float giaTien;
     float tongTien;
 
+    public GioHang(String maSP, String tenSP, String image, int soLuong, float giaTien) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.image = image;
+        this.soLuong = soLuong;
+        this.giaTien = giaTien;
+        setTongTien();
+    }
+
     public GioHang(String maSP, int soLuong, float giaTien) {
         this.maSP = maSP;
         this.soLuong = soLuong;
         this.giaTien = giaTien;
-        setTongTien(); // Gọi phương thức tính tổng tiền khi khởi tạo sản phẩm
+        // Gọi phương thức tính tổng tiền khi khởi tạo sản phẩm
     }
 
     public String getMaSP() {
@@ -55,5 +64,21 @@ public class GioHang {
     // Cập nhật phương thức tính tổng tiền
     public void setTongTien() {
         this.tongTien = soLuong * giaTien;
+    }
+
+    public String getTenSP() {
+        return tenSP;
+    }
+
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -51,4 +51,8 @@ public class KhachHangService {
         // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
         khRepository.save(khachHang);
     }
+
+    public boolean isCheckSDTExist(String sdt){
+        return khRepository.findBySdt(sdt)!=null;
+    }
 }
