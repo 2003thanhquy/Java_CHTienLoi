@@ -32,7 +32,7 @@ public class formThemNV extends javax.swing.JFrame {
      */
     @Autowired
     private NhanVienService nhanVienService;
-    public formThemNV {
+    public formThemNV() {
       
         initComponents();
     }

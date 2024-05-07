@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GioHangTableModel extends AbstractTableModel {
     private List<GioHang> lstHoaDons;
-    private final String[] COLUMNS ={"MASP","So luong","Đơn Giá","Thanh Tien","action"};
+    private final String[] COLUMNS ={"MÃSP","Tên Sản Phẩm","Số lợng","Đơn Giá","Thành Tiền","action"};
     public GioHangTableModel(List<GioHang> lstHoaDons){
         this.lstHoaDons = lstHoaDons;
     }
@@ -38,9 +38,10 @@ public class GioHangTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         return switch (columnIndex){
             case 0->lstHoaDons.get(rowIndex).getMaSP();
-            case 1->lstHoaDons.get(rowIndex).getSoLuong();
-            case 2->lstHoaDons.get(rowIndex).getGiaTien();
-            case 3->lstHoaDons.get(rowIndex).getTongTien();
+            case 1->lstHoaDons.get(rowIndex).getTenSP();
+            case 2->lstHoaDons.get(rowIndex).getSoLuong();
+            case 3->lstHoaDons.get(rowIndex).getGiaTien();
+            case 4->lstHoaDons.get(rowIndex).getTongTien();
             default -> "-";
         };
     }
@@ -52,7 +53,7 @@ public class GioHangTableModel extends AbstractTableModel {
             return Object.class;
         }
     }
-    private boolean[] canEdit = {false,true,false,false,true};
+    private boolean[] canEdit = {false,false,true,false,false,true};
     private boolean cloumnCanEidt(int columnIndex){
         return canEdit[columnIndex];
         

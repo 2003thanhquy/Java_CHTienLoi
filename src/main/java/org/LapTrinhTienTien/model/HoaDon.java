@@ -43,7 +43,7 @@ public class HoaDon {
     private int diemSuDung;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name ="HD_KH",nullable = false, referencedColumnName = "id")
+    @JoinColumn(name ="HD_KH",nullable = true, referencedColumnName = "id")
     private KhachHang khachHang;
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name ="HD_NV",nullable = false, referencedColumnName = "MaNV")

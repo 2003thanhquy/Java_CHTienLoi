@@ -20,10 +20,8 @@ import javax.swing.event.ChangeEvent;
  *
  * @author quyth
  */
-//@org.springframework.stereotype.Component
 public class TableTextViewEditer extends DefaultCellEditor{
-//    @Autowired
-//    CuaHangSanPhamService cuaHangSanPhamService;
+    CuaHangSanPhamService cuaHangSanPhamService;
 
     private JSpinner input;
 
@@ -34,14 +32,14 @@ public class TableTextViewEditer extends DefaultCellEditor{
    // private ModelItemSell item;
 
 
-    public TableTextViewEditer(EventCellInputChange event) {
+    public TableTextViewEditer(EventCellInputChange event, CuaHangSanPhamService cuaHangSanPhamService) {
        
         super(new JCheckBox());
           this.event = event;
         input = new JSpinner();
         SpinnerNumberModel numberModel = (SpinnerNumberModel) input.getModel();
         numberModel.setMinimum(1);
-        
+        this.cuaHangSanPhamService = cuaHangSanPhamService;
          input.addChangeListener((ChangeEvent e) -> {
             inputChange();
         });
@@ -83,16 +81,16 @@ public class TableTextViewEditer extends DefaultCellEditor{
         int qty = Integer.parseInt(input.getValue().toString());
         if (qty != item.getSoLuong()) {
             //DecimalFormat df = new DecimalFormat("#,##0.##");
-//            Response response =  cuaHangSanPhamService.isCheckSoLuong(item.getMaSP(),qty);
-//            if(response.getFlag()){
-//                item.setSoLuong(qty);
-//            }else {
-//                JOptionPane.showMessageDialog(null,response.getMessage());
-//            }
+            Response response =  cuaHangSanPhamService.isCheckSoLuong(item.getMaSP(),qty);
+            if(response.getFlag()){
+                item.setSoLuong(qty);
+            }else {
+                JOptionPane.showMessageDialog(null,response.getMessage());
+            }
 
             //table.setValueAt("$ " + df.format(item.getTongTien()), row, 3);
-           ((HoaDonTableModel)table.getModel()).fireTableCellUpdated(row, 3);
-            ((HoaDonTableModel)table.getModel()).fireTableCellUpdated(row, 1);
+           ((GioHangTableModel)table.getModel()).fireTableCellUpdated(row, 4);
+            ((GioHangTableModel)table.getModel()).fireTableCellUpdated(row, 2);
             event.inputChanged();
         }
     }

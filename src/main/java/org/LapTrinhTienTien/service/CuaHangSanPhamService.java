@@ -18,14 +18,10 @@ public class CuaHangSanPhamService {
     @Autowired
     SanPhamRepository sanPhamRepository;
     @Autowired TaiKhoanService taiKhoanService;
-    final  int SEARCH_LIMIT = 7;
+    final  int SEARCH_LIMIT = 4;
 
     public List<GioHang> searchTenSP(String search){
         List<GioHang> lstSearch = new ArrayList<GioHang>();
-        Response response = taiKhoanService.login("NV001","NV001");
-        Global.account = (TaiKhoan) response.getData();
-        if(Global.account==null||Global.account.getNhanVien()==null)
-            return lstSearch;
         CuaHang cuaHang = Global.account.getNhanVien().getCuaHang();
        List<CuaHangSanPham> cuaHangSanPhams = cuaHangSanPhamRepository.findAllByCuaHang(cuaHang);
 
@@ -37,7 +33,7 @@ public class CuaHangSanPhamService {
                String masp = sanPham.getMaSP();
                float giaTien = sanPham.getTienThanhToan();
                String image = sanPham.getImage();
-               lstSearch.add(new GioHang(masp,1,giaTien));
+               lstSearch.add(new GioHang(masp,tensp,image,1,giaTien));
            }
            if(lstSearch.size() >=SEARCH_LIMIT) {
                return lstSearch;
@@ -67,4 +63,27 @@ public class CuaHangSanPhamService {
         return new Response("Số lượn Trong kho đủ",true,null);
     }
 
+    public Response updateSoLuong(String maSP, int soLuong) {
+        String maCH;
+        try{
+            maCH = Global.account.getNhanVien().getCuaHang().getMaCH();
+        }catch (Exception e){
+            return new Response("Tài khoản bị lỗi, yêu cầu login",false,null);
+        }
+        Response response =  isCheckSoLuong(maSP,soLuong);
+        if(!response.getFlag()){
+            return  response;
+        }
+        // Lấy thông tin chi tiết sản phẩm trong kho hàng
+        CuaHangSanPham chsp = cuaHangSanPhamRepository.findBySanPham_MaSPAndCuaHang_MaCH(maSP,maCH);
+        if (chsp != null) {
+            // Cập nhật số lượng sản phẩm
+            int soLuongHienTai = chsp.getSoLuong();
+            chsp.setSoLuong(soLuongHienTai - soLuong);
+            // Lưu cập nhật vào cơ sở dữ liệu
+            cuaHangSanPhamRepository.save(chsp);
+            return new Response("cập nhật thành công",true,null);
+        }
+        return new Response("Cap nhật không thành công",false,null);
+    }
 }
