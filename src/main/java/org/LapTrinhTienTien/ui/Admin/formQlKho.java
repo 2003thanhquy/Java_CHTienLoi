@@ -4,12 +4,26 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+
+import org.LapTrinhTienTien.model.CuaHangSanPham;
+import org.LapTrinhTienTien.service.CuaHangSanPhamService;
 import org.LapTrinhTienTien.ui.customItem.ProductCard;
 import org.LapTrinhTienTien.ui.customItem.ScrollBar;
 import org.LapTrinhTienTien.ui.customItem.WrapLayout;
+import org.LapTrinhTienTien.ui.events.ProductCardClick;
 import org.LapTrinhTienTien.ui.model.modelProduct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,25 +35,71 @@ public class formQlKho extends javax.swing.JPanel {
     /**
      * Creates new form formQlKho
      */
-    public formQlKho() {
+    private CuaHangSanPhamService cuaHangSanPhamService;
+    List<CuaHangSanPham> cuaHangSanPhamList = new ArrayList<>();
+
+    public formQlKho(@Autowired CuaHangSanPhamService cuaHangSanPhamService) {
         initComponents();
-        init();
+        this.cuaHangSanPhamService = cuaHangSanPhamService;
+        loadData();
+        events();
     }
-     private void init() {
+
+    private void events() {
+        btnReload.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadData();
+            }
+        });
+    }
+
+    private void loadData() {
+        try {
+            cuaHangSanPhamList.clear();
+            cuaHangSanPhamList = cuaHangSanPhamService.getAll();
+            init();
+        } catch (Exception e) {
+           // e.printStackTrace();
+            // Xử lý exception ở đây nếu cần thiết
+        }
+
+    }
+    private void onClickToCardProduct(){
+        System.out.println("111111");
+    }
+
+    private void init() {
         panel.setLayout(new WrapLayout(WrapLayout.LEADING));
         scrollPane.setVerticalScrollBar(new ScrollBar());
-        panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/1.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/1.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/1.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/1.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/5.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/6.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/7.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/8.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/9.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/10.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-        //panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/11.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
-       // panel.add(new ProductCard(new modelProduct(new ImageIcon(getClass().getResource("/com/raven/icon/testing/12.jpg")), "Lean Java UI", "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch")));
+        for(CuaHangSanPham chsp : cuaHangSanPhamList){
+
+            String imageResource = chsp.getSanPham().getImage();
+            ImageIcon icon = null;
+            System.out.println("Image"+imageResource);
+            if (imageResource != null) {
+                ClassPathResource resource1 = new ClassPathResource(imageResource);
+                try {
+                    Image image = ImageIO.read(resource1.getInputStream());
+                    int width = 30; // Đặt chiều rộng mong muốn
+                    int height =20; // Đặt chiều cao mong muốn
+                    Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+                    icon = new ImageIcon(scaledImage);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+            panel.add(new ProductCard(new modelProduct(icon, chsp.getSanPham().getTenSP(), "Leaning java\nswing ui design\nlike and Subscribe\nthank for watch"), new ProductCardClick() {
+                @Override
+                public void onCLickCard() {
+                    onClickToCardProduct();
+                }
+            }));
+        }
+
         panel.revalidate();
         panel.repaint();
     }
@@ -58,8 +118,9 @@ public class formQlKho extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        button1 = new org.LapTrinhTienTien.ui.customItem.button();
+        btnReload = new org.LapTrinhTienTien.ui.customItem.button();
         button2 = new org.LapTrinhTienTien.ui.customItem.button();
+        button3 = new org.LapTrinhTienTien.ui.customItem.button();
 
         scrollPane.setBorder(null);
         scrollPane.setOpaque(false);
@@ -87,15 +148,20 @@ public class formQlKho extends javax.swing.JPanel {
 
         jSeparator2.setForeground(new java.awt.Color(51, 51, 51));
 
-        button1.setText("Thêm");
-        button1.setActionCommand("");
-        button1.setBorderColor(new java.awt.Color(0, 0, 204));
-        button1.setRadius(35);
+        btnReload.setText("Reload");
+        btnReload.setActionCommand("");
+        btnReload.setBorderColor(new java.awt.Color(0, 0, 204));
+        btnReload.setRadius(35);
 
         button2.setText("Xóa");
         button2.setActionCommand("");
         button2.setBorderColor(new java.awt.Color(0, 0, 204));
         button2.setRadius(35);
+
+        button3.setText("Thêm");
+        button3.setActionCommand("");
+        button3.setBorderColor(new java.awt.Color(0, 0, 204));
+        button3.setRadius(35);
 
         javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
         myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
@@ -104,30 +170,38 @@ public class formQlKho extends javax.swing.JPanel {
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(67, 67, 67))
+                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
+                        .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(61, 61, 61))
         );
         myPanelBoxShadow1Layout.setVerticalGroup(
             myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(28, 28, 28)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
+            .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -154,8 +228,9 @@ public class formQlKho extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.LapTrinhTienTien.ui.customItem.button button1;
+    private org.LapTrinhTienTien.ui.customItem.button btnReload;
     private org.LapTrinhTienTien.ui.customItem.button button2;
+    private org.LapTrinhTienTien.ui.customItem.button button3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

@@ -26,7 +26,7 @@ public class test extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        formQlKho2 = new org.LapTrinhTienTien.ui.Admin.formQlKho();
+       // formQlKho2 = new org.LapTrinhTienTien.ui.Admin.formQlKho();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);

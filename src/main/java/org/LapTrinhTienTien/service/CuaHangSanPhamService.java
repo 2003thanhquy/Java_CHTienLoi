@@ -86,4 +86,10 @@ public class CuaHangSanPhamService {
         }
         return new Response("Cap nhật không thành công",false,null);
     }
+
+
+    public List<CuaHangSanPham> getAll(){
+        CuaHang cuaHang = Global.account.getNhanVien().getCuaHang();
+        return cuaHangSanPhamRepository.findAllByCuaHang(cuaHang);
+    }
 }
