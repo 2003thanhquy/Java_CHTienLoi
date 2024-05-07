@@ -16,6 +16,16 @@ public class ChiTietHoaDonService {
     public List<ChiTietHoaDon> getListCTHD(HoaDon hoaDon){
         return chiTietHoaDonRepository.findAllByHoaDon(hoaDon);
     }
+    public void thongKeToanTgian(List<ChiTietHoaDon> chiTietHd, String maSP) {
+        int totalQuantity = 0;
 
+        for (ChiTietHoaDon chiTiet : chiTietHd) {
+            if (chiTiet.getSanPham().getMaSP().equals(maSP)) {
+                totalQuantity += chiTiet.getSoLuong();
+            }
+        }
+
+        System.out.println("Mã sản phẩm " + maSP + ": Tổng số lượng = " + totalQuantity);
+    }
 
 }

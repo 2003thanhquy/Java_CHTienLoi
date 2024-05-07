@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 @Service
 public class HoaDonService {
     @Autowired
@@ -25,6 +26,7 @@ public class HoaDonService {
     public List<HoaDon> getAllAdminHoaDon(){
         return (List<HoaDon>) hoaDonRepository.findAll();
     }
+
     public List<HoaDon> getAllHoaDon(){
        List<HoaDon> lst =  (List<HoaDon>) hoaDonRepository.findAll();
        lst = lst.stream().filter(hd->hd.getStatus().equals(Status.ACTIVE)).toList();
@@ -98,4 +100,5 @@ public class HoaDonService {
             return new Response("Lỗi khi cập nhật hóa đơn: " , false, null);
         }
     }
+
 }

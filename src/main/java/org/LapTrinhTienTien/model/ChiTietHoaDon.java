@@ -28,15 +28,15 @@ public class ChiTietHoaDon {
     @MapsId("maHD")
     private HoaDon hoaDon;
 
-    @Column(name = "GiaSanPham", nullable = false)
-    private float giaThanhToan;
+    @Column(name = "GiaThanhToan", nullable = false)
+    private int giaThanhToan;
 
 
     @Column(name = "SoLuong", nullable = false)
     private int soLuong;
 
     @Column(name = "TongTien", nullable = false)
-    private float tongTien;
+    private int tongTien;
 
     // Constructors, getters, and setters
 }

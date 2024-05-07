@@ -6,7 +6,6 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import jakarta.annotation.Resource;
 import org.LapTrinhTienTien.StaticApp.Global;
-import org.LapTrinhTienTien._enum.ChucVuEnum;
 import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.service.NhanVienService;
@@ -30,12 +29,9 @@ public class loginForm extends javax.swing.JFrame {
     /**
      * Creates new form loginForm
      */
-
     @Autowired
     TaiKhoanService taikhoanService;
     @Autowired adminForm adminform;
-    @Autowired staffForm staffForm;
-    @Autowired NhanVienService nhanvienService;
 //    @Autowired
 //    staffForm staffform;
     public loginForm(){
@@ -195,15 +191,7 @@ public class loginForm extends javax.swing.JFrame {
             System.out.println(response.getMessage());
             Global.account = (TaiKhoan) response.getData();
             //Chuyen toi form Admin main
-            if(Global.account.getNhanVien().getTrangThai()!=null){
-                JOptionPane.showMessageDialog(this, "Tài khoản đã bị khóa.");
-                Global.account = null;
-                return;
-            }
-            if(Global.account.getNhanVien().getChucVu().getMaCV().equals(ChucVuEnum.NHAN_VIEN.getMaCV())){
-                System.out.println("staff");
-                staffForm.setVisible(true);
-            }else  adminform.setVisible(true);
+            adminform.setVisible(true);
             this.dispose();
 
         }else System.out.println(response.getMessage());

@@ -32,12 +32,10 @@ public class SanPham {
     private String trangThai;
 
     @Column(name = "TienGoc", nullable = false)
-    private float tienGoc;
+    private int tienGoc;
 
     @Column(name = "TienThanhToan", nullable = false)
-    private float tienThanhToan;
-    @Column(name = "Image")
-    private String image;
+    private int tienThanhToan;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "NgayNhapHang", nullable = false)

@@ -53,7 +53,6 @@ public class FakeData   implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-
         insertChucVu();
         insertCalamViec();
         insertNhaCungCap();
@@ -85,18 +84,52 @@ public class FakeData   implements CommandLineRunner{
 
         // Tìm nhân viên và khách hàng từ cơ sở dữ liệu
         NhanVien nhanVien = nhanVienRepository.findByMaNV("NV001");
-       // KhachHang khachHang = khachHangRepository.findBySdt("0123456781");
+        KhachHang khachHang = khachHangRepository.findBySdt("0123456781");
         SanPham sanPham = sanPhamRepository.findByMaSP("SP001");
         CuaHang cuaHang = cuaHangRepository.findByMaCH("CH002");
 
         // Gán nhân viên và khách hàng cho hóa đơn
         hoaDon.setNhanVien(nhanVien);
-        //hoaDon.setKhachHang(khachHang);
+        hoaDon.setKhachHang(khachHang);
         hoaDon.setCuaHang(cuaHang);
         cuaHang.getHoaDon().add(hoaDon);
 
         // Lưu hóa đơn vào cơ sở dữ liệu
+        HoaDon hoaDon1 = new HoaDon();
+        hoaDon1.setMaHD("HD002");
+        hoaDon1.setNgayXuat(LocalDateTime.now());
+        hoaDon1.setGiaTri(0);
+        hoaDon1.setDiemTich(0);
+        hoaDon1.setDiemSuDung(0);
+        hoaDon1.setGiaTri(50000);
+        hoaDon1.setThanhTien(50000);
+        hoaDon1.setMaKhuyenMai(null);
 
+
+
+        // Gán nhân viên và khách hàng cho hóa đơn
+        hoaDon1.setNhanVien(nhanVien);
+        hoaDon1.setKhachHang(khachHang);
+        hoaDon1.setCuaHang(cuaHang);
+        cuaHang.getHoaDon().add(hoaDon1);
+        // Lưu hóa đơn vào cơ sở dữ liệu
+        HoaDon hoaDon2 = new HoaDon();
+        hoaDon2.setMaHD("HD003");
+        hoaDon2.setNgayXuat(LocalDateTime.now());
+        hoaDon2.setGiaTri(0);
+        hoaDon2.setDiemTich(0);
+        hoaDon2.setDiemSuDung(0);
+        hoaDon2.setGiaTri(80000);
+        hoaDon2.setThanhTien(80000);
+        hoaDon2.setMaKhuyenMai(null);
+
+
+
+        // Gán nhân viên và khách hàng cho hóa đơn
+        hoaDon2.setNhanVien(nhanVien);
+        hoaDon2.setKhachHang(khachHang);
+        hoaDon2.setCuaHang(cuaHang);
+        cuaHang.getHoaDon().add(hoaDon2);
 
         // Tạo chi tiết hóa đơn
         ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
@@ -124,35 +157,34 @@ public class FakeData   implements CommandLineRunner{
         chiTietHoaDon1.setSoLuong(2); // Số lượng sản phẩm
         chiTietHoaDon1.setTongTien(chiTietHoaDon1.getGiaThanhToan() * chiTietHoaDon1.getSoLuong());
         // Lưu chi tiết hóa đơn vào cơ sở dữ liệu
-      //  hoaDon.getChiTietHoaDon().add(chiTietHoaDon);
+        //hoaDon.getChiTietHoaDon().add(chiTietHoaDon);
         try {
 
             hoaDonRepository.save(hoaDon);
+            hoaDonRepository.save(hoaDon1);
+            hoaDonRepository.save(hoaDon2);
+
             chiTietHoaDonRepository.save(chiTietHoaDon);
             chiTietHoaDonRepository.save(chiTietHoaDon1);
         } catch (Exception e) {
             System.out.println("HoaDon:" + e.getMessage());
         }
 
-       // chiTietHoaDonRepository.save(chiTietHoaDon);
+       //chiTietHoaDonRepository.save(chiTietHoaDon);
     }
     private void insertCuaHangSanPham(){
         CuaHangSanPham cuaHangSanPham = new CuaHangSanPham();
-        for(int i = 1;i < 10;i ++){
-            SanPham sanPham = sanPhamRepository.findByMaSP("SP00"+i);
-            CuaHang cuaHang = cuaHangRepository.findByMaCH("CH002");
-            cuaHangSanPham.setId(new CuaHangSanPhamKey(cuaHang.getMaCH(),sanPham.getMaSP()));
-            cuaHangSanPham.setSanPham(sanPham);
-            cuaHangSanPham.setCuaHang(cuaHang);
-            cuaHangSanPham.setSoLuong(10);
-            try{
-                cuaHangSanPhamRepository.save(cuaHangSanPham);
-            }catch (Exception e){
-                System.out.println("CuaHangSanPham:" + e.getMessage());
-            }
-
+        SanPham sanPham = sanPhamRepository.findByMaSP("SP001");
+        CuaHang cuaHang = cuaHangRepository.findByMaCH("CH002");
+        cuaHangSanPham.setId(new CuaHangSanPhamKey(cuaHang.getMaCH(),sanPham.getMaSP()));
+        cuaHangSanPham.setSanPham(sanPham);
+        cuaHangSanPham.setCuaHang(cuaHang);
+        cuaHangSanPham.setSoLuong(10);
+        try{
+            cuaHangSanPhamRepository.save(cuaHangSanPham);
+        }catch (Exception e){
+            System.out.println("CuaHangSanPham:" + e.getMessage());
         }
-
 
     }
     private void insertKho(){
@@ -245,7 +277,7 @@ public class FakeData   implements CommandLineRunner{
         chuongTrinhKhuyenMai.setMaCT("CT001");
         chuongTrinhKhuyenMai.setTenChuongTrinh("Chương trình giảm giá mùa hè");
         chuongTrinhKhuyenMai.setPhanTramGiamGia(10);
-        chuongTrinhKhuyenMai.setNgayApDung(LocalDateTime.of(2024, 5, 1, 0, 0)); // Ngày 1 tháng 6 năm 2024
+        chuongTrinhKhuyenMai.setNgayApDung(LocalDateTime.of(2024, 6, 1, 0, 0)); // Ngày 1 tháng 6 năm 2024
         chuongTrinhKhuyenMai.setNgayKetThuc(LocalDateTime.of(2024, 8, 31, 23, 59)); // Ngày 31 tháng 8 năm 2024
         chuongTrinhKhuyenMai.setTonghonDon(1000000); // Điều kiện áp dụng: tổng hóa đơn từ 1,000,000 đồng trở lên
 
@@ -338,7 +370,6 @@ public class FakeData   implements CommandLineRunner{
             sanPham.setTenSP("Tên sản phẩm " +i);
             sanPham.setNoiSanXuat("Nơi sản xuất "+i);
             sanPham.setTrangThai("Hoạt động");
-            sanPham.setImage("Img/SanPham/1.jpg");
             sanPham.setTienGoc(1000000);
             sanPham.setTienThanhToan(100000);
             sanPham.setNgayNhapHang(LocalDate.now());
