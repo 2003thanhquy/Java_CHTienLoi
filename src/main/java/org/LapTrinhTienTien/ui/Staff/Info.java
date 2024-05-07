@@ -4,20 +4,24 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+import org.LapTrinhTienTien.repository.NhanVienRepository;
 import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author Admin
  */
-@Controller
+
 public class Info extends javax.swing.JPanel {
 
     /**
      * Creates new form Info
      */
-    public Info() {
+    private NhanVienRepository nv;
+    public Info( NhanVienRepository nhv ) {
         initComponents();
+        this.nv = nhv;
+        System.out.println("_------" +nv);
     }
 
     /**

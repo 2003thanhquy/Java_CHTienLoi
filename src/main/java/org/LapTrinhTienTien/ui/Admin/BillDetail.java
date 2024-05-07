@@ -4,17 +4,34 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import lombok.Setter;
+import org.LapTrinhTienTien.model.HoaDon;
+import org.LapTrinhTienTien.service.ChiTietHoaDonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 /**
  *
  * @author quyth
  */
+@Controller
 public class BillDetail extends javax.swing.JFrame {
 
     /**
      * Creates new form BillDetail
      */
-    public BillDetail() {
+
+    ChiTietHoaDonService chiTietHoaDonService;
+    @Setter
+    HoaDon hoaDon;
+    public BillDetail(@Autowired ChiTietHoaDonService chiTietHoaDonService) {
         initComponents();
+        this.chiTietHoaDonService = chiTietHoaDonService;
+        loadData();
+    }
+
+    private void loadData(){
+        
     }
 
     /**
@@ -26,17 +43,47 @@ public class BillDetail extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bill = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblCTHD = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        bill.setEditable(false);
+        bill.setColumns(20);
+        bill.setRows(5);
+        jScrollPane2.setViewportView(bill);
+
+        jScrollPane3.setViewportView(tblCTHD);
+
+        jTextField1.setText("Mã  HD:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -72,11 +119,16 @@ public class BillDetail extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BillDetail().setVisible(true);
+                //new BillDetail().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea bill;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblCTHD;
     // End of variables declaration//GEN-END:variables
 }
