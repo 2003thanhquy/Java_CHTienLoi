@@ -7,8 +7,11 @@ package org.LapTrinhTienTien.ui.Admin;
 import org.springframework.stereotype.Service;
 
 import java.awt.Color;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
@@ -26,6 +29,7 @@ public class staffInfo extends javax.swing.JPanel {
      * Creates new form staffInfo
      */
     @Autowired private formThemNV themNV;
+    manageWorkTime manageWorkTimeForm;
     
     NhanVienRepository nhanVienRepository;
     public staffInfo(@Autowired NhanVienRepository nhanVienRepository) {
@@ -40,12 +44,12 @@ public class staffInfo extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 // Lấy chỉ số hàng của dòng được chọn
                 int row = table1.getSelectedRow();
-
+                
                 // Lấy dữ liệu từ hàng được chọn và hiển thị trong các JTextField
-                jTextField2.setText(table1.getValueAt(row, 0).toString()); // Họ và tên
-                jTextField3.setText(table1.getValueAt(row, 1).toString()); // Chức vụ
-                jTextField1.setText(table1.getValueAt(row, 2).toString()); // Số điện thoại
-                jTextField4.setText(table1.getValueAt(row, 3).toString()); // Ca làm việc
+                jTextField2.setText(table1.getValueAt(row, 1).toString()); // Họ và tên
+                jTextField3.setText(table1.getValueAt(row, 2).toString()); // Chức vụ
+                jTextField1.setText(table1.getValueAt(row, 3).toString()); // Số điện thoại
+                jTextField4.setText(table1.getValueAt(row, 4).toString()); // Ca làm việc
             }
         });
     }
@@ -66,7 +70,7 @@ public class staffInfo extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new org.LapTrinhTienTien.ui.customItem.table();
         btnThem = new org.LapTrinhTienTien.ui.customItem.button();
-        btnXoa = new org.LapTrinhTienTien.ui.customItem.button();
+        btnDoiTrangThai = new org.LapTrinhTienTien.ui.customItem.button();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
@@ -81,6 +85,7 @@ public class staffInfo extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new org.LapTrinhTienTien.ui.customItem.button();
+        btnQuanLyLichLam = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(237, 237, 237));
 
@@ -90,13 +95,13 @@ public class staffInfo extends javax.swing.JPanel {
 
         table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Họ tên", "Chức vụ", "Số điện thoại", "Ca làm"
+                "Mã nhân viên", "Họ tên", "Chức vụ", "Số điện thoại", "Trạng thái"
             }
         ));
         jScrollPane1.setViewportView(table1);
@@ -133,8 +138,13 @@ public class staffInfo extends javax.swing.JPanel {
             }
         });
 
-        btnXoa.setText("Xóa");
-        btnXoa.setRadius(30);
+        btnDoiTrangThai.setText("Đối trạng thái");
+        btnDoiTrangThai.setRadius(30);
+        btnDoiTrangThai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiTrangThaiActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -185,6 +195,13 @@ public class staffInfo extends javax.swing.JPanel {
             }
         });
 
+        btnQuanLyLichLam.setText("jButton1");
+        btnQuanLyLichLam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuanLyLichLamActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -201,19 +218,8 @@ public class staffInfo extends javax.swing.JPanel {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField3)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -224,7 +230,21 @@ public class staffInfo extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextField4)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnDoiTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(btnQuanLyLichLam))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,27 +266,29 @@ public class staffInfo extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                         .addGap(1, 1, 1)))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnThem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnQuanLyLichLam)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDoiTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -328,6 +350,53 @@ public class staffInfo extends javax.swing.JPanel {
         // Update the table with the search result
         updateTable(searchResult);
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnDoiTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiTrangThaiActionPerformed
+        // Get the selected row index
+        int selectedRow = table1.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên để đổi trạng thái.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Get the staff code from the selected row (assuming it's the first column)
+        String maNV = table1.getValueAt(selectedRow, 0).toString();
+
+        // Find the staff information using the staff code
+        NhanVien nhanVien = nhanVienRepository.findByMaNV(maNV);
+
+        // Check if the staff is found
+        if (nhanVien == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin nhân viên.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Toggle the trangThai field based on its initial state
+        if (nhanVien.getTrangThai() == null) {
+            nhanVien.setTrangThai(LocalDateTime.now()); // Set to current date/time if null
+        } else {
+            nhanVien.setTrangThai(null); // Set to null if not null
+        }
+
+        // Save the updated staff information with error handling
+        try {
+            nhanVienRepository.save(nhanVien);
+            loadDataIntoTable(); // Reload table data (Implement this method to refresh the table)
+            String message = nhanVien.getTrangThai() == null ? "đã được đặt về trạng thái ban đầu" : "đã được cập nhật trạng thái.";
+            JOptionPane.showMessageDialog(this, "Nhân viên " + nhanVien.getHoTenNV() + " " + message + ".", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Cập nhật trạng thái nhân viên thất bại: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDoiTrangThaiActionPerformed
+
+    private void btnQuanLyLichLamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyLichLamActionPerformed
+        // Create an instance of manageWorkTime form
+            
+            // Make the form visible
+            manageWorkTimeForm.setVisible(true);
+    }//GEN-LAST:event_btnQuanLyLichLamActionPerformed
     
     private void updateTable(List<NhanVien> searchResult) {
         // Get the table model
@@ -338,14 +407,23 @@ public class staffInfo extends javax.swing.JPanel {
 
         // Populate the table with the search result
         for (NhanVien nhanVien : searchResult) {
+            String trangThai = "";
+            if (nhanVien.getTrangThai() != null) {
+              // Format the LocalDateTime to a String (assuming desired format)
+              trangThai = nhanVien.getTrangThai().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } else {
+              trangThai = "null";
+            }
             model.addRow(new Object[]{
+                    nhanVien.getMaNV(),
                     nhanVien.getHoTenNV(),
                     nhanVien.getChucVu().getTenChucVu(),
                     nhanVien.getSdt(),
-                    nhanVien.getLichLam()
+                    trangThai
             });
         }
     }
+    
     private void loadDataIntoTable() {
         List<NhanVien> nhanVienList = nhanVienRepository.findAll();
 
@@ -355,11 +433,19 @@ public class staffInfo extends javax.swing.JPanel {
 
         // Đưa dữ liệu mới từ danh sách khách hàng vào bảng
         for (NhanVien nhanVien : nhanVienList) {
+            String trangThai = "";
+            if (nhanVien.getTrangThai() != null) {
+              // Format the LocalDateTime to a String (assuming desired format)
+              trangThai = nhanVien.getTrangThai().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } else {
+              trangThai = "null";
+            }
             model.addRow(new Object[]{
+                    nhanVien.getMaNV(),
                     nhanVien.getHoTenNV(),
                     nhanVien.getChucVu().getTenChucVu(),
                     nhanVien.getSdt(),
-                    nhanVien.getLichLam()
+                    trangThai
             });
         }
     }
@@ -367,9 +453,10 @@ public class staffInfo extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.LapTrinhTienTien.ui.customItem.button btnDoiTrangThai;
+    private javax.swing.JButton btnQuanLyLichLam;
     private org.LapTrinhTienTien.ui.customItem.button btnThem;
     private org.LapTrinhTienTien.ui.customItem.button btnTimKiem;
-    private org.LapTrinhTienTien.ui.customItem.button btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
