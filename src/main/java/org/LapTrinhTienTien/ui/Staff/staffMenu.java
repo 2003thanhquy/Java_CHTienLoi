@@ -10,6 +10,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.JFrame;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.LapTrinhTienTien.ui.model.Model_Menu;
 
@@ -24,6 +25,11 @@ public class staffMenu extends javax.swing.JPanel {
      * Creates new form menu
      */
     private EventMenuSelected event;
+    public JFrame parentForm;
+    public void setParentForm(JFrame parentForm)
+    {
+        this.parentForm = parentForm;
+    }
 
     public void addEventMenuSelected(EventMenuSelected event) {
         this.event = event;
@@ -42,7 +48,7 @@ public class staffMenu extends javax.swing.JPanel {
         listMenu.addItem(new Model_Menu("warehouse", "product", Model_Menu.MenuType.MENU));
         listMenu.addItem(new Model_Menu("dashboard", "supplier", Model_Menu.MenuType.MENU));
         listMenu.addItem(new Model_Menu("customer", "timeTable", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+        //listMenu.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu.addItem(new Model_Menu("", "Chức năng", Model_Menu.MenuType.TITLE));
         listMenu.addItem(new Model_Menu("coupon", "invoice", Model_Menu.MenuType.MENU));
     }
@@ -56,14 +62,13 @@ public class staffMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        listMenu = new org.LapTrinhTienTien.ui.customItem.listMenu<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        logOutLbl = new javax.swing.JLabel();
+        listMenu = new org.LapTrinhTienTien.ui.customItem.listMenu<>();
 
         setForeground(new java.awt.Color(255, 255, 255));
-
-        listMenu.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
@@ -77,24 +82,47 @@ public class staffMenu extends javax.swing.JPanel {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 0, 35, 40);
 
+        logOutLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
+        logOutLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logOutLblMousePressed(evt);
+            }
+        });
+
+        listMenu.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                        .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(logOutLbl)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                                .addGap(0, 0, 0))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(logOutLbl)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void logOutLblMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutLblMousePressed
+        // TODO add your handling code here:
+        this.parentForm.dispose();
+        loginForm login = new loginForm();
+        login.setVisible(true);
+    }//GEN-LAST:event_logOutLblMousePressed
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -109,5 +137,6 @@ public class staffMenu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private org.LapTrinhTienTien.ui.customItem.listMenu<String> listMenu;
+    private javax.swing.JLabel logOutLbl;
     // End of variables declaration//GEN-END:variables
 }
