@@ -74,7 +74,7 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(formKho);
                 if(index==4)
                     setForm(ncc);
-                if(index==7)
+                if(index==6)
                     setForm(coupon);
                 if(index==7)
                     setForm(dashBoard);

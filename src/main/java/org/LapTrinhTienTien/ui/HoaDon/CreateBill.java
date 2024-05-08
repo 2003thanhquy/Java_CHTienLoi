@@ -208,6 +208,7 @@ public class CreateBill extends javax.swing.JFrame {
         }
       Response response =   thanhToanService.thanhToan(gioHangs,tf_sdt.getText()+"");
         if (response.getFlag()) {
+            btnThanhToan.setEnabled(false);
             JOptionPane.showMessageDialog(this, response.getMessage(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Lỗi: " + response.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

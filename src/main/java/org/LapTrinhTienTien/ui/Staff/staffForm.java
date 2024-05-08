@@ -63,7 +63,7 @@ public class staffForm extends javax.swing.JFrame {
                     setForm(wareHouse);
                 if(index==3)
                     setForm(timeTable);
-                if(index==7)
+                if(index==5)
                     setForm(invoice);
             }
 
