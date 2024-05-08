@@ -10,6 +10,7 @@ import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
 
 import org.LapTrinhTienTien.service.NhanVienService;
+import org.LapTrinhTienTien.ui.Admin.loginForm;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class staffForm extends javax.swing.JFrame {
     private CalendarCustom timeTable;
     @Autowired
     private Invoice invoice;
+    private loginForm login;
     public staffForm(@Autowired NhanVienRepository nhanVienRepository) {
         //this.info = new Info(nhanVienRepository);
         this.nhanVienRepository=nhanVienRepository;
@@ -48,6 +50,10 @@ public class staffForm extends javax.swing.JFrame {
 
         //  set when system open start with home form
 
+    }
+    public void setLogin(loginForm login) {
+        this.login = login;
+        staffMenu.setLogin(this.login);
     }
     private void events(){
         staffMenu.addEventMenuSelected(new EventMenuSelected()

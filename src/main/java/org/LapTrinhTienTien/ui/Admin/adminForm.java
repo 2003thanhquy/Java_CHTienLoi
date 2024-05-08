@@ -6,6 +6,8 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.JComponent;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.LapTrinhTienTien.service.NhanVienService;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +39,11 @@ public class adminForm extends javax.swing.JFrame {
     private formNhapHang nhapHang;
     @Autowired
     private customerMangager customer;
+    @Getter
+    loginForm login;
+
     public adminForm(@Autowired staffInfo info) {
         this.info = info;
-        
         //setUndecorated(true);
         
         initComponents();
@@ -49,6 +53,12 @@ public class adminForm extends javax.swing.JFrame {
         //  set when system open start with home form
 
     }
+
+    public void setLogin(loginForm login) {
+        this.login = login;
+        menu.setLoginForm(login);
+    }
+
     private void events(){{
         menu.addEventMenuSelected(new EventMenuSelected()
         {

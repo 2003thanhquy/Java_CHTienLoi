@@ -4,14 +4,15 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.JFrame;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.LapTrinhTienTien.ui.model.Model_Menu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 /**
  *
@@ -22,6 +23,7 @@ public class menu extends javax.swing.JPanel {
     /**
      * Creates new form menu
      */
+    loginForm loginForm;
     private EventMenuSelected event;
     public JFrame parentForm;
     public void addEventMenuSelected(EventMenuSelected event) {
@@ -37,6 +39,28 @@ public class menu extends javax.swing.JPanel {
     public void setParentForm(JFrame parentForm)
     {
         this.parentForm = parentForm;
+        events();
+    }
+    public void setLoginForm(loginForm loginForm){
+        this.loginForm = loginForm;
+    }
+    
+    private void events() {
+        logOutLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         logOutLbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Xử lý sự kiện click ở đây
+                logout(e);
+            }
+        });
+        }
+    private void logout(MouseEvent e){
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            parentForm.dispose();
+            loginForm.setVisible(true);
+        }
     }
     private void init() {
         listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
@@ -83,11 +107,6 @@ public class menu extends javax.swing.JPanel {
         jLabel2.setBounds(10, 0, 35, 40);
 
         logOutLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
-        logOutLbl.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                logOutLblMousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -117,13 +136,6 @@ public class menu extends javax.swing.JPanel {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void logOutLblMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutLblMousePressed
-        // TODO add your handling code here:
-        this.parentForm.dispose();
-        loginForm login = new loginForm();
-        login.setVisible(true);
-    }//GEN-LAST:event_logOutLblMousePressed
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -140,4 +152,5 @@ public class menu extends javax.swing.JPanel {
     private org.LapTrinhTienTien.ui.customItem.listMenu<String> listMenu;
     private javax.swing.JLabel logOutLbl;
     // End of variables declaration//GEN-END:variables
+
 }

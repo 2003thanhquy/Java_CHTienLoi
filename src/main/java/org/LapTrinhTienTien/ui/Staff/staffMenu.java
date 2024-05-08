@@ -5,12 +5,10 @@
 package org.LapTrinhTienTien.ui.Staff;
 
 import org.LapTrinhTienTien.ui.Admin.*;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.JFrame;
+
+import java.awt.*;
+import javax.swing.*;
+
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.LapTrinhTienTien.ui.model.Model_Menu;
 
@@ -26,6 +24,7 @@ public class staffMenu extends javax.swing.JPanel {
      */
     private EventMenuSelected event;
     public JFrame parentForm;
+    loginForm login;
     public void setParentForm(JFrame parentForm)
     {
         this.parentForm = parentForm;
@@ -37,9 +36,13 @@ public class staffMenu extends javax.swing.JPanel {
     }
     public staffMenu() {
         initComponents();
+        logOutLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         setOpaque(false);
         listMenu.setOpaque(false);
         init();
+    }
+    public void setLogin(loginForm login){
+        this.login = login;
     }
     private void init() {
         listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
@@ -119,9 +122,11 @@ public class staffMenu extends javax.swing.JPanel {
 
     private void logOutLblMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutLblMousePressed
         // TODO add your handling code here:
-        this.parentForm.dispose();
-        loginForm login = new loginForm();
-        login.setVisible(true);
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            parentForm.dispose();
+            login.setVisible(true);
+        }
     }//GEN-LAST:event_logOutLblMousePressed
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
