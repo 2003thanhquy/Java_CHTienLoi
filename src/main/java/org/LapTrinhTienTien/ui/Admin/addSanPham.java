@@ -177,12 +177,13 @@ public class addSanPham extends javax.swing.JFrame {
         tf_tiengoc = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tf_mancc = new javax.swing.JTextField();
-        btnThem = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         tf_soluong = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        btnThem = new org.LapTrinhTienTien.ui.customItem.button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -264,14 +265,24 @@ public class addSanPham extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel3.setText("Tiền gốc:");
 
-        jTextField4.setBorder(null);
-
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel5.setText("Nhà cung cấp");
 
-        btnThem.setText("Thêm");
+        tf_mancc.setBorder(null);
 
-        jLabel4.setText("Sô lương");
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel4.setText("Số lượng");
+
+        tf_soluong.setBorder(null);
+
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+
+        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
+
+        btnThem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnThem.setText("Thêm");
+        btnThem.setBorderColor(new java.awt.Color(0, 0, 0));
+        btnThem.setRadius(35);
 
         javax.swing.GroupLayout tf_tenspLayout = new javax.swing.GroupLayout(tf_tensp);
         tf_tensp.setLayout(tf_tenspLayout);
@@ -296,24 +307,22 @@ public class addSanPham extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tf_tenspLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)))
-                        .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator1)
-                                .addComponent(tf_diachi)
-                                .addComponent(tf_tensanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                .addComponent(jSeparator2)
-                                .addComponent(tf_tiengoc)
-                                .addComponent(jSeparator3)
-                                .addComponent(jTextField4))
-                            .addGroup(tf_tenspLayout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tf_mancc, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(tf_tenspLayout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(btnThem)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator1)
+                            .addComponent(tf_diachi)
+                            .addComponent(tf_tensanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(jSeparator2)
+                            .addComponent(tf_tiengoc)
+                            .addComponent(jSeparator3)
+                            .addComponent(tf_mancc)
+                            .addComponent(tf_soluong)
+                            .addComponent(jSeparator4)
+                            .addComponent(jSeparator5))
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tf_tenspLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         tf_tenspLayout.setVerticalGroup(
             tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,19 +347,21 @@ public class addSanPham extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(61, 61, 61)
                 .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(tf_mancc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(5, 5, 5)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(tf_tenspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tf_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(btnThem)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -408,7 +419,7 @@ public class addSanPham extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.LapTrinhTienTien.ui.customItem.button btnAddImg;
     private org.LapTrinhTienTien.ui.customItem.button btnDltImg;
-    private javax.swing.JButton btnThem;
+    private org.LapTrinhTienTien.ui.customItem.button btnThem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -418,7 +429,8 @@ public class addSanPham extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblLoadImage;
     private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow1;
     private javax.swing.JTextField tf_diachi;
