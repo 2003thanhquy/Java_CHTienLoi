@@ -43,7 +43,8 @@ public class adminForm extends javax.swing.JFrame {
     private customerMangager customer;
     @Getter
     loginForm login;
-
+    @Autowired
+    manageWorkTime manageWorkTime;
     public adminForm(@Autowired staffInfo info) {
         this.info = info;
         //setUndecorated(true);
@@ -72,14 +73,14 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(bill);
                 if(index==3)
                     setForm(formKho);
-                if(index==4)
-                    setForm(ncc);
-                if(index==6)
+                if(index==5)
                     setForm(coupon);
-                if(index==7)
+                if(index==6)
                     setForm(dashBoard);
-                if(index==8)
+                if(index==7)
                     setForm(customer);
+                if(index==8)
+                    setForm(manageWorkTime);
             }
 
         });
