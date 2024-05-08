@@ -113,4 +113,8 @@ public class MyPanelBoxShadow extends JPanel{
         g2.drawImage(render.createShadow(img), 0, 0, null);
         g2.drawImage(img, x, y, null);
     }
+
+    public void setImage(BufferedImage scaledImage) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

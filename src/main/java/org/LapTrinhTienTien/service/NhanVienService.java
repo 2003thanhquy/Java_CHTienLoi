@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
+import org.LapTrinhTienTien.model.CuaHang;
 import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
@@ -28,7 +29,7 @@ public class NhanVienService {
 
 
     @Transactional
-    public NhanVien themNhanVien(String hoTenNV, String cccd, LocalDate ngaySinh, LocalDate ngayVaoLam, String sdt, String diaChi, String gioiTinh, String urlImage) {
+    public NhanVien themNhanVien(String hoTenNV, String cccd, LocalDate ngaySinh, LocalDate ngayVaoLam, String sdt, String diaChi, String gioiTinh, String urlImage, ChucVu chucVu, CuaHang cuaHang) {
         NhanVien nhanVien = new NhanVien();
         try {
             // Xác định Mã nhân viên mới
@@ -53,7 +54,7 @@ public class NhanVienService {
 
             // Đường dẫn đầy đủ của tệp ảnh mới, sử dụng đường dẫn tương đối
             String newImagePath = "src/main/resources/NhanVien/" + newMaNV + ".jpg";
-
+            
             // Copy tệp ảnh đến đường dẫn mới
             File source = new File(urlImage);
             File destination = new File(newImagePath);
@@ -61,7 +62,8 @@ public class NhanVienService {
 
             // Cập nhật đường dẫn ảnh trong đối tượng nhân viên
             nhanVien.setUrlImage(newImagePath);
-
+            nhanVien.setCuaHang(cuaHang);
+            nhanVien.setChucVu(chucVu);
             // Lưu thông tin nhân viên vào cơ sở dữ liệu
             nhanVienRepository.save(nhanVien);
              // Tạo tài khoản mới cho nhân viên

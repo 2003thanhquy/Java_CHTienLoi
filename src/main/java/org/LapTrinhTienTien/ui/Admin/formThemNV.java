@@ -18,6 +18,10 @@ import org.LapTrinhTienTien.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import java.io.IOException;
+import org.LapTrinhTienTien.model.ChucVu;
+import org.LapTrinhTienTien.model.CuaHang;
+import org.LapTrinhTienTien.repository.ChucVuRepository;
+import org.LapTrinhTienTien.repository.CuaHangRepository;
 import org.apache.poi.EncryptedDocumentException;
 
 /**
@@ -32,10 +36,22 @@ public class formThemNV extends javax.swing.JFrame {
      */
     @Autowired
     private NhanVienService nhanVienService;
-
-    public formThemNV() {
-
+    private ChucVuRepository chucVuRepository;
+    private CuaHangRepository cuaHangRepository;
+    String maChucVu = "CV0001"; // Ví dụ: CV001
+    String maCuaHang = "CH002"; // Ví dụ: CH001
+    NhanVien nvAdded;
+    ChucVu chucVu;
+    CuaHang cuaHang;
+    
+    public formThemNV(@Autowired ChucVuRepository chucVuRepository, @Autowired CuaHangRepository cuaHangRepository) {
+        this.chucVuRepository = chucVuRepository;
+        this.cuaHangRepository = cuaHangRepository;
+        chucVu = chucVuRepository.findByMaCV(maChucVu);
+        cuaHang = cuaHangRepository.findByMaCH(maCuaHang);
+        // Truy vấn cơ sở dữ liệu để lấy đối tượng ChucVu và CuaHang tương ứng
         initComponents();
+        
     }
 
     /**
@@ -294,41 +310,26 @@ public class formThemNV extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        System.out.println(nhanVienService);
         String hoTen = jTextField1.getText();
         String cccd =  jTextField6.getText();
-        // Lấy ngày sinh từ jTextField2 và chuyển đổi thành LocalDate
         LocalDate ngaySinh = LocalDate.parse(jTextField2.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        // Tương tự với các giá trị khác
         LocalDate ngayVaoLam = LocalDate.parse(jTextField3.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String sdt = jTextField4.getText();
         String diaChi = jTextField5.getText();
-
-        // Xác định giới tính dựa trên RadioButton
         String gioiTinh = rbNam.isSelected() ? "Nam" : "Nữ";
-
-        // Lấy đường dẫn ảnh từ JTextField
         String urlImage = jTextFieldImagePath.getText();
-        
+        nvAdded = nhanVienService.themNhanVien(hoTen, cccd,  ngaySinh, ngayVaoLam, sdt, diaChi, gioiTinh, urlImage, chucVu, cuaHang);
 
-        // Gọi phương thức thêm nhân viên từ lớp xử lý dữ liệu
-        NhanVien nv = nhanVienService.themNhanVien(hoTen, cccd, ngaySinh, ngayVaoLam, sdt, diaChi, gioiTinh, urlImage);
-        // Hiển thị thông báo hoặc thực hiện hành động tiếp theo tùy theo kết quả
-        // Kiểm tra xem việc thêm nhân viên đã thành công hay chưa
-        if (nv != null) {
-            // Nếu nv không null, tức là thêm thành công
-            // Thực hiện các hành động tiếp theo tại đây
-            // Ví dụ: Hiển thị thông báo thành công, làm mới các trường nhập liệu, v.v.
+        // Kiểm tra xem việc thêm nhân viên đã thành công hay không
+        if (nvAdded != null) {
+            // Thêm thành công
             System.out.println("Thêm nhân viên thành công!");
         } else {
-            // Nếu nv là null, tức là thêm không thành công
-            // Thực hiện các hành động xử lý khi thêm không thành công tại đây
-            // Ví dụ: Hiển thị thông báo lỗi, yêu cầu người dùng nhập lại, v.v.
+            // Thêm không thành công
             System.out.println("Thêm nhân viên không thành công!");
         }
     }//GEN-LAST:event_btnThemActionPerformed
-
+    
     private void btnSelectExcelFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectExcelFileActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx", "xls");
@@ -358,9 +359,12 @@ public class formThemNV extends javax.swing.JFrame {
                         gioiTinh = gioiTinh.substring(0, 1);
                     }
                     String urlImage = row.getCell(7).getStringCellValue().trim();
+                    
 
-                    NhanVien nv = nhanVienService.themNhanVien(hoTen, cccd,  ngaySinh, ngayVaoLam, sdt, diaChi, gioiTinh, urlImage);
-                    if (nv != null) {
+
+        // Gọi phương thức thêm nhân viên từ lớp xử lý dữ liệu
+                    nvAdded = nhanVienService.themNhanVien(hoTen, cccd,  ngaySinh, ngayVaoLam, sdt, diaChi, gioiTinh, urlImage, chucVu, cuaHang);
+                    if (nvAdded != null) {
                         System.out.println("Thêm nhân viên thành công!");
                     } else {
                         System.out.println("Thêm nhân viên không thành công!");
@@ -441,7 +445,7 @@ public class formThemNV extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new formThemNV().setVisible(true);
+                //new formThemNV().setVisible(true);
             }
         });
     }

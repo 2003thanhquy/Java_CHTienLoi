@@ -50,10 +50,10 @@ public class NhanVien implements Serializable {
     LocalDateTime trangThai;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "NV_CV")
     private ChucVu chucVu;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name ="NV_CH")
     private CuaHang cuaHang;
     @OneToMany(mappedBy="nhanVien",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
