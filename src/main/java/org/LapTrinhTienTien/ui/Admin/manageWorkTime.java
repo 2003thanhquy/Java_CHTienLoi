@@ -4,17 +4,74 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import org.LapTrinhTienTien.TableModel.LichLamTableModel;
+import org.LapTrinhTienTien.model.LichLam;
+import org.LapTrinhTienTien.service.LichLamService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author Hi
  */
+@Controller
 public class manageWorkTime extends javax.swing.JPanel {
 
     /**
      * Creates new form manageWorkTime
      */
-    public manageWorkTime() {
+    LichLamService lichLamService;
+    LichLamTableModel llTableModel;
+    List<LichLam> lichLamList = new ArrayList<>();
+    public manageWorkTime( @Autowired LichLamService lichLamService) {
         initComponents();
+        this.lichLamService = lichLamService;
+        events();
+    }
+
+    private void events() {
+        btnReload.addActionListener(e -> {
+            loadData();
+        });
+        btnTimKiem.addActionListener(e -> {
+           btnTimKiemAction();
+        });
+    }
+    private void btnTimKiemAction() {
+        String manv = tf_manv.getText()+"";
+        String calv = tf_maca.getText()+"";
+        LocalDate ngaybd = getSelectedDate(dcNgayBD.getDate());
+        LocalDate ngaykt = getSelectedDate(dcNgayKT.getDate());
+        List<LichLam> lichLams= lichLamService.timKiemLichLam(manv,calv,ngaybd,ngaykt);
+        System.out.println("---ll Find--"+lichLams.size());
+        llTableModel.setLstLichLams(lichLams);
+        llTableModel.fireTableDataChanged();
+    }
+    private void loadData() {
+        tf_maca.setText("");
+        tf_manv.setText("");
+        LocalDate ngayHienTai = LocalDate.now();
+        java.sql.Date date = java.sql.Date.valueOf(ngayHienTai);
+        dcNgayBD.setDate(date);
+        dcNgayKT.setDate(date);
+        lichLamList.clear();
+        lichLamList = lichLamService.getAllLichLam();
+        System.out.println("------listll----"+ lichLamList.size());
+        llTableModel = new LichLamTableModel(lichLamList);
+        tblLichLam.setModel(llTableModel);
+    }
+    public LocalDate getSelectedDate(Date date) {
+        if (date != null) {
+            return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -30,16 +87,16 @@ public class manageWorkTime extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         tf_maca = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        tf_ngaybd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        tf_ngaykt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        btnCaLamViec = new javax.swing.JTable();
+        tblLichLam = new javax.swing.JTable();
         btnThemExcel = new javax.swing.JButton();
         btnReload = new javax.swing.JButton();
         btnTimKiem = new javax.swing.JButton();
+        dcNgayBD = new com.toedter.calendar.JDateChooser();
+        dcNgayKT = new com.toedter.calendar.JDateChooser();
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel1.setText("Mã NV: ");
@@ -53,7 +110,7 @@ public class manageWorkTime extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel4.setText("Ngày kết thúc:");
 
-        jScrollPane1.setViewportView(btnCaLamViec);
+        jScrollPane1.setViewportView(tblLichLam);
 
         btnThemExcel.setText("Excel");
 
@@ -85,10 +142,10 @@ public class manageWorkTime extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(11, 11, 11)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_ngaybd, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                            .addComponent(tf_ngaykt))
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dcNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dcNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addGap(200, 200, 200)))
                 .addContainerGap())
@@ -107,17 +164,19 @@ public class manageWorkTime extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tf_manv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(tf_ngaybd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tf_manv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel3))
+                            .addComponent(dcNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tf_maca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(tf_ngaykt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tf_maca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4))
+                            .addComponent(dcNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,19 +198,19 @@ public class manageWorkTime extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable btnCaLamViec;
     private javax.swing.JButton btnReload;
     private javax.swing.JButton btnThemExcel;
     private javax.swing.JButton btnTimKiem;
+    private com.toedter.calendar.JDateChooser dcNgayBD;
+    private com.toedter.calendar.JDateChooser dcNgayKT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblLichLam;
     private javax.swing.JTextField tf_maca;
     private javax.swing.JTextField tf_manv;
-    private javax.swing.JTextField tf_ngaybd;
-    private javax.swing.JTextField tf_ngaykt;
     // End of variables declaration//GEN-END:variables
 }
