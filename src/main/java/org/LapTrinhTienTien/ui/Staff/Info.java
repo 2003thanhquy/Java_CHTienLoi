@@ -13,6 +13,10 @@ import javax.swing.ImageIcon;
 import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
+import org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -132,11 +136,17 @@ public class Info extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -153,7 +163,7 @@ public class Info extends javax.swing.JPanel {
                         .addGap(23, 23, 23)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(57, 57, 57)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -227,7 +237,7 @@ public class Info extends javax.swing.JPanel {
                             .addComponent(tfNgayVaoLam)
                             .addComponent(jSeparator7)
                             .addComponent(jSeparator8))))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,6 +315,36 @@ public class Info extends javax.swing.JPanel {
         tfSoDienThoai.setText(currentNhanVien.getSdt());
         tfDiaChi.setText(currentNhanVien.getDiaChi());
         tfCCCD.setText(currentNhanVien.getCccd());
+        //String dataUrl = currentNhanVien.getUrlImage();
+        //String filename = dataUrl.substring(dataUrl.lastIndexOf("/") + 1);
+
+        // Construct the file path based on the project structure
+        String imagePath = currentNhanVien.getUrlImage();
+
+        try {
+            // Read the image from the file system
+            BufferedImage image = ImageIO.read(new File(imagePath));
+
+            // Ensure lblImage has a non-zero size
+            if (lblImage.getWidth() > 0 && lblImage.getHeight() > 0) {
+                // Resize the image to fit the label
+                int scaledWidth = lblImage.getWidth();
+                int scaledHeight = lblImage.getHeight();
+                BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+                Graphics g = scaledImage.getGraphics();
+                g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
+                g.dispose();
+
+                // Set the image on the label
+                ImageIcon imageIcon = new ImageIcon(scaledImage);
+                lblImage.setIcon(imageIcon);
+            } else {
+                System.out.println("Label size is zero. Cannot resize image.");
+            }
+        } catch (IOException e) {
+            // Handle image loading errors gracefully, for example, by displaying a default image
+            System.out.println("Error loading image: " + e.getMessage());
+        }
         //tfCongViec.setText(currentNhanVien.getCongViec());
         //tfTrangThai.setText(currentNhanVien.getTrangThai());
         String imagePath = currentNhanVien.getUrlImage();

@@ -4,6 +4,9 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import org.LapTrinhTienTien.TableModel.LichLamTableModel;
 import org.LapTrinhTienTien.model.LichLam;
 import org.LapTrinhTienTien.service.LichLamService;
@@ -12,9 +15,27 @@ import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.LapTrinhTienTien.model.CaLamViec;
+import org.LapTrinhTienTien.model.IdClass.LichLamId;
+import org.LapTrinhTienTien.model.NhanVien;
+import org.LapTrinhTienTien.repository.CaLamViecRepository;
+import org.LapTrinhTienTien.repository.LichLamRepository;
+import org.LapTrinhTienTien.repository.NhanVienRepository;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -26,6 +47,9 @@ public class manageWorkTime extends javax.swing.JPanel {
     /**
      * Creates new form manageWorkTime
      */
+    @Autowired CaLamViecRepository caLamViecRepository;
+    @Autowired NhanVienRepository nhanVienRepository;
+    @Autowired LichLamRepository lichLamRepository;
     LichLamService lichLamService;
     LichLamTableModel llTableModel;
     List<LichLam> lichLamList = new ArrayList<>();
@@ -113,6 +137,11 @@ public class manageWorkTime extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblLichLam);
 
         btnThemExcel.setText("Excel");
+        btnThemExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemExcelActionPerformed(evt);
+            }
+        });
 
         btnReload.setText("reload");
 
@@ -126,36 +155,39 @@ public class manageWorkTime extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_maca, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnThemExcel))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_manv, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(11, 11, 11)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dcNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dcNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tf_maca, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tf_manv, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(11, 11, 11)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dcNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dcNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)))
                         .addGap(200, 200, 200)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(120, 120, 120)
                 .addComponent(btnTimKiem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnReload)
-                    .addComponent(btnThemExcel))
+                .addComponent(btnReload)
                 .addGap(70, 70, 70))
         );
         layout.setVerticalGroup(
@@ -182,20 +214,87 @@ public class manageWorkTime extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                        .addComponent(btnThemExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnThemExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemExcelActionPerformed
+        // Open file dialog and select Excel file
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn file Excel");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("File Excel", "xls", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int returnVal = fileChooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                // Read data from Excel file
+                FileInputStream fis = new FileInputStream(file);
+                Workbook workbook = WorkbookFactory.create(fis); // Use WorkbookFactory for newer formats
+                Sheet sheet = workbook.getSheetAt(0);
+
+                // Iterate through rows in the sheet
+                for (Row row : sheet) {
+                    if (isRowEmpty(row)) {
+                        System.out.println("Dòng rỗng");
+                        continue; // Skip empty rows
+                    }
+
+                    // Extract data from specific columns
+                    String maCa = row.getCell(0).getStringCellValue().trim();
+                    String maNV = row.getCell(1).getStringCellValue().trim();
+                    LocalDate ngay = LocalDate.parse(row.getCell(2).getStringCellValue(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                    // Create LichLam object and validate data
+                    LichLam lichLam = new LichLam();
+                    CaLamViec caLamViec = caLamViecRepository.findByMaCa(maCa);
+                    NhanVien nhanVien = nhanVienRepository.findByMaNV(maNV);
+                    if (caLamViec == null || nhanVien == null) {
+                        System.out.println("Mã ca hoặc mã nhân viên không hợp lệ: " + row.getRowNum());
+                        continue; // Skip invalid rows
+                    }
+
+                    lichLam.setId(new LichLamId(nhanVien.getMaNV(), ngay));
+                    lichLam.setCaLamViec(caLamViec);
+                    lichLam.setNhanVien(nhanVien);
+
+                    // Save LichLam object to database
+                    lichLamRepository.save(lichLam);
+                }
+
+                // Close file input stream
+                fis.close();
+
+                // Reload data on the work schedule table
+                loadData();
+
+                // Display success message
+                JOptionPane.showMessageDialog(this, "Thêm lịch làm từ file Excel thành công!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi đọc file Excel: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException | DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ trong file Excel: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnThemExcelActionPerformed
+    private boolean isRowEmpty(Row row) {
+        for (int i = row.getFirstCellNum(); i < row.getLastCellNum(); i++) {
+            Cell cell = row.getCell(i, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+            if (cell != null && cell.getCellType() != CellType.BLANK) {
+                return false; // Dòng không rỗng
+            }
+        }
+        return true; // Dòng rỗng
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReload;

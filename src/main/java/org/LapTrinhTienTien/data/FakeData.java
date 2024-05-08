@@ -54,17 +54,17 @@ public class FakeData   implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
 
-        insertChucVu();
-        insertCalamViec();
-        insertNhaCungCap();
-        insertSanPham();
-        insertKhachHang();
-        insertCuaHang();//cua hang + kho //Trung khoa chinh
-        insertNhanVien();//tai khoan voi nhan vien
-       insertLichLam();// insert theo thu tu
-        insertCuaHangSanPham();
-       insertChuongTrinh();// chuong trinh
-        insertHoaDon();//hoa don va chi tiet hoa don
+//        insertChucVu();
+//        insertCalamViec();
+//        insertNhaCungCap();
+//        insertSanPham();
+//        insertKhachHang();
+//        insertCuaHang();//cua hang + kho //Trung khoa chinh
+//        insertNhanVien();//tai khoan voi nhan vien
+//       insertLichLam();// insert theo thu tu
+//        insertCuaHangSanPham();
+//       insertChuongTrinh();// chuong trinh
+//        insertHoaDon();//hoa don va chi tiet hoa don
 
         //chitiethoadon
 
