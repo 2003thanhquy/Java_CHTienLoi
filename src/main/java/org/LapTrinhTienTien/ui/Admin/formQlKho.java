@@ -5,7 +5,7 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 import org.LapTrinhTienTien.model.CuaHangSanPham;
 import org.LapTrinhTienTien.service.CuaHangSanPhamService;
@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class formQlKho extends javax.swing.JPanel {
     /**
      * Creates new form formQlKho
      */
+    @Autowired
+    addSanPham addAdminSanPham;
     private CuaHangSanPhamService cuaHangSanPhamService;
     List<CuaHangSanPham> cuaHangSanPhamList = new ArrayList<>();
 
@@ -52,6 +56,35 @@ public class formQlKho extends javax.swing.JPanel {
                 loadData();
             }
         });
+        btnThem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                themSanPham();
+            }
+        });
+
+    }
+    private void themSanPham() {
+        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
+
+        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
+        addAdminSanPham.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addAdminSanPham.setLocationRelativeTo(rootFrame);
+
+        // Tắt form hiện tại
+        rootFrame.setEnabled(false);
+
+        // Khi form mới được đóng, bật lại form hiện tại
+        addAdminSanPham.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                rootFrame.setEnabled(true);
+            }
+        });
+
+        // Hiển thị form saleForm
+        addAdminSanPham.setVisible(true);
     }
 
     private void loadData() {
@@ -70,6 +103,7 @@ public class formQlKho extends javax.swing.JPanel {
     }
 
     private void init() {
+        panel.removeAll();
         panel.setLayout(new WrapLayout(WrapLayout.LEADING));
         scrollPane.setVerticalScrollBar(new ScrollBar());
         for(CuaHangSanPham chsp : cuaHangSanPhamList){
@@ -120,7 +154,7 @@ public class formQlKho extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         btnReload = new org.LapTrinhTienTien.ui.customItem.button();
         button2 = new org.LapTrinhTienTien.ui.customItem.button();
-        button3 = new org.LapTrinhTienTien.ui.customItem.button();
+        btnThem = new org.LapTrinhTienTien.ui.customItem.button();
 
         scrollPane.setBorder(null);
         scrollPane.setOpaque(false);
@@ -158,10 +192,10 @@ public class formQlKho extends javax.swing.JPanel {
         button2.setBorderColor(new java.awt.Color(0, 0, 204));
         button2.setRadius(35);
 
-        button3.setText("Thêm");
-        button3.setActionCommand("");
-        button3.setBorderColor(new java.awt.Color(0, 0, 204));
-        button3.setRadius(35);
+        btnThem.setText("Thêm");
+        btnThem.setActionCommand("");
+        btnThem.setBorderColor(new java.awt.Color(0, 0, 204));
+        btnThem.setRadius(35);
 
         javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
         myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
@@ -181,7 +215,7 @@ public class formQlKho extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61))
         );
         myPanelBoxShadow1Layout.setVerticalGroup(
@@ -198,7 +232,7 @@ public class formQlKho extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -229,8 +263,8 @@ public class formQlKho extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.LapTrinhTienTien.ui.customItem.button btnReload;
+    private org.LapTrinhTienTien.ui.customItem.button btnThem;
     private org.LapTrinhTienTien.ui.customItem.button button2;
-    private org.LapTrinhTienTien.ui.customItem.button button3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
