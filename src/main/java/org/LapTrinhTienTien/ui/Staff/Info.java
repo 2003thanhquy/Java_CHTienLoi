@@ -347,7 +347,6 @@ public class Info extends javax.swing.JPanel {
         }
         //tfCongViec.setText(currentNhanVien.getCongViec());
         //tfTrangThai.setText(currentNhanVien.getTrangThai());
-        String imagePath = currentNhanVien.getUrlImage();
 
         try {
             // Read the image from the file system
