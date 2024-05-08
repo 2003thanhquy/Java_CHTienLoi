@@ -175,6 +175,8 @@ public class FakeData   implements CommandLineRunner{
         lichLam.setCaLamViec(caLamViec);
         lichLam.setNhanVien(nhanVien);
         lichLamRepository.save(lichLam);
+
+
     }
     private void insertKhachHang(){
         int n = 5;
@@ -332,7 +334,7 @@ public class FakeData   implements CommandLineRunner{
     }
     private void insertSanPham(){
         int n = 10;
-        for(int i = 1;i <= 10;i++){
+        for(int i = 1;i <10;i++){
             SanPham sanPham = new SanPham();
             sanPham.setMaSP("SP00"+i);
             sanPham.setTenSP("Tên sản phẩm " +i);

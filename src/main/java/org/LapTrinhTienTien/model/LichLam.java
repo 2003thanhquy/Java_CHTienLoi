@@ -23,12 +23,12 @@ public class LichLam implements Serializable {
     private LichLamId id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("maNV")
     private NhanVien nhanVien ;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "LL_CLV")
     private CaLamViec caLamViec;
 

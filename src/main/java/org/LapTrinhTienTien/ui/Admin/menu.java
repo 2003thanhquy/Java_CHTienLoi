@@ -4,13 +4,15 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.LapTrinhTienTien.ui.model.Model_Menu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 /**
  *
@@ -21,8 +23,9 @@ public class menu extends javax.swing.JPanel {
     /**
      * Creates new form menu
      */
+    loginForm loginForm;
     private EventMenuSelected event;
-
+    public JFrame parentForm;
     public void addEventMenuSelected(EventMenuSelected event) {
         this.event = event;
         listMenu.addEventMenuSelected(event);
@@ -32,6 +35,32 @@ public class menu extends javax.swing.JPanel {
         setOpaque(false);
         listMenu.setOpaque(false);
         init();
+    }
+    public void setParentForm(JFrame parentForm)
+    {
+        this.parentForm = parentForm;
+        events();
+    }
+    public void setLoginForm(loginForm loginForm){
+        this.loginForm = loginForm;
+    }
+    
+    private void events() {
+        logOutLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         logOutLbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Xử lý sự kiện click ở đây
+                logout(e);
+            }
+        });
+        }
+    private void logout(MouseEvent e){
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            parentForm.dispose();
+            loginForm.setVisible(true);
+        }
     }
     private void init() {
         listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
@@ -60,6 +89,7 @@ public class menu extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        logOutLbl = new javax.swing.JLabel();
 
         setForeground(new java.awt.Color(255, 255, 255));
 
@@ -77,6 +107,8 @@ public class menu extends javax.swing.JPanel {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 0, 35, 40);
 
+        logOutLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,15 +116,25 @@ public class menu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(listMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(logOutLbl)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(logOutLbl)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     protected void paintChildren(Graphics grphcs) {
@@ -109,5 +151,7 @@ public class menu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private org.LapTrinhTienTien.ui.customItem.listMenu<String> listMenu;
+    private javax.swing.JLabel logOutLbl;
     // End of variables declaration//GEN-END:variables
+
 }

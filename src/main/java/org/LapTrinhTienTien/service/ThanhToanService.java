@@ -82,7 +82,7 @@ public class ThanhToanService {
             return new Response("Thanh toán thành công", true, null);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Response("Lỗi khi thanh toán: " + e.getMessage(), false, null);
+            return new Response("Lỗi khi thanh toán: ", false, null);
         }
     }
 

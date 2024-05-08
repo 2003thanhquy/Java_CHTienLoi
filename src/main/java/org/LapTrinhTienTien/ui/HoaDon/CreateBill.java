@@ -194,9 +194,9 @@ public class CreateBill extends javax.swing.JFrame {
 
         }
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
-        bill.setText(bill.getText() + "Tổng Tiền :\t"+getTongTien()+"\n");
-        bill.setText(bill.getText() + "Giam gia:\t"+getGiamGia()+"\n");
-        bill.setText(bill.getText() + "Thành Tiền :\t"+(getTongTien()-getGiamGia())+"\n");
+        bill.setText(bill.getText() + "Tổng Tiền :    \t"+getTongTien()+"\n");
+        bill.setText(bill.getText() + "Giam gia:         \t"+getGiamGia()+"\n");
+        bill.setText(bill.getText() + "Thành Tiền : \t"+(getTongTien()-getGiamGia())+"\n");
         bill.setText(bill.getText() + "====================================\n");
         bill.setText(bill.getText() +"                     Thanks For Your Business...!"+"\n");
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
@@ -331,8 +331,8 @@ public class CreateBill extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

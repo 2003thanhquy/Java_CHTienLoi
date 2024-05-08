@@ -41,7 +41,6 @@ public class loginForm extends javax.swing.JFrame {
     public loginForm(){
         initComponents();
         setSize(700,500);
-
         ClassPathResource resource1 = new ClassPathResource("/grocery-cart.png");
         ClassPathResource resource2 = new ClassPathResource("/user.png");
         ClassPathResource resource3 = new ClassPathResource("/padlock.png");
@@ -185,8 +184,6 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tf_user.getText()+"";
         String password = tf_pass.getText()+"";
-        username="NV005";
-        password ="NV005";
         if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
             return;
         }
@@ -203,7 +200,13 @@ public class loginForm extends javax.swing.JFrame {
             if(Global.account.getNhanVien().getChucVu().getMaCV().equals(ChucVuEnum.NHAN_VIEN.getMaCV())){
                 System.out.println("staff");
                 staffForm.setVisible(true);
-            }else  adminform.setVisible(true);
+                staffForm.setLogin(this);
+            }else  {
+                adminform.setLogin(this);
+                adminform.setVisible(true);
+            }
+            tf_user.setText("");
+            tf_pass.setText("");
             this.dispose();
 
         }else System.out.println(response.getMessage());
