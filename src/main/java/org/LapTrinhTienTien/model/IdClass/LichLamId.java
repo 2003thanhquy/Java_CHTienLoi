@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.LapTrinhTienTien.model.NhanVien;
 
 import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
