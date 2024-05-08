@@ -42,6 +42,7 @@ public class staffForm extends javax.swing.JFrame {
         this.nhanVienRepository=nhanVienRepository;
         //setUndecorated(true);
         initComponents();
+        staffMenu.setParentForm(this);
         //setBackground(new Color(0, 0, 0, 0));
         events();
 

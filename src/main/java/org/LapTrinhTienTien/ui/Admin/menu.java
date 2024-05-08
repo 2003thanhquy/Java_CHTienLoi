@@ -9,6 +9,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.JFrame;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.LapTrinhTienTien.ui.model.Model_Menu;
 
@@ -22,7 +23,7 @@ public class menu extends javax.swing.JPanel {
      * Creates new form menu
      */
     private EventMenuSelected event;
-
+    public JFrame parentForm;
     public void addEventMenuSelected(EventMenuSelected event) {
         this.event = event;
         listMenu.addEventMenuSelected(event);
@@ -32,6 +33,10 @@ public class menu extends javax.swing.JPanel {
         setOpaque(false);
         listMenu.setOpaque(false);
         init();
+    }
+    public void setParentForm(JFrame parentForm)
+    {
+        this.parentForm = parentForm;
     }
     private void init() {
         listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
@@ -59,6 +64,7 @@ public class menu extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        logOutLbl = new javax.swing.JLabel();
 
         setForeground(new java.awt.Color(255, 255, 255));
 
@@ -76,6 +82,13 @@ public class menu extends javax.swing.JPanel {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 0, 35, 40);
 
+        logOutLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
+        logOutLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logOutLblMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,17 +96,34 @@ public class menu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(listMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(logOutLbl)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(logOutLbl)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void logOutLblMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutLblMousePressed
+        // TODO add your handling code here:
+        this.parentForm.dispose();
+        loginForm login = new loginForm();
+        login.setVisible(true);
+    }//GEN-LAST:event_logOutLblMousePressed
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -108,5 +138,6 @@ public class menu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private org.LapTrinhTienTien.ui.customItem.listMenu<String> listMenu;
+    private javax.swing.JLabel logOutLbl;
     // End of variables declaration//GEN-END:variables
 }
