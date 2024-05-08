@@ -17,21 +17,23 @@ import org.LapTrinhTienTien.ui.events.ProductCardClick;
 import org.LapTrinhTienTien.ui.model.modelProduct;
 import org.LapTrinhTienTien.utils.Response;
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +101,7 @@ public class formQlKho extends javax.swing.JPanel {
         int returnValue = fileChooser.showOpenDialog(null);
         String error = "";
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+            System.out.println(returnValue);
             try {
                 File selectedFile = fileChooser.getSelectedFile();
                 FileInputStream file = new FileInputStream(selectedFile);
@@ -115,13 +118,21 @@ public class formQlKho extends javax.swing.JPanel {
                         System.out.println("Dòng rỗng");
                         return; // Bỏ qua dòng nếu dòng là rỗng
                     }
-                    Cell maSPCell = row.getCell(0);
+                    Cell maSPCell = row.getCell(2);
                     Cell maCHCell = row.getCell(1);
-                    Cell soLuongCell = row.getCell(2);
+                    Cell soLuongCell = row.getCell(0);
 
                     String maSP = maSPCell.getStringCellValue();
                     String maCH = maCHCell.getStringCellValue();
-                    int soLuong = (int) soLuongCell.getNumericCellValue();
+                    String soluongstr  = soLuongCell.getStringCellValue();
+                    int soLuong;
+                    try {
+                        soLuong = Integer.parseInt(soluongstr);
+                    } catch (NumberFormatException e) {
+                        // Xử lý trường hợp nếu chuỗi không phải là một số nguyên
+                        System.out.println("Lỗi: Không thể chuyển đổi " + soluongstr + " thành số nguyên.");
+                        return; // hoặc thực hiện xử lý khác tùy vào yêu cầu của bạn
+                    }
 
                    Response response =  cuahangSanPhamService.updateNhapKho(maCH,maSP,soLuong);
                     if(!response.getFlag()){
@@ -191,9 +202,7 @@ public class formQlKho extends javax.swing.JPanel {
                     throw new RuntimeException(e);
                 }
             }
-
-
-            panel.add(new ProductCard(new modelProduct(icon, chsp.getSanPham().getTenSP(), "Mã Sản Phẩm: "+chsp.getSanPham().getMaSP()+"\n"+"Giá Tiên: "+chsp.getSanPham().getTienThanhToan()+"\nSố lượng:" + chsp.getSoLuong()+"\nthank for watch"), new ProductCardClick() {
+            panel.add(new ProductCard(new modelProduct(icon, chsp.getSanPham().getTenSP(), "Mã Sản Phẩm: "+chsp.getSanPham().getMaSP()+"\n"+"Giá Tiên: "+chsp.getSanPham().getTienThanhToan()+"\nSố lượng:" + chsp.getSoLuong()+""), new ProductCardClick() {
                 @Override
                 public void onCLickCard(CuaHangSanPham cuaHangSanPham) {
                     onClickToCardProduct(cuaHangSanPham);

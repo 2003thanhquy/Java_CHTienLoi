@@ -184,8 +184,8 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tf_user.getText()+"";
         String password = tf_pass.getText()+"";
-        username = "NV006";
-        password = "NV006";
+        username = "NV005";
+        password = "NV005";
         if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
             return;
         }
