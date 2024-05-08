@@ -77,23 +77,29 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jSeparator2" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSeparator1" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="lblMaSP" min="-2" pref="152" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lblSoLuong" alignment="0" min="-2" pref="197" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jSeparator2" min="-2" pref="209" max="-2" attributes="0"/>
+                          <Component id="btnNhapKho" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnReload" min="-2" pref="100" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="button2" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="btnKLuu" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSeparator1" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnThem" min="-2" pref="100" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="btnReload" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -102,21 +108,28 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblMaSP" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jSeparator2" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnReload" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <Component id="lblSoLuong" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                  <Component id="btnThem" min="-2" pref="39" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="button2" min="-2" pref="39" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnThem" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnReload" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnNhapKho" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnKLuu" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -157,9 +170,9 @@
             <Property name="radius" type="int" value="35"/>
           </Properties>
         </Component>
-        <Component class="org.LapTrinhTienTien.ui.customItem.button" name="button2">
+        <Component class="org.LapTrinhTienTien.ui.customItem.button" name="btnNhapKho">
           <Properties>
-            <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p Kho"/>
             <Property name="actionCommand" type="java.lang.String" value=""/>
             <Property name="borderColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="0" red="0" type="rgb"/>
@@ -175,6 +188,26 @@
               <Color blue="cc" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="radius" type="int" value="35"/>
+          </Properties>
+        </Component>
+        <Component class="org.LapTrinhTienTien.ui.customItem.button" name="btnKLuu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="K.L&#x1b0;u"/>
+            <Property name="actionCommand" type="java.lang.String" value=""/>
+            <Property name="borderColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="radius" type="int" value="35"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblMaSP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="M&#xe3; SP:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblSoLuong">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng: "/>
           </Properties>
         </Component>
       </SubComponents>
