@@ -6,6 +6,7 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.LapTrinhTienTien.model.CuaHangSanPham;
 import org.LapTrinhTienTien.service.CuaHangSanPhamService;
@@ -14,10 +15,17 @@ import org.LapTrinhTienTien.ui.customItem.ScrollBar;
 import org.LapTrinhTienTien.ui.customItem.WrapLayout;
 import org.LapTrinhTienTien.ui.events.ProductCardClick;
 import org.LapTrinhTienTien.ui.model.modelProduct;
+import org.LapTrinhTienTien.utils.Response;
+import org.apache.poi.EncryptedDocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +45,8 @@ public class formQlKho extends javax.swing.JPanel {
     /**
      * Creates new form formQlKho
      */
+    @Autowired
+    CuaHangSanPhamService cuahangSanPhamService;
     @Autowired
     addSanPham addAdminSanPham;
     private CuaHangSanPhamService cuaHangSanPhamService;
@@ -63,8 +73,77 @@ public class formQlKho extends javax.swing.JPanel {
                 themSanPham();
             }
         });
+        btnNhapKho.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnNhapExcel();
+            }
+        });
 
     }
+    private boolean isRowEmpty(Row row) {
+        for (int i = row.getFirstCellNum(); i < row.getLastCellNum(); i++) {
+            Cell cell = row.getCell(i, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+            if (cell != null && cell.getCellType() != CellType.BLANK) {
+                return false; // Dòng không rỗng
+            }
+        }
+        return true; // Dòng rỗng
+    }
+    private void btnNhapExcel() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx", "xls");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showOpenDialog(null);
+        String error = "";
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = fileChooser.getSelectedFile();
+                FileInputStream file = new FileInputStream(selectedFile);
+                Workbook workbook = WorkbookFactory.create(file);
+                Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
+                int rowNum = 0;
+                for (Row row : sheet) {
+                    if (rowNum == 0) {
+                        rowNum++;
+                        continue;
+                    }
+                    ++rowNum;
+                    if (isRowEmpty(row)) {
+                        System.out.println("Dòng rỗng");
+                        return; // Bỏ qua dòng nếu dòng là rỗng
+                    }
+                    Cell maSPCell = row.getCell(0);
+                    Cell maCHCell = row.getCell(1);
+                    Cell soLuongCell = row.getCell(2);
+
+                    String maSP = maSPCell.getStringCellValue();
+                    String maCH = maCHCell.getStringCellValue();
+                    int soLuong = (int) soLuongCell.getNumericCellValue();
+
+                   Response response =  cuahangSanPhamService.updateNhapKho(maCH,maSP,soLuong);
+                    if(!response.getFlag()){
+                        error += response.getMessage()+" row"+row+", ";
+                    }
+                }
+                if(!error.isEmpty()){
+                    JOptionPane.showMessageDialog(this,error,"Lỗi",JOptionPane.ERROR_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(this,"Thêm file thành công","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                }
+                file.close();
+            } catch (IOException | EncryptedDocumentException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            // User canceled the file chooser dialog
+            // Handle this case if needed
+        }
+
+    }
+
     private void themSanPham() {
         JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
 
@@ -99,7 +178,8 @@ public class formQlKho extends javax.swing.JPanel {
 
     }
     private void onClickToCardProduct(CuaHangSanPham chsp){
-        System.out.println("chsp---------"+ chsp.getSanPham().getMaSP());
+        lblMaSP.setText("Mã SP: "+chsp.getSanPham().getMaSP());
+        lblSoLuong.setText("Sô Lượng: "+ chsp.getSoLuong());
     }
 
     private void init() {
@@ -153,8 +233,11 @@ public class formQlKho extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         btnReload = new org.LapTrinhTienTien.ui.customItem.button();
-        button2 = new org.LapTrinhTienTien.ui.customItem.button();
+        btnNhapKho = new org.LapTrinhTienTien.ui.customItem.button();
         btnThem = new org.LapTrinhTienTien.ui.customItem.button();
+        btnKLuu = new org.LapTrinhTienTien.ui.customItem.button();
+        lblMaSP = new javax.swing.JLabel();
+        lblSoLuong = new javax.swing.JLabel();
 
         scrollPane.setBorder(null);
         scrollPane.setOpaque(false);
@@ -187,15 +270,24 @@ public class formQlKho extends javax.swing.JPanel {
         btnReload.setBorderColor(new java.awt.Color(0, 0, 204));
         btnReload.setRadius(35);
 
-        button2.setText("Xóa");
-        button2.setActionCommand("");
-        button2.setBorderColor(new java.awt.Color(0, 0, 204));
-        button2.setRadius(35);
+        btnNhapKho.setText("Nhập Kho");
+        btnNhapKho.setActionCommand("");
+        btnNhapKho.setBorderColor(new java.awt.Color(0, 0, 204));
+        btnNhapKho.setRadius(35);
 
         btnThem.setText("Thêm");
         btnThem.setActionCommand("");
         btnThem.setBorderColor(new java.awt.Color(0, 0, 204));
         btnThem.setRadius(35);
+
+        btnKLuu.setText("K.Lưu");
+        btnKLuu.setActionCommand("");
+        btnKLuu.setBorderColor(new java.awt.Color(0, 0, 204));
+        btnKLuu.setRadius(35);
+
+        lblMaSP.setText("Mã SP:");
+
+        lblSoLuong.setText("Số lượng: ");
 
         javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
         myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
@@ -204,38 +296,49 @@ public class formQlKho extends javax.swing.JPanel {
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(lblMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnNhapKho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61))
+                        .addComponent(btnKLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(48, 48, 48))
         );
         myPanelBoxShadow1Layout.setVerticalGroup(
             myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMaSP)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(lblSoLuong)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNhapKho, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnKLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -262,12 +365,15 @@ public class formQlKho extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.LapTrinhTienTien.ui.customItem.button btnKLuu;
+    private org.LapTrinhTienTien.ui.customItem.button btnNhapKho;
     private org.LapTrinhTienTien.ui.customItem.button btnReload;
     private org.LapTrinhTienTien.ui.customItem.button btnThem;
-    private org.LapTrinhTienTien.ui.customItem.button button2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblMaSP;
+    private javax.swing.JLabel lblSoLuong;
     private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow1;
     private javax.swing.JPanel panel;
     private javax.swing.JScrollPane scrollPane;
