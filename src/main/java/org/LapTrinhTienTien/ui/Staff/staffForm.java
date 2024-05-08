@@ -4,6 +4,7 @@
  */
 package org.LapTrinhTienTien.ui.Staff;
 
+
 import javax.swing.JComponent;
 import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.TaiKhoan;
@@ -29,11 +30,7 @@ public class staffForm extends javax.swing.JFrame {
     NhanVienRepository nhanVienRepository;
     private Info info;
     @Autowired
-    private wareHouseForm wareHouse;
-    @Autowired
-    private ProductForm product;
-    @Autowired
-    private NCCForm supplier;
+    private WareHouseForm wareHouse;
     @Autowired
     private CalendarCustom timeTable;
     @Autowired
@@ -65,10 +62,6 @@ public class staffForm extends javax.swing.JFrame {
                 if(index==2)
                     setForm(wareHouse);
                 if(index==3)
-                    setForm(product);
-                if(index==4)
-                    setForm(supplier);
-                if(index==5)
                     setForm(timeTable);
                 if(index==7)
                     setForm(invoice);
@@ -77,6 +70,7 @@ public class staffForm extends javax.swing.JFrame {
         });
         //setForm(info);
     }
+    
     private void setForm(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
@@ -107,9 +101,8 @@ public class staffForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(staffMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(staffMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(625, 625, 625))
         );

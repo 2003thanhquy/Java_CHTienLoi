@@ -47,9 +47,7 @@ public class staffMenu extends javax.swing.JPanel {
     private void init() {
         listMenu.addItem(new Model_Menu("", "Quản lý ", Model_Menu.MenuType.TITLE));
         listMenu.addItem(new Model_Menu("user", "info", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("bill", "ware house", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("warehouse", "product", Model_Menu.MenuType.MENU));
-        listMenu.addItem(new Model_Menu("dashboard", "supplier", Model_Menu.MenuType.MENU));
+        listMenu.addItem(new Model_Menu("warehouse", "ware house", Model_Menu.MenuType.MENU));
         listMenu.addItem(new Model_Menu("customer", "timeTable", Model_Menu.MenuType.MENU));
         //listMenu.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu.addItem(new Model_Menu("", "Chức năng", Model_Menu.MenuType.TITLE));

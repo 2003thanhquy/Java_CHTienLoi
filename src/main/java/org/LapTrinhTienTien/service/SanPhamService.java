@@ -1,3 +1,4 @@
+
 package org.LapTrinhTienTien.service;
 
 import org.LapTrinhTienTien.StaticApp.Global;
@@ -15,11 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.util.Optional;
-
 @Service
 public class SanPhamService {
     @Autowired
     SanPhamRepository sanPhamRepository;
+    public List<SanPham> getAllSanPham(){
+        return (List<SanPham>) sanPhamRepository.findAll();
+    }
     @Autowired
     CuaHangSanPhamRepository cuaHangSanPhamRepository;
     public String generateMaSP() {
