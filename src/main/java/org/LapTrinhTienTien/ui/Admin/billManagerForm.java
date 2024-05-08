@@ -18,9 +18,7 @@ import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +28,7 @@ import java.util.List;
  */
 @Service
 public class billManagerForm extends javax.swing.JPanel {
+    @Autowired BillDetail billDetail;
     private HoaDonService hoaDonService;
     private ChiTietHoaDonService chiTietHoaDonService;
     private HoaDonAdminTableModel hoaDonAdminTableModel;
@@ -66,7 +65,7 @@ public class billManagerForm extends javax.swing.JPanel {
                 }
             }
         });
-        mpbReload.addMouseListener(new MouseAdapter() {
+        mpbChiTiet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                mpbChiTietClick();
@@ -88,7 +87,30 @@ public class billManagerForm extends javax.swing.JPanel {
         });
     }
     private void mpbChiTietClick(){
+        if(tblHoaDonIndexSelected == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng từ bảng trước khi chỉnh sửa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        HoaDon hoaDon = hoaDonAdminTableModel.getRow(tblHoaDonIndexSelected);
+        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
+        billDetail.setHoaDon(hoaDon);
+        System.out.println("-------Hoadon---" + hoaDon.getChiTietHoaDon().size());
+        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
+        billDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        billDetail.setLocationRelativeTo(rootFrame);
 
+        // Tắt form hiện tại
+        rootFrame.setEnabled(false);
+
+        // Khi form mới được đóng, bật lại form hiện tại
+        billDetail.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                rootFrame.setEnabled(true);
+            }
+        });
+
+        billDetail.setVisible(true);
     }
     private void mpbChinhSuaClick(){
         if(tblHoaDonIndexSelected == -1) {

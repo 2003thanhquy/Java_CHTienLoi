@@ -6,6 +6,8 @@ package org.LapTrinhTienTien.ui.Admin;
 
 import javax.swing.JComponent;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.LapTrinhTienTien.service.NhanVienService;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +31,34 @@ public class adminForm extends javax.swing.JFrame {
     @Autowired
     private formQlKho formKho;
     private staffInfo info;
-    /*@Autowired
-    private dashBoard dashBoard;*/
+    @Autowired
+    private dashBoard dashBoard;
     @Autowired
     private couponForm coupon;
     @Autowired
     private formNhapHang nhapHang;
     @Autowired
     private customerMangager customer;
+    @Getter
+    loginForm login;
+
     public adminForm(@Autowired staffInfo info) {
         this.info = info;
         //setUndecorated(true);
         
         initComponents();
+        menu.setParentForm(this);
         events();
 
         //  set when system open start with home form
 
     }
+
+    public void setLogin(loginForm login) {
+        this.login = login;
+        menu.setLoginForm(login);
+    }
+
     private void events(){{
         menu.addEventMenuSelected(new EventMenuSelected()
         {
@@ -60,8 +72,8 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(formKho);
                 if(index==6)
                     setForm(coupon);
-                /*if(index==7)
-                    setForm(dashBoard);*/
+                if(index==7)
+                    setForm(dashBoard);
                 if(index==8)
                     setForm(customer);
             }
@@ -107,7 +119,7 @@ public class adminForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(menu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(menu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
             .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 

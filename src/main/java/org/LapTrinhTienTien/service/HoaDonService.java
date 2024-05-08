@@ -73,6 +73,7 @@ public class HoaDonService {
                return false;
             }).collect(Collectors.toList());
         }
+        danhSachHoaDon = danhSachHoaDon.stream().filter(hd->hd.getStatus().equals(Status.ACTIVE)).toList();
         return danhSachHoaDon;
     }
 

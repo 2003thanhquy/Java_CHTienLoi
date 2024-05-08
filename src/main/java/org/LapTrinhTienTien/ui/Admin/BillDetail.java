@@ -4,17 +4,99 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import ch.qos.logback.core.util.Loader;
+import lombok.Setter;
+import org.LapTrinhTienTien.TableModel.ChiTietHoaDonTableModel;
+import org.LapTrinhTienTien.model.ChiTietHoaDon;
+import org.LapTrinhTienTien.model.GioHang;
+import org.LapTrinhTienTien.model.HoaDon;
+import org.LapTrinhTienTien.service.ChiTietHoaDonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author quyth
  */
+@Controller
 public class BillDetail extends javax.swing.JFrame {
 
     /**
      * Creates new form BillDetail
      */
-    public BillDetail() {
+
+    ChiTietHoaDonService chiTietHoaDonService;
+    ChiTietHoaDonTableModel chiTietHoaDonTableModel;
+    List<ChiTietHoaDon> chiTietHoaDonList = new ArrayList<>();
+    @Setter
+    HoaDon hoaDon;
+    public BillDetail(@Autowired ChiTietHoaDonService chiTietHoaDonService) {
         initComponents();
+        jTextField1.setEditable(false);
+        bill.setEditable(false);
+        this.chiTietHoaDonService = chiTietHoaDonService;
+        events();
+
+    }
+    private void events(){
+        btnLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jTextField1.setText("Mã HD: " + hoaDon.getMaHD());
+                loadData();
+                loadBill();
+            }
+        });
+        btnThoat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnThoatPerformed();
+            }
+        });
+    }
+    private void btnThoatPerformed(){
+        this.dispose();
+    }
+
+    private void loadData(){
+        chiTietHoaDonList.clear();
+        chiTietHoaDonList  = chiTietHoaDonService.getListCTHD(hoaDon);
+        System.out.println("-------lst-chitiet----"+ chiTietHoaDonList.size());
+        chiTietHoaDonTableModel = new ChiTietHoaDonTableModel(chiTietHoaDonList);
+        tblCTHD.setModel(chiTietHoaDonTableModel);
+        chiTietHoaDonTableModel.fireTableDataChanged();
+    }
+    private void loadBill() {
+        bill.setText("                         The Little mall \n");
+        bill.setText(bill.getText() + "\tSố 1, Võ Văn Ngân \n");
+        bill.setText(bill.getText() + "\tThủ đức, Thành phố Hồ Chí Minh, \n");
+        bill.setText(bill.getText() + "\t+084 123456789, \n");
+        bill.setText(bill.getText() + "----------------------------------------------------------------\n");
+        bill.setText(bill.getText() + " Ten \tSo Luong \tGia \tThanh Tien \n");
+        bill.setText(bill.getText() + "----------------------------------------------------------------\n");
+
+
+        for(ChiTietHoaDon gh : chiTietHoaDonList){
+
+            String name =gh.getSanPham().getTenSP();
+            String qt =String.valueOf(gh.getSoLuong()) ;
+            String prc =String.valueOf( gh.getGiaThanhToan());
+            String tongtien = String.valueOf(gh.getTongTien());
+            bill.setText(bill.getText() + name+"\t  "+qt+"\t"+prc+"S\t"+tongtien+" \n");
+
+        }
+        bill.setText(bill.getText() + "----------------------------------------------------------------\n");
+        bill.setText(bill.getText() + "Tổng Tiền :\t"+hoaDon.getGiaTri()+"\n");
+        bill.setText(bill.getText() + "Giam gia:\t"+(hoaDon.getThanhTien()-hoaDon.getGiaTri())+"\n");
+        bill.setText(bill.getText() + "Thành Tiền :\t"+hoaDon.getThanhTien()+"\n");
+        bill.setText(bill.getText() + "====================================\n");
+        bill.setText(bill.getText() +"                     Thanks For Your Business...!"+"\n");
+        bill.setText(bill.getText() + "----------------------------------------------------------------\n");
     }
 
     /**
@@ -26,17 +108,62 @@ public class BillDetail extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bill = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblCTHD = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
+        btnLoad = new javax.swing.JButton();
+        btnThoat = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        bill.setEditable(false);
+        bill.setColumns(20);
+        bill.setRows(5);
+        jScrollPane2.setViewportView(bill);
+
+        jScrollPane3.setViewportView(tblCTHD);
+
+        jTextField1.setText("Mã  HD:");
+
+        btnLoad.setText("Load ");
+
+        btnThoat.setText("Thoát");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnLoad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnThoat)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoad)
+                    .addComponent(btnThoat))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -72,11 +199,18 @@ public class BillDetail extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BillDetail().setVisible(true);
+                //new BillDetail().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea bill;
+    private javax.swing.JButton btnLoad;
+    private javax.swing.JButton btnThoat;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblCTHD;
     // End of variables declaration//GEN-END:variables
 }

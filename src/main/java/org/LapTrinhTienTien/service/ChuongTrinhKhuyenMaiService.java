@@ -1,7 +1,9 @@
 package org.LapTrinhTienTien.service;
 
+import org.LapTrinhTienTien._enum.Status;
 import org.LapTrinhTienTien.model.ChuongTrinhKhuyenMai;
 import org.LapTrinhTienTien.repository.ChuongTrinhKhuyenMaiRepository;
+import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class ChuongTrinhKhuyenMaiService {
         ChuongTrinhKhuyenMai chuongTrinhKhuyenMai = null;
         for(ChuongTrinhKhuyenMai ctkm : chuongTrinhKhuyenMais){
             System.out.println("ctkm-------"+ctkm.getTonghonDon());
-            if(ctkm.getTonghonDon()<=tongtien){
+            if(ctkm.getTonghonDon()<=tongtien && ctkm.getStatus().equals(Status.ACTIVE)){
                 if(chuongTrinhKhuyenMai==null){
                     chuongTrinhKhuyenMai = ctkm;
                 }
@@ -44,4 +46,26 @@ public class ChuongTrinhKhuyenMaiService {
         }
         return ctkm.getPhanTramGiamGia()*ctkm.getTonghonDon()/100;
     }
+    public List<ChuongTrinhKhuyenMai> getAllKhuyenMai(){
+        return (List<ChuongTrinhKhuyenMai>) chuongTrinhKhuyenMaiRepository.findAll();
+    }
+    public Response saveChuongTrinhKM(ChuongTrinhKhuyenMai chuongTrinhKhuyenMai){
+        try{
+            ChuongTrinhKhuyenMai ctkm =  chuongTrinhKhuyenMaiRepository.save(chuongTrinhKhuyenMai);
+            return new Response("Them thanh cong",true,ctkm);
+        }catch (Exception e){
+            return new Response("Them khong thanh cong",false,null);
+        }
+
+    }
+    public Response updateChuongTrinhKM(ChuongTrinhKhuyenMai chuongTrinhKhuyenMai){
+        try{
+            ChuongTrinhKhuyenMai ctkm =  chuongTrinhKhuyenMaiRepository.save(chuongTrinhKhuyenMai);
+            return new Response("Them thanh cong",true,ctkm);
+        }catch (Exception e){
+            return new Response("Them khong thanh cong",false,null);
+        }
+
+    }
+
 }

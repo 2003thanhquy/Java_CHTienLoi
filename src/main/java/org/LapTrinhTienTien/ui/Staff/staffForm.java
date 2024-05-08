@@ -10,6 +10,7 @@ import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
 
 import org.LapTrinhTienTien.service.NhanVienService;
+import org.LapTrinhTienTien.ui.Admin.loginForm;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,16 +38,22 @@ public class staffForm extends javax.swing.JFrame {
     private CalendarCustom timeTable;
     @Autowired
     private Invoice invoice;
+    private loginForm login;
     public staffForm(@Autowired NhanVienRepository nhanVienRepository) {
         //this.info = new Info(nhanVienRepository);
         this.nhanVienRepository=nhanVienRepository;
         //setUndecorated(true);
         initComponents();
+        staffMenu.setParentForm(this);
         //setBackground(new Color(0, 0, 0, 0));
         events();
 
         //  set when system open start with home form
 
+    }
+    public void setLogin(loginForm login) {
+        this.login = login;
+        staffMenu.setLogin(this.login);
     }
     private void events(){
         staffMenu.addEventMenuSelected(new EventMenuSelected()
@@ -104,7 +111,7 @@ public class staffForm extends javax.swing.JFrame {
                 .addComponent(staffMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(619, 619, 619))
+                .addGap(625, 625, 625))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
