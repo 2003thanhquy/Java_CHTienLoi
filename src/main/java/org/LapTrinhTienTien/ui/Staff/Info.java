@@ -3,14 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package org.LapTrinhTienTien.ui.Staff;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.NhanVien;
-import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -35,6 +37,7 @@ public class Info extends javax.swing.JPanel {
         // Load thông tin của nhân viên từ cơ sở dữ liệu khi khởi tạo
         
         initComponents();
+        lblImage.setSize(226, 212);
         loadCurrentNhanVien();
     }
 
@@ -65,6 +68,7 @@ public class Info extends javax.swing.JPanel {
         tfNgayVaoLam = new javax.swing.JTextField();
         myPanelBoxShadow1 = new org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow();
         jPanel1 = new javax.swing.JPanel();
+        lblImage = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -128,11 +132,11 @@ public class Info extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 242, Short.MAX_VALUE)
+            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
         );
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -160,7 +164,7 @@ public class Info extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -223,7 +227,7 @@ public class Info extends javax.swing.JPanel {
                             .addComponent(tfNgayVaoLam)
                             .addComponent(jSeparator7)
                             .addComponent(jSeparator8))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,6 +307,37 @@ public class Info extends javax.swing.JPanel {
         tfCCCD.setText(currentNhanVien.getCccd());
         //tfCongViec.setText(currentNhanVien.getCongViec());
         //tfTrangThai.setText(currentNhanVien.getTrangThai());
+        String imagePath = currentNhanVien.getUrlImage();
+
+        try {
+            // Read the image from the file system
+            BufferedImage image = ImageIO.read(new File(imagePath));
+
+            // Ensure lblImage has a non-zero size
+            if (lblImage.getWidth() > 0 && lblImage.getHeight() > 0) {
+                // Resize the image to fit the label
+                int scaledWidth = lblImage.getWidth();
+                int scaledHeight = lblImage.getHeight();
+                BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+                Graphics g = scaledImage.getGraphics();
+                g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
+                g.dispose();
+
+                // Set the image on the label
+                ImageIcon imageIcon = new ImageIcon(scaledImage);
+                lblImage.setIcon(imageIcon);
+                System.out.println(imagePath);
+            } else {
+                System.out.println("Label size is zero. Cannot resize image.");
+            }
+        } catch (IOException e) {
+            // Handle image loading errors gracefully, for example, by displaying a default image
+            System.out.println("Error loading image: " + e.getMessage());
+        }
+       
+        
+
+
     }
 
     
@@ -325,6 +360,7 @@ public class Info extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JLabel lblImage;
     private org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow myPanelBoxShadow1;
     private javax.swing.JTextField tfCCCD;
     private javax.swing.JTextField tfDiaChi;
