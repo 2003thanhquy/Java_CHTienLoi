@@ -184,8 +184,8 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tf_user.getText()+"";
         String password = tf_pass.getText()+"";
-        username = "NV005";
-        password = "NV005";
+        username = "NV006";
+        password = "NV006";
         if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
             return;
         }
@@ -212,8 +212,6 @@ public class loginForm extends javax.swing.JFrame {
             this.dispose();
 
         }else System.out.println(response.getMessage());
-
-
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

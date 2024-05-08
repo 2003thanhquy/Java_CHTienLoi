@@ -145,25 +145,12 @@ public class formQlKho extends javax.swing.JPanel {
     }
 
     private void themSanPham() {
-        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
 
-        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
-        addAdminSanPham.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        addAdminSanPham.setLocationRelativeTo(rootFrame);
-
-        // Tắt form hiện tại
-        rootFrame.setEnabled(false);
-
-        // Khi form mới được đóng, bật lại form hiện tại
-        addAdminSanPham.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                rootFrame.setEnabled(true);
-            }
-        });
+        
 
         // Hiển thị form saleForm
         addAdminSanPham.setVisible(true);
+        addAdminSanPham.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);;
     }
 
     private void loadData() {

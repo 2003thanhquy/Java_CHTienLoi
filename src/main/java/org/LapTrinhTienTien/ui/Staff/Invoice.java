@@ -109,24 +109,9 @@ public class Invoice extends javax.swing.JPanel {
     }
     private void btnCreateHoaDonPerformed(ActionEvent e) {
         JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
-
         // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
-        createBill.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        createBill.setLocationRelativeTo(rootFrame);
-
-        // Tắt form hiện tại
-        rootFrame.setEnabled(false);
-
-        // Khi form mới được đóng, bật lại form hiện tại
-        createBill.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                rootFrame.setEnabled(true);
-            }
-        });
-
-        // Hiển thị form saleForm
         createBill.setVisible(true);
+        createBill.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     private void btnTimKiemActionPerformed(ActionEvent e) {
         String maHD = tf_mahd.getText()+"";
