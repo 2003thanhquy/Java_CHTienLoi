@@ -5,38 +5,42 @@
 package org.LapTrinhTienTien.ui.Admin;
 
 import java.util.List;
-
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import org.LapTrinhTienTien.model.NhaCungCap;
 
 import org.LapTrinhTienTien.repository.NhaCungCapRepository;
 
 import org.LapTrinhTienTien.service.NhaCungCapService;
-import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 
-
+/**
+ *
+ * @author Admin // chinh sua 5 image
+ */
 @Controller
 public class NCCForm extends javax.swing.JPanel {
 @Autowired
     NhaCungCapRepository nccRepository;
-
     NhaCungCapService nccService;
-    public NCCForm(NhaCungCapRepository nccRepository) {
+    boolean addCheck=false;
+    public NCCForm() {
         this.nccRepository = nccRepository;
+
         initComponents();
         tf_maNCC.setEditable(false);
         tf_tenNCC.setEditable(false);
         tf_sdt.setEditable(false);
         tf_diaChi.setEditable(false);
+        initComponents();
     }
     public void loadDataToTable() {
         // Lấy danh sách nhà cung cấp từ cơ sở dữ liệu
         List<NhaCungCap> nccList = nccRepository.findAll();
+        int numberOfElements = nccList.size();
+        System.out.println("Số lượng phần tử trong danh sách là: " + numberOfElements);
 
         // Xóa dữ liệu cũ trong bảng
         DefaultTableModel model = (DefaultTableModel) tblNCC.getModel();
@@ -65,7 +69,7 @@ public class NCCForm extends javax.swing.JPanel {
 
         jToolBar1 = new javax.swing.JToolBar();
         btnAdd = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
+        btnHuy = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnLuu = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -103,17 +107,17 @@ public class NCCForm extends javax.swing.JPanel {
         });
         jToolBar1.add(btnAdd);
 
-        btnXoa.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
-        btnXoa.setText("Xoá");
-        btnXoa.setFocusable(false);
-        btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+        btnHuy.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
+        btnHuy.setText("Hủy");
+        btnHuy.setFocusable(false);
+        btnHuy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnHuy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
+                btnHuyActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnXoa);
+        jToolBar1.add(btnHuy);
 
         btnSua.setFont(new java.awt.Font("SF Pro Display", 0, 12)); // NOI18N
         btnSua.setText("Sửa");
@@ -179,8 +183,8 @@ public class NCCForm extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtSearchForm)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReset)
                 .addContainerGap())
@@ -189,11 +193,12 @@ public class NCCForm extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSearchForm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
         );
 
         jScrollPane1.setBorder(null);
@@ -201,13 +206,10 @@ public class NCCForm extends javax.swing.JPanel {
         tblNCC.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         tblNCC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Mã NCC", "Tên nhà cung cấp", "Địa chỉ", "SĐT"
+                "Mã NCC", "Tên nhà cung cấp", "Số điện thoại", "Địa chỉ"
             }
         ));
         tblNCC.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -216,9 +218,6 @@ public class NCCForm extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tblNCC);
-        if (tblNCC.getColumnModel().getColumnCount() > 0) {
-            tblNCC.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -255,7 +254,7 @@ public class NCCForm extends javax.swing.JPanel {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tf_diaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,35 +309,47 @@ public class NCCForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        String tenNCC = tf_maNCC.getText();
+        List<NhaCungCap> nccList = nccRepository.findAll();
+        int numberOfElements = nccList.size();
+        String newMaNCC = "NCC00" + (numberOfElements + 1);
+        tf_maNCC.setText(newMaNCC);
+        tf_tenNCC.setEditable(false);
+        tf_sdt.setEditable(false);
+        tf_diaChi.setEditable(false);
+        addCheck=true;
+        tf_tenNCC.setEditable(true);
+        tf_sdt.setEditable(true);
+        tf_diaChi.setEditable(true);
+        /*
+        String tenNCC = tf_tenNCC.getText();
         String diaChi = tf_diaChi.getText();
         String sdt = tf_sdt.getText();
-        Response response = nccService.addNCC(tenNCC, diaChi, sdt);
-        if(response.getFlag()==false)
-        {
-            JOptionPane.showMessageDialog(this, response.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        
             // Xác định Mã nhà cung cấp mới
             NhaCungCap lastNCC = nccRepository.findTopByOrderByMaNCCDesc();
             String lastMaNCC = lastNCC.getMaNCC().trim();
             int lastNumber = Integer.parseInt(lastMaNCC.substring(3));
             String newMaNCC = "NCC" + (lastNumber + 1);
-            
-            // Lưu thông tin nhà cung cấp vào đối tượng
-            NhaCungCap ncc = new NhaCungCap();
-            ncc.setMaNCC(newMaNCC);
-            ncc.setTenNCC(tenNCC);
-            ncc.setDiaChi(diaChi);
-            ncc.setSdt(sdt);
-            nccRepository.save(ncc);
-            JOptionPane.showMessageDialog(this, response.getMessage(), "Thanh cong", JOptionPane.PLAIN_MESSAGE);
-        }
+        
+        // Lưu thông tin nhà cung cấp vào đối tượng
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setMaNCC(newMaNCC);
+        ncc.setTenNCC(tenNCC);
+        ncc.setDiaChi(diaChi);
+        ncc.setSdt(sdt);
+        nccRepository.save(ncc);
+        */
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-    
-    }//GEN-LAST:event_btnXoaActionPerformed
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        tf_tenNCC.setEditable(false);
+        tf_sdt.setEditable(false);
+        tf_diaChi.setEditable(false);
+        tf_maNCC.setText("");
+        tf_tenNCC.setText("");
+        tf_sdt.setText("");
+        tf_diaChi.setText("");
+    }//GEN-LAST:event_btnHuyActionPerformed
 
     private void exportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportExcelActionPerformed
         // TODO add your handling code here:
@@ -354,7 +365,6 @@ public class NCCForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-
         int selectedRow = tblNCC.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để sửa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -362,12 +372,35 @@ public class NCCForm extends javax.swing.JPanel {
         }
         String maNCC = tblNCC.getValueAt(selectedRow, 0).toString();
         String tenNCC = tblNCC.getValueAt(selectedRow, 1).toString();
-        String sdt = tblNCC.getValueAt(selectedRow, 2).toString();
-        String diaChi = tblNCC.getValueAt(selectedRow, 3).toString();
+        String diaChi = tblNCC.getValueAt(selectedRow, 2).toString();
+        String sdt = tblNCC.getValueAt(selectedRow, 3).toString();
         tf_tenNCC.setEditable(true);
         tf_sdt.setEditable(true);
         tf_diaChi.setEditable(true);
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+
+        String maNCC = tf_maNCC.getText();
+        String tenNCC = tf_tenNCC.getText();
+        String diaChi = tf_diaChi.getText();
+        String sdt = tf_sdt.getText();
+        
+        if (addCheck == true)
+        {
+            NhaCungCap ncc = new NhaCungCap();
+            ncc.setMaNCC(maNCC);
+            ncc.setTenNCC(tenNCC);
+            ncc.setDiaChi(diaChi);
+            ncc.setSdt(sdt);
+            nccRepository.save(ncc);
+        }
+        else
+        {
+            nccService.updateNCC(maNCC, tenNCC, diaChi, sdt);
+        }
+        loadDataToTable();
+    }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String maNCC = txtSearchForm.getText();
@@ -382,16 +415,7 @@ public class NCCForm extends javax.swing.JPanel {
             ncc.getDiaChi(),
             ncc.getSdt()
         });
-
     }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        String maNCC = tf_maNCC.getText();
-        String tenNCC = tf_maNCC.getText();
-        String diaChi = tf_maNCC.getText();
-        String sdt = tf_maNCC.getText();
-        nccService.updateNCC(maNCC, tenNCC, diaChi, sdt);
-    }//GEN-LAST:event_btnLuuActionPerformed
 
     private void tblNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNCCMouseClicked
         int rowIndex = tblNCC.getSelectedRow();
@@ -408,11 +432,11 @@ public class NCCForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSua;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JButton exportExcel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

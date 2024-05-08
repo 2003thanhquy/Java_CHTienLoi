@@ -5,36 +5,45 @@
 package org.LapTrinhTienTien.service;
 
 import jakarta.transaction.Transactional;
+import javax.swing.JOptionPane;
 
 import org.LapTrinhTienTien.model.NhaCungCap;
 import org.LapTrinhTienTien.repository.NhaCungCapRepository;
 import org.LapTrinhTienTien.utils.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
+@Service
 public class NhaCungCapService {
     
     @Autowired
     private NhaCungCapRepository nhaCungCapRepository;
     
     
-    @Transactional
-    public Response addNCC(String tenNCC, String diaChi, String sdt) {
-        if(!checkEmpty(tenNCC, diaChi, sdt)) {
-            //JOptionPane.showMessageDialog(null, "Họ tên và số điện thoại không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return new Response("Ho ten, dia chi va so dien thoai khong duoc de trong", false, null);
-        }
-        if (!isValidPhoneNumber(sdt)) {
-            return new Response("Số điện thoại không hợp lệ", false, null);
-        }
-        return new Response("Them thanh cong", true, null);
+    public NhaCungCap addNCC(String maNCC, String tenNCC, String diaChi, String sdt) {
+        NhaCungCap ncc = new NhaCungCap();
+        
+        ncc.setMaNCC(maNCC);
+        ncc.setTenNCC(tenNCC);
+        ncc.setDiaChi(diaChi);
+        ncc.setSdt(sdt);
+        
+        nhaCungCapRepository.save(ncc);
+        return ncc;
     }
     public void updateNCC(String maNCC, String tenNCC, String diaChi, String sdt)
     {
+        if(!checkEmpty(tenNCC,diaChi, sdt)) {
+            JOptionPane.showMessageDialog(null, "Thông tin không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        if (!isValidPhoneNumber(sdt)) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
         NhaCungCap ncc = nhaCungCapRepository.findById(maNCC).orElse(null);
         ncc.setTenNCC(tenNCC);
         ncc.setDiaChi(diaChi);
