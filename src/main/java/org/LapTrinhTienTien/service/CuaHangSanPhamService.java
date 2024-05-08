@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CuaHangSanPhamService {
@@ -91,5 +92,27 @@ public class CuaHangSanPhamService {
     public List<CuaHangSanPham> getAll(){
         CuaHang cuaHang = Global.account.getNhanVien().getCuaHang();
         return cuaHangSanPhamRepository.findAllByCuaHang(cuaHang);
+    }
+    public Response updateNhapKho(String maCh,String maSP, int soLuong) {
+        if(maCh==null || maSP==null || soLuong<0){
+            return new Response("Dữ liệu không hợp lệ",false,null);
+        }
+        if( !Global.account.getNhanVien().getCuaHang().getMaCH().equals(maCh)){
+            return new Response("Mã Cữa hàng không tồn tại",false,null);
+        }
+        List<CuaHangSanPham> cuaHangSanPhams = getAll();
+        Optional<CuaHangSanPham> optionalCuaHangSanPham = cuaHangSanPhams.stream()
+                .filter(chsp -> chsp.getSanPham().getMaSP().equals(maSP))
+                .findFirst();
+
+        if (optionalCuaHangSanPham.isPresent()) {
+            CuaHangSanPham sp = optionalCuaHangSanPham.get();
+            sp.setSoLuong(soLuong +sp.getSoLuong());
+            CuaHangSanPham chsp = cuaHangSanPhamRepository.save(sp);
+            return new Response("Cập nhật số lượng thành công",true,chsp);
+
+        }
+        return new Response("Sản phảm chưa tồn tại",false,null);
+
     }
 }
