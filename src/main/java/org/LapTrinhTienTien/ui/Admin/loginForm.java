@@ -73,7 +73,6 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        tf_pass = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         tf_user = new javax.swing.JTextField();
@@ -81,6 +80,7 @@ public class loginForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnLogin = new org.LapTrinhTienTien.ui.customItem.button();
+        tf_pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -136,10 +136,6 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3.add(jLabel3);
         jLabel3.setBounds(120, 150, 90, 20);
 
-        tf_pass.setBorder(null);
-        jPanel3.add(tf_pass);
-        tf_pass.setBounds(120, 170, 150, 30);
-
         jSeparator7.setForeground(new java.awt.Color(51, 0, 51));
         jPanel3.add(jSeparator7);
         jSeparator7.setBounds(120, 200, 150, 10);
@@ -157,9 +153,9 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3.add(jSeparator8);
         jSeparator8.setBounds(120, 130, 150, 10);
 
-       // jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/LapTrinhTienTien/Img/user.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
         jPanel3.add(jLabel5);
-        jLabel5.setBounds(80, 80, 0, 30);
+        jLabel5.setBounds(60, 80, 30, 30);
         jPanel3.add(jLabel6);
         jLabel6.setBounds(80, 140, 20, 40);
 
@@ -173,6 +169,10 @@ public class loginForm extends javax.swing.JFrame {
         });
         jPanel3.add(btnLogin);
         btnLogin.setBounds(120, 240, 90, 40);
+
+        tf_pass.setBorder(null);
+        jPanel3.add(tf_pass);
+        tf_pass.setBounds(120, 170, 150, 30);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(350, 0, 350, 400);
@@ -211,9 +211,9 @@ public class loginForm extends javax.swing.JFrame {
             tf_pass.setText("");
             this.dispose();
 
-        }else System.out.println(response.getMessage());
-
-
+        }else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -269,7 +269,7 @@ public class loginForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTextField tf_pass;
+    private javax.swing.JPasswordField tf_pass;
     private javax.swing.JTextField tf_user;
     // End of variables declaration//GEN-END:variables
 }

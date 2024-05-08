@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.NhanVien;
-import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
 import org.LapTrinhTienTien.ui.customItem.MyPanelBoxShadow;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,7 @@ public class Info extends javax.swing.JPanel {
         // Load thông tin của nhân viên từ cơ sở dữ liệu khi khởi tạo
         
         initComponents();
+        lblImage.setSize(226, 212);
         loadCurrentNhanVien();
     }
 
@@ -174,7 +174,7 @@ public class Info extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -347,6 +347,37 @@ public class Info extends javax.swing.JPanel {
         }
         //tfCongViec.setText(currentNhanVien.getCongViec());
         //tfTrangThai.setText(currentNhanVien.getTrangThai());
+        String imagePath = currentNhanVien.getUrlImage();
+
+        try {
+            // Read the image from the file system
+            BufferedImage image = ImageIO.read(new File(imagePath));
+
+            // Ensure lblImage has a non-zero size
+            if (lblImage.getWidth() > 0 && lblImage.getHeight() > 0) {
+                // Resize the image to fit the label
+                int scaledWidth = lblImage.getWidth();
+                int scaledHeight = lblImage.getHeight();
+                BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+                Graphics g = scaledImage.getGraphics();
+                g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
+                g.dispose();
+
+                // Set the image on the label
+                ImageIcon imageIcon = new ImageIcon(scaledImage);
+                lblImage.setIcon(imageIcon);
+                System.out.println(imagePath);
+            } else {
+                System.out.println("Label size is zero. Cannot resize image.");
+            }
+        } catch (IOException e) {
+            // Handle image loading errors gracefully, for example, by displaying a default image
+            System.out.println("Error loading image: " + e.getMessage());
+        }
+       
+        
+
+
     }
 
     

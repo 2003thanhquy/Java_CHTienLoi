@@ -4,6 +4,9 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,6 +16,9 @@ import org.LapTrinhTienTien.model.NhaCungCap;
 import org.LapTrinhTienTien.repository.NhaCungCapRepository;
 
 import org.LapTrinhTienTien.service.NhaCungCapService;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -352,8 +358,34 @@ public class NCCForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void exportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportExcelActionPerformed
-        // TODO add your handling code here:
+        /*
+        File file = new File("data.xlsx");
 
+        try {
+            // Tạo một Workbook mới
+            Workbook workbook = new XSSFWorkbook();
+            // Tạo một Sheet mới trong Workbook
+            Sheet sheet = workbook.createSheet("Danh sách NCC");
+
+            // Tạo header row (tên cột)
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Mã NCC");
+            headerRow.createCell(1).setCellValue("Tên NCC");
+            headerRow.createCell(2).setCellValue("Số điện thoại");
+            headerRow.createCell(3).setCellValue("Địa chỉ");
+
+            // Ghi Workbook vào file
+            try (FileOutputStream outputStream = new FileOutputStream(file)) {
+                workbook.write(outputStream);
+            }
+            workbook.close();
+
+            System.out.println("Excel file has been created successfully!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
     }//GEN-LAST:event_exportExcelActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
@@ -403,18 +435,40 @@ public class NCCForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String maNCC = txtSearchForm.getText();
-        NhaCungCap ncc = nccRepository.findByMaNCC(maNCC);
+        String searchText = txtSearchForm.getText();
+        boolean containNCC = searchText.contains("NCC");
         
         DefaultTableModel model = (DefaultTableModel) tblNCC.getModel();
         model.setRowCount(0);
-        
-        model.addRow(new Object[]{
-            ncc.getMaNCC(),
-            ncc.getTenNCC(),
-            ncc.getDiaChi(),
-            ncc.getSdt()
-        });
+        if (containNCC)
+        {
+            NhaCungCap ncc = nccRepository.findByMaNCC(searchText);
+
+            model.addRow(new Object[]{
+                ncc.getMaNCC(),
+                ncc.getTenNCC(),
+                ncc.getDiaChi(),
+                ncc.getSdt()
+            });
+        }
+        else
+        {
+            searchText = searchText.toLowerCase();
+            List<NhaCungCap> nccList = nccRepository.findAll();
+            for(NhaCungCap ncc: nccList)
+            {
+                if( ncc.getTenNCC().toLowerCase().contains(searchText))
+                {
+                    model.addRow(new Object[]{
+                    ncc.getMaNCC(),
+                    ncc.getTenNCC(),
+                    ncc.getDiaChi(),
+                    ncc.getSdt()
+                    });
+                }
+            }
+        }
+
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tblNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNCCMouseClicked

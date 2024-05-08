@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
@@ -92,25 +92,12 @@ public class billManagerForm extends javax.swing.JPanel {
             return;
         }
         HoaDon hoaDon = hoaDonAdminTableModel.getRow(tblHoaDonIndexSelected);
-        JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
+        //JFrame rootFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
         billDetail.setHoaDon(hoaDon);
         System.out.println("-------Hoadon---" + hoaDon.getChiTietHoaDon().size());
-        // Đặt cửa sổ của saleForm là cửa sổ cha của cửa sổ gốc
-        billDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        billDetail.setLocationRelativeTo(rootFrame);
-
-        // Tắt form hiện tại
-        rootFrame.setEnabled(false);
-
-        // Khi form mới được đóng, bật lại form hiện tại
-        billDetail.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                rootFrame.setEnabled(true);
-            }
-        });
-
+        
         billDetail.setVisible(true);
+        billDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     private void mpbChinhSuaClick(){
         if(tblHoaDonIndexSelected == -1) {
