@@ -40,6 +40,7 @@ public class BillDetail extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         bill.setEditable(false);
         this.chiTietHoaDonService = chiTietHoaDonService;
+        this.setLocationRelativeTo(null);
         events();
 
     }
@@ -72,7 +73,7 @@ public class BillDetail extends javax.swing.JFrame {
         chiTietHoaDonTableModel.fireTableDataChanged();
     }
     private void loadBill() {
-        bill.setText("                         The Little mall \n");
+        /*bill.setText("                         The Little mall \n");
         bill.setText(bill.getText() + "\tSố 1, Võ Văn Ngân \n");
         bill.setText(bill.getText() + "\tThủ đức, Thành phố Hồ Chí Minh, \n");
         bill.setText(bill.getText() + "\t+084 123456789, \n");
@@ -97,6 +98,46 @@ public class BillDetail extends javax.swing.JFrame {
         bill.setText(bill.getText() + "====================================\n");
         bill.setText(bill.getText() +"                     Thanks For Your Business...!"+"\n");
         bill.setText(bill.getText() + "----------------------------------------------------------------\n");
+*/
+        String billText = "";
+
+// Header section with consistent indentation, centered alignment, top and bottom borders, and adjusted spacing
+        billText += String.format("╔════════════════════════════════════════════════════╗\n");
+        billText += String.format("%45s\n", "The Little Mall");  // Adjust spacing for centered alignment
+        billText += String.format("\n");  // Add extra line spacing
+        billText += String.format("%20sSố 1, Võ Văn Ngân\n", "");
+        billText += String.format("%20sThủ Đức, Thành phố Hồ Chí Minh,\n", "");
+        billText += String.format("%20s+084 123456789\n", "");
+        billText += String.format("╚════════════════════════════════════════════════════╝\n");
+
+// Title row with clear separation, alignment, top and bottom borders, and adjusted spacing
+        billText += String.format("╔════════════════════════════════════════════════════╗\n");
+        billText += String.format("| %-20s | %8s | %8s | %12s |\n", "Tên", "Số lượng", "Đơn giá", "Thành tiền");
+        billText += String.format("╠════════════════════════════════════════════════════╗\n");
+
+// Loop through ChiTietHoaDon entries with formatted output, consistent borders, and adjusted spacing
+        for (ChiTietHoaDon gh : chiTietHoaDonList) {
+            String name = gh.getSanPham().getTenSP();
+            String qt = String.valueOf(gh.getSoLuong());
+            String prc = String.valueOf(gh.getGiaThanhToan()) + "S";
+            String tongtien = String.valueOf(gh.getTongTien());
+            billText += String.format("| %-20s | %8s | %8s | %12s |\n", name, qt, prc, tongtien);
+        }
+
+        billText += String.format("╠════════════════════════════════════════════════════╗\n");
+
+// Summary section with alignment, formatting, top and bottom borders, and adjusted spacing
+        billText += String.format("| %-25s | %10s |\n", "Tổng Tiền :", hoaDon.getGiaTri());
+        billText += String.format("| %-25s | %10s |\n", "Giảm giá:", hoaDon.getThanhTien() - hoaDon.getGiaTri());
+        billText += String.format("| %-25s | %10s |\n", "Thành Tiền :", hoaDon.getThanhTien());
+        billText += String.format("╚════════════════════════════════════════════════════╝\n");
+
+        billText += "============================================================\n";
+        billText += String.format("%45s\n", "Thanks For Your Business...!");
+        billText += "----------------------------------------------------------------\n";
+
+// Update the bill text view with the formatted string
+        bill.setText(billText);
     }
 
     /**

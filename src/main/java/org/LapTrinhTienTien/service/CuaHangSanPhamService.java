@@ -19,7 +19,7 @@ public class CuaHangSanPhamService {
     @Autowired
     SanPhamRepository sanPhamRepository;
     @Autowired TaiKhoanService taiKhoanService;
-    final  int SEARCH_LIMIT = 4;
+    final  int SEARCH_LIMIT = 7;
 
     public List<GioHang> searchTenSP(String search){
         List<GioHang> lstSearch = new ArrayList<GioHang>();

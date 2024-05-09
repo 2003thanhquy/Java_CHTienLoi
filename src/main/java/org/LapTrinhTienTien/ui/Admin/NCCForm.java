@@ -32,15 +32,16 @@ public class NCCForm extends javax.swing.JPanel {
     NhaCungCapRepository nccRepository;
     NhaCungCapService nccService;
     boolean addCheck=false;
-    public NCCForm() {
+    public NCCForm(NhaCungCapRepository nccRepository, NhaCungCapService nccService) {
         this.nccRepository = nccRepository;
-
+        this.nccService = nccService;
         initComponents();
         tf_maNCC.setEditable(false);
         tf_tenNCC.setEditable(false);
         tf_sdt.setEditable(false);
         tf_diaChi.setEditable(false);
         initComponents();
+        //loadDataToTable();
     }
     public void loadDataToTable() {
         // Lấy danh sách nhà cung cấp từ cơ sở dữ liệu
@@ -61,7 +62,12 @@ public class NCCForm extends javax.swing.JPanel {
                 ncc.getDiaChi()
                 // Nếu có các trường dữ liệu khác, bạn có thể thêm vào đây
         });
+        
     }
+        tf_maNCC.setEditable(false);
+        tf_tenNCC.setEditable(false);
+        tf_sdt.setEditable(false);
+        tf_diaChi.setEditable(false);
 }
 
     /**
@@ -404,8 +410,8 @@ public class NCCForm extends javax.swing.JPanel {
         }
         String maNCC = tblNCC.getValueAt(selectedRow, 0).toString();
         String tenNCC = tblNCC.getValueAt(selectedRow, 1).toString();
-        String diaChi = tblNCC.getValueAt(selectedRow, 2).toString();
-        String sdt = tblNCC.getValueAt(selectedRow, 3).toString();
+        String diaChi = tblNCC.getValueAt(selectedRow, 3).toString();
+        String sdt = tblNCC.getValueAt(selectedRow, 2).toString();
         tf_tenNCC.setEditable(true);
         tf_sdt.setEditable(true);
         tf_diaChi.setEditable(true);
@@ -475,8 +481,8 @@ public class NCCForm extends javax.swing.JPanel {
         int rowIndex = tblNCC.getSelectedRow();
         String maNCC = tblNCC.getValueAt(rowIndex, 0).toString();
         String tenNCC = tblNCC.getValueAt(rowIndex, 1).toString();
-        String diaChi = tblNCC.getValueAt(rowIndex, 2).toString();
-        String sdt = tblNCC.getValueAt(rowIndex, 3).toString();
+        String diaChi = tblNCC.getValueAt(rowIndex, 3).toString();
+        String sdt = tblNCC.getValueAt(rowIndex, 2).toString();
         tf_maNCC.setText(maNCC);
         tf_tenNCC.setText(tenNCC);
         tf_diaChi.setText(diaChi);

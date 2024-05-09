@@ -4,6 +4,8 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import org.LapTrinhTienTien.model.KhachHang;
 import org.LapTrinhTienTien.repository.KhachHangRepository;
 import org.LapTrinhTienTien.service.KhachHangService;
@@ -35,7 +37,17 @@ public class addCustomer extends javax.swing.JFrame {
 
         this.khachHangService = khachHangService;
         System.out.print(this.khachHangService);
+        this.setLocationRelativeTo(null);
         initComponents();
+        WindowAdapter windowAdapter = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                txtTen.setText("");
+                txtSdt.setText("");
+                
+            }
+        };
+        addWindowListener(windowAdapter);
     }
 
     /**

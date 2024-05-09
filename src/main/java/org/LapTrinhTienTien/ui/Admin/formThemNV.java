@@ -4,6 +4,8 @@
  */
 package org.LapTrinhTienTien.ui.Admin;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import org.apache.poi.ss.usermodel.*;
@@ -51,6 +53,22 @@ public class formThemNV extends javax.swing.JFrame {
         cuaHang = cuaHangRepository.findByMaCH(maCuaHang);
         // Truy vấn cơ sở dữ liệu để lấy đối tượng ChucVu và CuaHang tương ứng
         initComponents();
+        this.setLocationRelativeTo(null);
+        WindowAdapter windowAdapter = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                jTextField1.setText(null);
+                jTextField2.setText(null);
+                jTextField3.setText(null);
+                jTextField4.setText(null);
+                jTextField5.setText(null);
+                jTextField6.setText(null);
+                jTextFieldImagePath.setText(null);
+                rbNam.setSelected(false);
+                rbNu.setSelected(false);
+            }
+        };
+        addWindowListener(windowAdapter);
         
     }
 
@@ -93,10 +111,6 @@ public class formThemNV extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
         btnHuy = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -185,14 +199,6 @@ public class formThemNV extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Chức vụ");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên", "Quản lý" }));
-
-        jLabel10.setText("Cửa hàng");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
         myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
         myPanelBoxShadow1Layout.setHorizontalGroup(
@@ -228,52 +234,39 @@ public class formThemNV extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow1Layout.createSequentialGroup()
                                         .addGap(38, 38, 38)
                                         .addComponent(btnSelectFileImage, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSelectExcelFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnHuy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         myPanelBoxShadow1Layout.setVerticalGroup(
             myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(59, 59, 59)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -317,7 +310,7 @@ public class formThemNV extends javax.swing.JFrame {
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -481,10 +474,7 @@ public class formThemNV extends javax.swing.JFrame {
     private javax.swing.JButton btnSelectFileImage;
     private javax.swing.JButton btnThem;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -492,7 +482,6 @@ public class formThemNV extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;

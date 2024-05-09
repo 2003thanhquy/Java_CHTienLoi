@@ -86,20 +86,14 @@
                       </Group>
                       <Component id="lblSoLuong" alignment="0" min="-2" pref="197" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="btnNhapKho" min="-2" pref="100" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnKLuu" min="-2" pref="100" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace pref="85" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnNhapKho" min="-2" pref="100" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="btnThem" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="btnReload" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jSeparator1" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
@@ -127,10 +121,7 @@
                       <Component id="btnReload" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnNhapKho" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                      <Component id="btnKLuu" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnNhapKho" min="-2" pref="39" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -185,16 +176,6 @@
         <Component class="org.LapTrinhTienTien.ui.customItem.button" name="btnThem">
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
-            <Property name="actionCommand" type="java.lang.String" value=""/>
-            <Property name="borderColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="cc" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="radius" type="int" value="35"/>
-          </Properties>
-        </Component>
-        <Component class="org.LapTrinhTienTien.ui.customItem.button" name="btnKLuu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="K.L&#x1b0;u"/>
             <Property name="actionCommand" type="java.lang.String" value=""/>
             <Property name="borderColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="0" red="0" type="rgb"/>

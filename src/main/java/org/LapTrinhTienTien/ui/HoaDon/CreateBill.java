@@ -18,6 +18,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -41,6 +43,7 @@ public class CreateBill extends javax.swing.JFrame {
     List<GioHang> storegioHang = new ArrayList<>();
     public CreateBill(@Autowired CuaHangSanPhamService cuaHangSanPhamService) {
         initComponents();
+
         this.khoService = cuaHangSanPhamService;
         menu = new JPopupMenu();
         search = new PanelSearch();
@@ -50,7 +53,18 @@ public class CreateBill extends javax.swing.JFrame {
         menu.add(search);
         menu.setFocusable(false);
         tblHoaDon.setRowHeight(40);
-        
+        WindowAdapter windowAdapter = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                bill.setText("");
+                gioHangs.clear();
+                hoaDonTableModel.fireTableDataChanged();
+                tblHoaDon.setModel(hoaDonTableModel);
+                btnThanhToan.setEnabled(true);
+
+            }
+        };
+        addWindowListener(windowAdapter);
         TableActionEvent event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
@@ -100,7 +114,9 @@ public class CreateBill extends javax.swing.JFrame {
                 txtSearch.setText("");
                 if(isCheckSPAdd(data)){
                     gioHangs.add(data);
+
                     hoaDonTableModel.fireTableDataChanged();
+
                 }
                 menu.setVisible(false);
                 hoaDonTableModel.fireTableDataChanged();
@@ -121,6 +137,7 @@ public class CreateBill extends javax.swing.JFrame {
                 if(response.getFlag()){
                     if(isCheckSPAdd(data)){
                         gioHangs.add(data);
+
                         hoaDonTableModel.fireTableDataChanged();
                     }
                 }else {
@@ -210,6 +227,8 @@ public class CreateBill extends javax.swing.JFrame {
         if (response.getFlag()) {
             btnThanhToan.setEnabled(false);
             JOptionPane.showMessageDialog(this, response.getMessage(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            gioHangs.clear();
+            hoaDonTableModel.fireTableDataChanged();
         } else {
             JOptionPane.showMessageDialog(this, "Lỗi: " + response.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }

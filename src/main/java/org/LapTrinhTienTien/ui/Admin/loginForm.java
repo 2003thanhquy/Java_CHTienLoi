@@ -40,7 +40,7 @@ public class loginForm extends javax.swing.JFrame {
 //    staffForm staffform;
     public loginForm(){
         initComponents();
-        setSize(700,500);
+        //setSize(700,500);
         ClassPathResource resource1 = new ClassPathResource("/grocery-cart.png");
         ClassPathResource resource2 = new ClassPathResource("/user.png");
         ClassPathResource resource3 = new ClassPathResource("/padlock.png");
@@ -51,6 +51,7 @@ public class loginForm extends javax.swing.JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -84,7 +85,6 @@ public class loginForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 255));
 
@@ -99,29 +99,14 @@ public class loginForm extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 350, 400);
-
         jSeparator1.setForeground(new java.awt.Color(51, 0, 51));
-        getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(420, 150, 0, 3);
 
         jSeparator2.setForeground(new java.awt.Color(51, 0, 51));
         jSeparator2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(420, 150, 0, 3);
 
         jSeparator3.setForeground(new java.awt.Color(51, 0, 51));
-        getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(420, 160, 0, 3);
-        getContentPane().add(jSeparator4);
-        jSeparator4.setBounds(420, 160, 0, 3);
 
         jSeparator5.setForeground(new java.awt.Color(51, 0, 51));
-        getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(420, 130, 0, 3);
-        getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(430, 160, 0, 3);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(null);
@@ -174,8 +159,56 @@ public class loginForm extends javax.swing.JFrame {
         jPanel3.add(tf_pass);
         tf_pass.setBounds(120, 170, 150, 30);
 
-        getContentPane().add(jPanel3);
-        jPanel3.setBounds(350, 0, 350, 400);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,8 +217,6 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tf_user.getText()+"";
         String password = tf_pass.getText()+"";
-        username = "NV002";
-        password = "NV002";
         if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
             return;
         }

@@ -6,16 +6,13 @@ package org.LapTrinhTienTien.ui.Staff;
 
 
 import javax.swing.JComponent;
-import org.LapTrinhTienTien.StaticApp.Global;
-import org.LapTrinhTienTien.model.TaiKhoan;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
+import org.LapTrinhTienTien.ui.Admin.customerMangager;
 
-import org.LapTrinhTienTien.service.NhanVienService;
 import org.LapTrinhTienTien.ui.Admin.loginForm;
 import org.LapTrinhTienTien.ui.events.EventMenuSelected;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -36,6 +33,8 @@ public class staffForm extends javax.swing.JFrame {
     @Autowired
     private Invoice invoice;
     private loginForm login;
+    @Autowired
+    private customerMangager customer;
     public staffForm(@Autowired NhanVienRepository nhanVienRepository) {
         //this.info = new Info(nhanVienRepository);
         this.nhanVienRepository=nhanVienRepository;
@@ -65,6 +64,8 @@ public class staffForm extends javax.swing.JFrame {
                     setForm(timeTable);
                 if(index==5)
                     setForm(invoice);
+                if(index==6)
+                    setForm(customer);
             }
 
         });
@@ -101,14 +102,14 @@ public class staffForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(staffMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(staffMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(625, 625, 625))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(staffMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
