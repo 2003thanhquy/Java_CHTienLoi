@@ -50,6 +50,10 @@ public class staffInfo extends javax.swing.JPanel {
                 jTextField3.setText(table1.getValueAt(row, 2).toString()); // Chức vụ
                 jTextField1.setText(table1.getValueAt(row, 3).toString()); // Số điện thoại
                 jTextField4.setText(table1.getValueAt(row, 4).toString()); // Ca làm việc
+                jTextField2.setEditable(false); // Họ và tên
+                jTextField3.setEditable(false); // Chức vụ
+                jTextField1.setEditable(false); // Số điện thoại
+                jTextField4.setEditable(false);
             }
         });
     }
@@ -85,9 +89,13 @@ public class staffInfo extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new org.LapTrinhTienTien.ui.customItem.button();
-        btnQuanLyLichLam = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(237, 237, 237));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 127, 127));
@@ -195,13 +203,6 @@ public class staffInfo extends javax.swing.JPanel {
             }
         });
 
-        btnQuanLyLichLam.setText("jButton1");
-        btnQuanLyLichLam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuanLyLichLamActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -233,9 +234,6 @@ public class staffInfo extends javax.swing.JPanel {
                                 .addComponent(btnDoiTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnQuanLyLichLam))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
@@ -268,7 +266,7 @@ public class staffInfo extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                         .addGap(1, 1, 1)))
-                .addGap(16, 16, 16)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -278,8 +276,6 @@ public class staffInfo extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnQuanLyLichLam)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
@@ -391,12 +387,10 @@ public class staffInfo extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDoiTrangThaiActionPerformed
 
-    private void btnQuanLyLichLamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyLichLamActionPerformed
-        // Create an instance of manageWorkTime form
-            
-            // Make the form visible
-            manageWorkTimeForm.setVisible(true);
-    }//GEN-LAST:event_btnQuanLyLichLamActionPerformed
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jPanel1MousePressed
     
     private void updateTable(List<NhanVien> searchResult) {
         // Get the table model
@@ -454,7 +448,6 @@ public class staffInfo extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.LapTrinhTienTien.ui.customItem.button btnDoiTrangThai;
-    private javax.swing.JButton btnQuanLyLichLam;
     private org.LapTrinhTienTien.ui.customItem.button btnThem;
     private org.LapTrinhTienTien.ui.customItem.button btnTimKiem;
     private javax.swing.JLabel jLabel1;

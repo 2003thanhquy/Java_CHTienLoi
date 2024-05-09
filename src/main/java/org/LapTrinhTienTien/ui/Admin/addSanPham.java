@@ -7,7 +7,6 @@ package org.LapTrinhTienTien.ui.Admin;
 import org.LapTrinhTienTien.model.NhaCungCap;
 import org.LapTrinhTienTien.model.SanPham;
 import org.LapTrinhTienTien.repository.NhaCungCapRepository;
-import org.LapTrinhTienTien.repository.SanPhamRepository;
 import org.LapTrinhTienTien.service.SanPhamService;
 import org.LapTrinhTienTien.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.time.LocalDate;
 
@@ -39,14 +40,17 @@ public class addSanPham extends javax.swing.JFrame {
 
     public addSanPham() {
         initComponents();
+        this.setLocationRelativeTo(null);
         event();
     }
 
     private void event() {
+        
         btnThem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 btnThemPerformed();
+                
             }
         });
         btnAddImg.addActionListener(new ActionListener() {
@@ -62,6 +66,19 @@ public class addSanPham extends javax.swing.JFrame {
                 lblLoadImage.setIcon(null);
             }
         });
+        WindowAdapter windowAdapter = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                tf_soluong.setText("");
+                tf_mancc.setText("");
+                tf_tensanpham.setText("");
+                tf_tiengoc.setText("");
+                tf_diachi.setText("");
+                selectedFileSanPham = null;
+                lblLoadImage.setIcon(null);
+            }
+        };
+        addWindowListener(windowAdapter);
     }
     private boolean isValidFloat(String value) {
         try {

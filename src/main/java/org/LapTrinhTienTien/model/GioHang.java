@@ -25,6 +25,7 @@ public class GioHang {
         setTongTien();
     }
 
+
     public GioHang(String maSP, int soLuong, float giaTien) {
         this.maSP = maSP;
         this.soLuong = soLuong;
@@ -81,4 +82,5 @@ public class GioHang {
     public void setImage(String image) {
         this.image = image;
     }
+
 }

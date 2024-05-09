@@ -65,6 +65,8 @@ public class GioHangTableModel extends AbstractTableModel {
     public GioHang getRow(int row){
         return lstHoaDons.get(row);
     }
-    
-    
+
+    public void addRow(GioHang gioHang){
+        lstHoaDons.add(gioHang);
+    }
 }

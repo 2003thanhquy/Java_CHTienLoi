@@ -231,7 +231,6 @@ public class formQlKho extends javax.swing.JPanel {
         btnReload = new org.LapTrinhTienTien.ui.customItem.button();
         btnNhapKho = new org.LapTrinhTienTien.ui.customItem.button();
         btnThem = new org.LapTrinhTienTien.ui.customItem.button();
-        btnKLuu = new org.LapTrinhTienTien.ui.customItem.button();
         lblMaSP = new javax.swing.JLabel();
         lblSoLuong = new javax.swing.JLabel();
 
@@ -276,11 +275,6 @@ public class formQlKho extends javax.swing.JPanel {
         btnThem.setBorderColor(new java.awt.Color(0, 0, 204));
         btnThem.setRadius(35);
 
-        btnKLuu.setText("K.Lưu");
-        btnKLuu.setActionCommand("");
-        btnKLuu.setBorderColor(new java.awt.Color(0, 0, 204));
-        btnKLuu.setRadius(35);
-
         lblMaSP.setText("Mã SP:");
 
         lblSoLuong.setText("Số lượng: ");
@@ -299,12 +293,9 @@ public class formQlKho extends javax.swing.JPanel {
                         .addGap(6, 6, 6)
                         .addComponent(lblMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addComponent(btnNhapKho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnKLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNhapKho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
@@ -331,9 +322,7 @@ public class formQlKho extends javax.swing.JPanel {
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReload, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNhapKho, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnNhapKho, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
 
@@ -361,7 +350,6 @@ public class formQlKho extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.LapTrinhTienTien.ui.customItem.button btnKLuu;
     private org.LapTrinhTienTien.ui.customItem.button btnNhapKho;
     private org.LapTrinhTienTien.ui.customItem.button btnReload;
     private org.LapTrinhTienTien.ui.customItem.button btnThem;
