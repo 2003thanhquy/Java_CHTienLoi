@@ -26,8 +26,8 @@ public class CaLamViec {
     @Column(name = "GiaKetThuc", nullable = false, unique = true)
     private  LocalTime giaKetThuc;
 
-    @Column(name = "PhanTramThuongThem", nullable = false)
-    private int phanTramThuongThem;
+//    @Column(name = "PhanTramThuongThem", nullable = false)
+//    private int phanTramThuongThem;
 
     @OneToMany(mappedBy = "caLamViec")
     private Set<LichLam> lichLam;

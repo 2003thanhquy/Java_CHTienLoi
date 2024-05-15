@@ -76,13 +76,13 @@ public class adminForm extends javax.swing.JFrame {
                     setForm(formKho);
                 if(index==4)
                     setForm(ncc);
-                if(index==6)
+                if(index==5)
                     setForm(coupon);
-                if(index==7)
+                if(index==6)
                     setForm(dashBoard);
-                if(index==8)
+                if(index==7)
                     setForm(customer);
-                if(index==9)
+                if(index==8)
                     setForm(manageWorkTime);
             }
 

@@ -1,23 +1,21 @@
 package org.LapTrinhTienTien.service;
 
-import org.LapTrinhTienTien._enum.ChucVuEnum;
+import org.LapTrinhTienTien.StaticApp.Global;
 import org.LapTrinhTienTien.model.ChucVu;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.LapTrinhTienTien.model.CuaHang;
 import org.LapTrinhTienTien.model.NhanVien;
 import org.LapTrinhTienTien.model.TaiKhoan;
+import org.LapTrinhTienTien.model.customModel.EmployeeSalary;
 import org.LapTrinhTienTien.repository.NhanVienRepository;
-import org.LapTrinhTienTien.utils.Response;
 import org.LapTrinhTienTien.repository.TaiKhoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -106,4 +104,60 @@ public class NhanVienService {
     public List<NhanVien> timNhanVienTheoTen(String tenNV) {
         return nhanVienRepository.findByHoTenNVContainingIgnoreCase(tenNV);
     }
+    public List<NhanVien> findALlNhanVien() {
+        List<NhanVien> lstNhanVien =  nhanVienRepository.findAll();
+        String mach = Global.account.getNhanVien().getCuaHang().getMaCH();
+        lstNhanVien = lstNhanVien.stream().filter(nv->nv.getCuaHang().getMaCH().equals(mach)&& nv.getTrangThai()==null).toList();
+
+        return lstNhanVien;
+
+    }
+    public List<EmployeeSalary> findSalaryEmployeeInMonthAndYear(String manv,int month, int year) {
+        List<NhanVien> lstNhanVien = findALlNhanVien();
+        List<EmployeeSalary> lstEmployeeSalary = new ArrayList<>();
+
+        List<EmployeeSalary> finalLstEmployeeSalary = lstEmployeeSalary;
+        lstNhanVien.forEach(nv -> {
+            EmployeeSalary employeeSalary = new EmployeeSalary();
+            employeeSalary.setManv(nv.getMaNV());
+            employeeSalary.setTennv(nv.getHoTenNV());
+            employeeSalary.setMorning(0);
+            employeeSalary.setAfternoon(0);
+            employeeSalary.setEvening(0);
+            employeeSalary.setTotalMoney(0);
+
+            nv.getLichLam().forEach(lichLam -> {
+                LocalDate ngayThangNam = lichLam.getId().getNgayThangNam();
+                int mm = ngayThangNam.getMonthValue();
+                int yyyy = ngayThangNam.getYear();
+
+                if (mm == month && yyyy == year) {
+                    String maca = lichLam.getCaLamViec().getMaCa();
+                    switch (maca) {
+                        case "CA001":
+                            employeeSalary.setMorning(employeeSalary.getMorning() + 1);
+                            break;
+                        case "CA002":
+                            employeeSalary.setAfternoon(employeeSalary.getAfternoon() + 1);
+                            break;
+                        case "CA003":
+                            employeeSalary.setEvening(employeeSalary.getEvening() + 1);
+                            break;
+                        default:
+                            break;
+                    }
+                    employeeSalary.setTotalMoney(employeeSalary.getTotalMoney() + lichLam.getGiaTien());
+                }
+            });
+
+            finalLstEmployeeSalary.add(employeeSalary);
+        });
+        lstEmployeeSalary= finalLstEmployeeSalary;
+        if(!manv.isEmpty()){
+            lstEmployeeSalary = lstEmployeeSalary.stream().filter(es->es.getManv().equals(manv)).toList();
+        }
+
+        return lstEmployeeSalary;
+    }
+
 }
