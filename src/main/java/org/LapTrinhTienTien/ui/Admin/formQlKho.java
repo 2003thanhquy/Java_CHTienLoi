@@ -21,6 +21,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -30,10 +32,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +58,7 @@ public class formQlKho extends javax.swing.JPanel {
     private CuaHangSanPhamService cuaHangSanPhamService;
     List<CuaHangSanPham> cuaHangSanPhamList = new ArrayList<>();
 
-    public formQlKho(@Autowired CuaHangSanPhamService cuaHangSanPhamService) {
+    public formQlKho( @Autowired CuaHangSanPhamService cuaHangSanPhamService) {
         initComponents();
         this.cuaHangSanPhamService = cuaHangSanPhamService;
         loadData();
@@ -180,24 +184,22 @@ public class formQlKho extends javax.swing.JPanel {
         lblSoLuong.setText("Sô Lượng: "+ chsp.getSoLuong());
     }
 
-    private void init() {
+    private void init(){
         panel.removeAll();
         panel.setLayout(new WrapLayout(WrapLayout.LEADING));
         scrollPane.setVerticalScrollBar(new ScrollBar());
         for(CuaHangSanPham chsp : cuaHangSanPhamList){
 
             String imageResource = chsp.getSanPham().getImage();
-            ImageIcon icon = null;
+
+            ImageIcon icon = new ImageIcon("resources/Img/SanPham/SP000.png");
+            System.out.println("Icon" + icon);
             System.out.println("Image"+imageResource);
             if (imageResource != null) {
-                ClassPathResource resource1 = new ClassPathResource(imageResource);
+                ClassPathResource resource = new ClassPathResource(imageResource);
                 try {
-                    Image image = ImageIO.read(resource1.getInputStream());
-                    int width = 400; // Đặt chiều rộng mong muốn
-                    int height =400; // Đặt chiều cao mong muốn
-                    Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-
-                    icon = new ImageIcon(scaledImage);
+                    Image image = ImageIO.read(resource.getInputStream());
+                    icon = new ImageIcon(image);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

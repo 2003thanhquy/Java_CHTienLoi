@@ -54,17 +54,17 @@ public class FakeData   implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
 
-        /*insertChucVu();
-        insertCalamViec();
-        insertNhaCungCap();
-        insertSanPham();
-        insertKhachHang();
-        insertCuaHang();//cua hang + kho //Trung khoa chinh
-        insertNhanVien();//tai khoan voi nhan vien
-        insertLichLam();// insert theo thu tu
-        insertCuaHangSanPham();
-         insertChuongTrinh();// chuong trinh
-        insertHoaDon();*///hoa don va chi tiet hoa don
+//        insertChucVu();
+//        insertCalamViec();
+//        insertNhaCungCap();
+//        insertSanPham();
+//        insertKhachHang();
+//        insertCuaHang();//cua hang + kho //Trung khoa chinh
+//        insertNhanVien();//tai khoan voi nhan vien
+//        insertLichLam();// insert theo thu tu
+//        insertCuaHangSanPham();
+//         insertChuongTrinh();// chuong trinh
+//        insertHoaDon();//hoa don va chi tiet hoa don
 
         //chitiethoadon
 
@@ -197,19 +197,16 @@ public class FakeData   implements CommandLineRunner{
         caLamViec.setMaCa("CA001");
         caLamViec.setGioBatDau(LocalTime.of(6, 0)); // 06:00
         caLamViec.setGiaKetThuc(LocalTime.of(14, 0)); // 14:00
-        caLamViec.setPhanTramThuongThem(0);
 
         CaLamViec caLamViec2 = new CaLamViec();
         caLamViec2.setMaCa("CA002");
         caLamViec2.setGioBatDau(LocalTime.of(14, 0)); // 06:00
         caLamViec2.setGiaKetThuc(LocalTime.of(22, 0)); // 14:00
-        caLamViec2.setPhanTramThuongThem(0);
 
         CaLamViec caLamViec3 = new CaLamViec();
         caLamViec3.setMaCa("CA003");
         caLamViec3.setGioBatDau(LocalTime.of(22, 0)); // 06:00
         caLamViec3.setGiaKetThuc(LocalTime.of(6, 0)); // 14:00
-        caLamViec3.setPhanTramThuongThem(20);
 
         caLamViecRepository.save(caLamViec);
         caLamViecRepository.save(caLamViec2);

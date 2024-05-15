@@ -220,6 +220,7 @@ public class loginForm extends javax.swing.JFrame {
         if(tf_user.getText().equals("") || tf_pass.getText().equals("")){
             return;
         }
+        username = "NV005"; password="NV005";
         Response response =taikhoanService.login(username, password);
         if(response.getFlag()){
             System.out.println(response.getMessage());

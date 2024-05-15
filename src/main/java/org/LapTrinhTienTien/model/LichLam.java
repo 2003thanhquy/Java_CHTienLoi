@@ -26,7 +26,8 @@ public class LichLam implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("maNV")
     private NhanVien nhanVien ;
-
+    @Column(name = "giatien", nullable = false)
+    private float giaTien = 240000;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "LL_CLV")
